@@ -46,6 +46,11 @@ public class Tile : MonoBehaviour {
         {
             myState = States.FIRE;
         }
+
+        if(other.tag == "warn")
+        {
+            flickerWarn();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -72,6 +77,22 @@ public class Tile : MonoBehaviour {
         {
             rend.material = materials[1];
         }
+    }
+
+    private IEnumerator flickerWarn()
+    {
+        WaitForSeconds wait = new WaitForSeconds(.5f);
+        myState = States.WARN;
+        yield return wait;
+        myState = States.NONE;
+        yield return wait;
+        myState = States.WARN;
+        yield return wait;
+        myState = States.NONE;
+        yield return wait;
+        myState = States.WARN;
+        yield return wait;
+        myState = States.NONE;
     }
 
     

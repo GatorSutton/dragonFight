@@ -7,17 +7,15 @@ public class Fireball : MonoBehaviour {
     public Transform gameCenter;
     public Transform warn;
     public Transform fire;
-    public float warnTicks;
 
-    private float _currentScale;
-    public float targetScale = 2f;
-    public float initScale = 1f;
-    private const float animationTimeSeconds = 2;
-    private float _dt = 0;
+    public float targetScale;
+    public float growFactor;
+    public float waitTime;
+
+    private float _currentScale = 1;
     private bool _upScale = true;
 
-
-	void Update () {
+    void Update () {
 
         if(Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -29,8 +27,7 @@ public class Fireball : MonoBehaviour {
     {
         //Move warn to the center
         warn.position = gameCenter.position;
-        //Flicker Warn
-
+        yield return null;
         //Move warn back
         warn.localPosition = new Vector3(0f, 0f, 0f);
         //Move fireball to the center
@@ -43,20 +40,16 @@ public class Fireball : MonoBehaviour {
                 _upScale = false;
                 _currentScale = targetScale;
             }
-            fire.localScale = Vector3.one * (targetScale / animationTimeSeconds);
-            yield return null;
+            _currentScale *= growFactor;
+            fire.localScale = Vector3.one * _currentScale;
+            yield return new WaitForSeconds(waitTime);
         }
 
-        while(!_upScale)
-        {
-            if(_currentScale < initScale)
-            {
-                   
-            }
-        }
         //Move back to under the dragon
-
-
+        fire.localPosition = new Vector3(0f, 0f, 0f);
         yield return null;
+
+        _upScale = true;
+        fire.localScale = new Vector3(2f, 2f, 2f);
     }
 }
