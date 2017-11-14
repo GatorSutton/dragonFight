@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour {
-    
+
+    public float timeBetweenFlicker;
     public enum States { NONE, WARN, FIRE};
     [System.NonSerialized]
     public States myState = States.NONE;
@@ -11,6 +12,7 @@ public class Tile : MonoBehaviour {
     public MeshRenderer rend;
 
     bool playerHere = false;
+    bool warning = false;
 
 	// Use this for initialization
 	void Start () {
@@ -47,9 +49,9 @@ public class Tile : MonoBehaviour {
             myState = States.FIRE;
         }
 
-        if(other.tag == "warn")
+        if(other.tag == "warn" && !warning)
         {
-            flickerWarn();
+            StartCoroutine(flickerWarn());
         }
     }
 
@@ -81,7 +83,8 @@ public class Tile : MonoBehaviour {
 
     private IEnumerator flickerWarn()
     {
-        WaitForSeconds wait = new WaitForSeconds(.5f);
+        warning = true;
+        WaitForSeconds wait = new WaitForSeconds(timeBetweenFlicker);
         myState = States.WARN;
         yield return wait;
         myState = States.NONE;
@@ -93,6 +96,7 @@ public class Tile : MonoBehaviour {
         myState = States.WARN;
         yield return wait;
         myState = States.NONE;
+        warning = false;
     }
 
     

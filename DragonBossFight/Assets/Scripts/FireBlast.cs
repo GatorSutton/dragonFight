@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fireball : MonoBehaviour {
+public class FireBlast : MonoBehaviour {
 
     public Transform gameCenter;
     public Transform warn;
     public Transform fire;
 
     public float targetScale;
+    public float initScale;
     public float growFactor;
     public float waitTime;
 
-    private float _currentScale = 1;
+    private float _currentScale = 1f;
     private bool _upScale = true;
 
     void Update () {
@@ -25,14 +26,16 @@ public class Fireball : MonoBehaviour {
 
     private IEnumerator Attack()
     {
+        _currentScale = initScale;
         //Move warn to the center
         warn.position = gameCenter.position;
-        yield return null;
+        yield return new WaitForSeconds(.5f);
         //Move warn back
         warn.localPosition = new Vector3(0f, 0f, 0f);
+        yield return new WaitForSeconds(1f);
         //Move fireball to the center
         fire.position = gameCenter.position;
-        //grow and shrink the fireball
+        //grow fireball
         while(_upScale)
         {
             if(_currentScale > targetScale)
@@ -44,12 +47,23 @@ public class Fireball : MonoBehaviour {
             fire.localScale = Vector3.one * _currentScale;
             yield return new WaitForSeconds(waitTime);
         }
-
+        //wait 2 seconds as large fireball
+        yield return new WaitForSeconds(2f);
+        //shrink fireball
+        while(!_upScale)
+        {
+            if(_currentScale < initScale)
+            {
+                _upScale = true;
+                _currentScale = initScale;
+            }
+            _currentScale /= growFactor;
+            fire.localScale = Vector3.one * _currentScale;
+            yield return new WaitForSeconds(waitTime);
+        }
         //Move back to under the dragon
         fire.localPosition = new Vector3(0f, 0f, 0f);
         yield return null;
 
-        _upScale = true;
-        fire.localScale = new Vector3(2f, 2f, 2f);
     }
 }
