@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlameWave : MonoBehaviour {
+public class FlameWaveTile : MonoBehaviour {
 
     public Floor floor;
     public float timeBetweenFire;

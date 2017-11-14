@@ -6,6 +6,7 @@ public class FireBallThrower : MonoBehaviour {
 
     public FireBall fireball;
     public int numOfFireballs;
+    public float timeBetweenAttacks;
 
     private int fireballCount;
     private List<int> usedValues = null;
@@ -16,6 +17,7 @@ public class FireBallThrower : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
+            StopAllCoroutines();
             StartCoroutine(throwFireballs());
         }
     }
@@ -27,7 +29,7 @@ public class FireBallThrower : MonoBehaviour {
         {
             throwOneFireball(uniqueRandomNumber());
             fireballCount++;
-            yield return new WaitForSeconds(.2f);
+            yield return new WaitForSeconds(timeBetweenAttacks);
         }
         fireballCount = 0;
     }
