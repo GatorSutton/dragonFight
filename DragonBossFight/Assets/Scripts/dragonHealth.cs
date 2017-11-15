@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class dragonHealth : MonoBehaviour {
 
+    public int startingHealth;
+
 	// Use this for initialization
 	void Start () {
 		

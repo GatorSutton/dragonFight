@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class playerHealth : MonoBehaviour {
 
+    public int startingHealth;
+
+    private int hp;
+
 	// Use this for initialization
 	void Start () {
-		
+        hp = startingHealth;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void takeDamage()
+    {
+        hp--;
+        print(hp);
+    }
 }

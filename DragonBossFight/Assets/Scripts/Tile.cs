@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour {
     public playerHealth PH;
 
     public float timeBetweenFlicker;
-    public enum States { NONE, WARN, FIRE};
+    public enum States { NONE, WARN, FIRE, DAMAGE};
     [System.NonSerialized]
     public States myState = States.NONE;
     public Material[] materials;
@@ -22,6 +22,8 @@ public class Tile : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rend = GetComponent<MeshRenderer>();
+        DH = GameObject.FindGameObjectWithTag("dragon").GetComponent<dragonHealth>();
+        PH = GameObject.FindGameObjectWithTag("Player").GetComponent<playerHealth>();
 	}
 	
 	// Update is called once per frame
@@ -50,7 +52,7 @@ public class Tile : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "fire")
+        if(other.tag == "fire"  && !takingDamage)
         {
             fire = true;
             myState = States.FIRE;
@@ -73,13 +75,10 @@ public class Tile : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.tag == "fire")
+        if(other.tag == "fire" && !takingDamage)
         {
-            if (other.tag == "fire")
-            {
                 fire = true;
                 myState = States.FIRE;
-            }
         }
     }
 
@@ -96,12 +95,16 @@ public class Tile : MonoBehaviour {
             case States.WARN:
                 rend.material = materials[3];
                 break;
+            case States.DAMAGE:
+                rend.material = materials[4];
+                break;
         }
-
+        /*
         if(playerHere)
         {
             rend.material = materials[1];
         }
+        */
     }
 
     private IEnumerator flickerWarn()
@@ -126,23 +129,24 @@ public class Tile : MonoBehaviour {
     {
         if(playerHere && fire && !takingDamage)
         {
-            
+            StartCoroutine(flickerDamage());
+            PH.takeDamage();
         }
     }
 
-    private IEnumerator flickerFire()
+    private IEnumerator flickerDamage()
     {
         takingDamage = true;
         WaitForSeconds wait = new WaitForSeconds(timeBetweenFlicker);
-        myState = States.FIRE;
+        myState = States.DAMAGE;
         yield return wait;
         myState = States.NONE;
         yield return wait;
-        myState = States.FIRE;
+        myState = States.DAMAGE;
         yield return wait;
         myState = States.NONE;
         yield return wait;
-        myState = States.FIRE;
+        myState = States.DAMAGE;
         yield return wait;
         myState = States.NONE;
         takingDamage = false;
