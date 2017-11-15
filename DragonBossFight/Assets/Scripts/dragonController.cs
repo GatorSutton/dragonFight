@@ -13,6 +13,11 @@ public class dragonController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        focusAtCenter();
+    }
+
+    private void focusAtCenter()
+    {
         Vector3 relativePos = target.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(relativePos);
         transform.rotation = rotation;

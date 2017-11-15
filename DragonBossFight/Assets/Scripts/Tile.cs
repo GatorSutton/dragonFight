@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour {
 
+    public dragonHealth DH;
+    public playerHealth PH;
+
     public float timeBetweenFlicker;
     public enum States { NONE, WARN, FIRE};
     [System.NonSerialized]
@@ -13,6 +16,8 @@ public class Tile : MonoBehaviour {
 
     bool playerHere = false;
     bool warning = false;
+    bool fire = false;
+    bool takingDamage = false;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +27,7 @@ public class Tile : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         updateMaterial();
+        checkForPlayerOnFire();
 	}
 
     private void OnCollisionEnter(Collision collision)
@@ -46,6 +52,7 @@ public class Tile : MonoBehaviour {
     {
         if(other.tag == "fire")
         {
+            fire = true;
             myState = States.FIRE;
         }
 
@@ -57,7 +64,23 @@ public class Tile : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        myState = States.NONE;
+        if (other.tag == "fire")
+        {
+            fire = false;
+            myState = States.NONE;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.tag == "fire")
+        {
+            if (other.tag == "fire")
+            {
+                fire = true;
+                myState = States.FIRE;
+            }
+        }
     }
 
     private void updateMaterial()
@@ -97,6 +120,32 @@ public class Tile : MonoBehaviour {
         yield return wait;
         myState = States.NONE;
         warning = false;
+    }
+
+    private void checkForPlayerOnFire()
+    {
+        if(playerHere && fire && !takingDamage)
+        {
+            
+        }
+    }
+
+    private IEnumerator flickerFire()
+    {
+        takingDamage = true;
+        WaitForSeconds wait = new WaitForSeconds(timeBetweenFlicker);
+        myState = States.FIRE;
+        yield return wait;
+        myState = States.NONE;
+        yield return wait;
+        myState = States.FIRE;
+        yield return wait;
+        myState = States.NONE;
+        yield return wait;
+        myState = States.FIRE;
+        yield return wait;
+        myState = States.NONE;
+        takingDamage = false;
     }
 
     

@@ -38,8 +38,8 @@ public class FlameWave : MonoBehaviour {
             fire.Translate(Vector3.forward * Time.deltaTime * speed, Space.Self);
             yield return new WaitForEndOfFrame();
         }
+        yield return new WaitForSeconds(2f);
 
         fire.localPosition = homePosition;
-        Destroy(gameObject, 1);
     }
 }
