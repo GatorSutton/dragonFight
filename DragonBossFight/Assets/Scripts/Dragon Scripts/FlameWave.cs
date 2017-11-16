@@ -21,7 +21,7 @@ public class FlameWave : FireAttack {
         }
     }
 
-    private IEnumerator Attack()
+    public override IEnumerator Attack()
     {
         Vector3 startingPosition = new Vector3(-3.5f + Random.Range(1,6), 0f, 0f);
         //Set warn and fire to initial position

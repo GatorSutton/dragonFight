@@ -22,7 +22,7 @@ public class FireBallThrower : FireAttack {
         }
     }
 
-    private IEnumerator Attack()
+    public override IEnumerator Attack()
     {
         initList();
         while(fireballCount < numOfFireballs)
