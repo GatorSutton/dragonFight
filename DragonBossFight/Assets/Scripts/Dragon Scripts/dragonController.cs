@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlameSweepCollider : MonoBehaviour {
+public class dragonController : MonoBehaviour {
 
-    public Transform warn;
+    bool dead = false;
 
 	// Use this for initialization
 	void Start () {
@@ -13,6 +13,14 @@ public class FlameSweepCollider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+   
+    }
+
+
+    private void fight()
+    {
+        
+    }
+
+
 }

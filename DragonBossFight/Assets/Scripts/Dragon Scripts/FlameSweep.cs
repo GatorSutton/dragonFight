@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlameSweep : MonoBehaviour {
+public class FlameSweep : FireAttack {
 
     public Transform fire;
     public Transform warn;
@@ -19,7 +19,7 @@ public class FlameSweep : MonoBehaviour {
         }
 	}
 
-    private IEnumerator Attack()
+    public override IEnumerator Attack()
     {
         bool secondWarning = false;
         warn.localPosition = new Vector3(-3.5f, 0f, 0f);

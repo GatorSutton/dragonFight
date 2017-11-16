@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBlast : MonoBehaviour {
+public class FireBlast : FireAttack {
 
     public Transform gameCenter;
     public Transform warn;

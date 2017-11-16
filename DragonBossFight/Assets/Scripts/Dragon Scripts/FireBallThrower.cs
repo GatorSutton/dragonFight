@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBallThrower : MonoBehaviour {
+public class FireBallThrower : FireAttack {
 
     public FireBall fireball;
     public int numOfFireballs;
@@ -18,11 +18,11 @@ public class FireBallThrower : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             StopAllCoroutines();
-            StartCoroutine(throwFireballs());
+            StartCoroutine(Attack());
         }
     }
 
-    private IEnumerator throwFireballs()
+    private IEnumerator Attack()
     {
         initList();
         while(fireballCount < numOfFireballs)

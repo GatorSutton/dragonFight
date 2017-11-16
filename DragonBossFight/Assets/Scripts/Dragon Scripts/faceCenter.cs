@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class dragonController : MonoBehaviour {
+public class faceCenter : MonoBehaviour {
 
     public Transform target;
 

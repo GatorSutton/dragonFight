@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlameWave : MonoBehaviour {
+public class FlameWave : FireAttack {
 
     public Transform warn;
     public Transform fire;
