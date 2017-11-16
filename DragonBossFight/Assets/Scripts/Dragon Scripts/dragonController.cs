@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class dragonController : MonoBehaviour {
 
-    bool dead = false;
     public List<FireAttack> fireAttacks = new List<FireAttack>();
 
 	// Use this for initialization
