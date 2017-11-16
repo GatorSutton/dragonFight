@@ -5,7 +5,8 @@ public class SplineWalker : MonoBehaviour
     public bool lookForward;
     public BezierSpline spline;
 
-    private Position position;
+    [HideInInspector]
+    public Position position;
     public float duration;
     private float progress;
     private float target;
@@ -68,6 +69,46 @@ public class SplineWalker : MonoBehaviour
         if (progress > target)
         {
             progress -= Time.deltaTime / duration;
+        }
+    }
+
+    public void setRandomPosition()
+    {
+        int move = Random.Range(0, 2);
+        switch (position)
+        {
+            case Position.Left:
+                if(move == 0)
+                {
+                    position = Position.Front;
+                }
+                else
+                {
+                    position = Position.Right;
+                }
+                break;
+            case Position.Front:
+                if (move == 0)
+                {
+                    position = Position.Left;
+                }
+                else
+                {
+                    position = Position.Right;
+                }
+                break;
+            case Position.Right:
+                if (move == 0)
+                {
+                    position = Position.Left;
+                }
+                else
+                {
+                    position = Position.Front;
+                }
+                break;
+            default:
+                break;
         }
     }
 }
