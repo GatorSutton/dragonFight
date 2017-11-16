@@ -21,6 +21,7 @@ public class FlameSweep : FireAttack {
 
     public override IEnumerator Attack()
     {
+        activeStatus = true;
         bool secondWarning = false;
         warn.localPosition = new Vector3(-3.5f, 0f, 0f);
         yield return new WaitForSeconds(.5f);
@@ -45,6 +46,7 @@ public class FlameSweep : FireAttack {
             t += Time.deltaTime;
             yield return null;
         }
+        activeStatus = false;
     }
 }
 

@@ -23,6 +23,7 @@ public class FlameWave : FireAttack {
 
     public override IEnumerator Attack()
     {
+        activeStatus = true;
         Vector3 startingPosition = new Vector3(-3.5f + Random.Range(1,6), 0f, 0f);
         //Set warn and fire to initial position
         warn.localPosition = startingPosition + new Vector3(0f, 0f, distanceToFirstSquare);
@@ -41,5 +42,6 @@ public class FlameWave : FireAttack {
         yield return new WaitForSeconds(2f);
 
         fire.localPosition = homePosition;
+        activeStatus = false;
     }
 }

@@ -27,6 +27,7 @@ public class FireBlast : FireAttack {
 
     public override IEnumerator Attack()
     {
+        activeStatus = true;
         _currentScale = initScale;
         //Move warn to the center
         warn.position = gameCenter;
@@ -64,7 +65,7 @@ public class FireBlast : FireAttack {
         }
         //Move back to under the dragon
         fire.localPosition = new Vector3(0f, 0f, 0f);
-        yield return null;
+        activeStatus = false;
 
     }
 }

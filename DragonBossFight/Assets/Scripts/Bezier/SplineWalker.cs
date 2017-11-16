@@ -41,7 +41,7 @@ public class SplineWalker : MonoBehaviour
         }
     }
 
-    private void setTarget(Position position)
+    public void setTarget(Position position)
     {
         switch (position)
         {
@@ -110,5 +110,15 @@ public class SplineWalker : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public bool isPositionReached()
+    {
+        setTarget(position);
+        if (Mathf.Abs(target - progress) <= .01f)
+        {
+            return true;
+        }
+        return false;
     }
 }

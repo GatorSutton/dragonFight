@@ -24,6 +24,7 @@ public class FireBallThrower : FireAttack {
 
     public override IEnumerator Attack()
     {
+        activeStatus = true;
         initList();
         while(fireballCount < numOfFireballs)
         {
@@ -32,6 +33,8 @@ public class FireBallThrower : FireAttack {
             yield return new WaitForSeconds(timeBetweenAttacks);
         }
         fireballCount = 0;
+        yield return new WaitForSeconds(5f);
+        activeStatus = false;
     }
 
     private void initList()
@@ -54,7 +57,6 @@ public class FireBallThrower : FireAttack {
         int i = Random.Range(0, usedValues.Count-1);
         int temp = usedValues[i];
         usedValues.RemoveAt(i);
-        print(temp);
         return temp;
     }
 }
