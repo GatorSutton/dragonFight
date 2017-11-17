@@ -2,26 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class dragonController : MonoBehaviour {
+public class dragonController : MonoBehaviour
+{
+
+    public FireAttack flameSweep;
+    public FireAttack fireBlast;
+    public FireAttack fireBallThrower;
+    public FireAttack flameWave;
 
     public List<FireAttack> fireAttacks = new List<FireAttack>();
+
     private FireAttack currentAttack;
     private SplineWalker SW;
 
     private Action action;
     private bool actionComplete = true;
-    
 
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start()
+    {
         SW = GetComponent<SplineWalker>();
-        action = Action.attack;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        
-        if(actionComplete)
+        action = Action.move;
+        resetAttacks();
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        if (actionComplete)
         {
             actionComplete = false;
             switch (action)
@@ -38,6 +49,7 @@ public class dragonController : MonoBehaviour {
         }
 
         checkForCompleteAction();
+        checkForEmptyList();
     }
 
     private void changePosition()
@@ -47,8 +59,10 @@ public class dragonController : MonoBehaviour {
 
     private void attack()
     {
-        currentAttack = fireAttacks[Random.Range(0, fireAttacks.Count)];
+        int index = Random.Range(0, fireAttacks.Count);
+        currentAttack = fireAttacks[index];
         StartCoroutine(currentAttack.Attack());
+        fireAttacks.RemoveAt(index);
     }
 
     private enum Action
@@ -63,14 +77,14 @@ public class dragonController : MonoBehaviour {
         switch (action)
         {
             case Action.move:
-                if(SW.isPositionReached())
+                if (SW.isPositionReached())
                 {
                     actionComplete = true;
                     action = Action.attack;
                 }
                 break;
             case Action.attack:
-                if(!currentAttack.getStatus())
+                if (!currentAttack.getStatus())
                 {
                     actionComplete = true;
                     action = Action.move;
@@ -79,6 +93,22 @@ public class dragonController : MonoBehaviour {
             default:
                 break;
         }
+    }
+
+    private void checkForEmptyList()
+    {
+        if (fireAttacks.Count == 0)
+        {
+            resetAttacks();
+        }
+    }
+
+    private void resetAttacks()
+    {
+        fireAttacks.Add(flameSweep);
+        fireAttacks.Add(fireBlast);
+        fireAttacks.Add(fireBallThrower);
+        fireAttacks.Add(flameWave);
     }
 
 
