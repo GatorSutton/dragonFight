@@ -5,6 +5,8 @@ using UnityEngine;
 public class dragonController : MonoBehaviour
 {
 
+    public Floor floor;
+
     public FireAttack flameSweep;
     public FireAttack fireBlast;
     public FireAttack fireBallThrower;
@@ -15,6 +17,7 @@ public class dragonController : MonoBehaviour
     private FireAttack currentAttack;
     private SplineWalker SW;
 
+    private float waitTime = 10f;
     private Action action;
     private bool actionComplete = true;
 
@@ -23,7 +26,7 @@ public class dragonController : MonoBehaviour
     void Start()
     {
         SW = GetComponent<SplineWalker>();
-        action = Action.move;
+        action = Action.wait;
         resetAttacks();
 
     }
@@ -49,7 +52,7 @@ public class dragonController : MonoBehaviour
         }
 
         checkForCompleteAction();
-        checkForEmptyList();
+        checkForEmptyAttackList();
     }
 
     private void changePosition()
@@ -90,12 +93,19 @@ public class dragonController : MonoBehaviour
                     action = Action.move;
                 }
                 break;
+            case Action.wait:
+                if(floor.isPlayerOnAnyTile())
+                {
+                    actionComplete = true;
+                    action = Action.move;
+                }
+                break;
             default:
                 break;
         }
     }
 
-    private void checkForEmptyList()
+    private void checkForEmptyAttackList()
     {
         if (fireAttacks.Count == 0)
         {

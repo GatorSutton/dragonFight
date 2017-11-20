@@ -152,5 +152,10 @@ public class Tile : MonoBehaviour {
         takingDamage = false;
     }
 
+    public bool isPlayerHere()
+    {
+        return playerHere;
+    }
+
     
 }

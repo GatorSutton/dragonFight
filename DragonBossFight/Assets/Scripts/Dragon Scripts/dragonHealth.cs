@@ -6,6 +6,16 @@ public class dragonHealth : MonoBehaviour {
 
     public int startingHealth;
 
+    private int hp;
+    public int HP
+    {
+        get
+        {
+            return hp;
+        }
+    }
+
+
 	// Use this for initialization
 	void Start () {
 		

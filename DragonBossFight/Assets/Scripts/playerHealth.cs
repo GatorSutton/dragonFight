@@ -7,6 +7,13 @@ public class playerHealth : MonoBehaviour {
     public int startingHealth;
 
     private int hp;
+    public int HP
+    {
+        get
+        {
+            return hp;
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +28,5 @@ public class playerHealth : MonoBehaviour {
     public void takeDamage()
     {
         hp--;
-        print(hp);
     }
 }

@@ -16,6 +16,7 @@ public class Floor : MonoBehaviour {
         CreateFloor();
 	}
 
+
     private void CreateTile(int x, int z)
     {
         Tile newTile = Instantiate(tilePrefab);
@@ -45,6 +46,21 @@ public class Floor : MonoBehaviour {
     public void setTile(int x, int z, Tile.States state)
     {
         tiles[x, z].myState = state;
+    }
+
+    public bool isPlayerOnAnyTile()
+    {
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int z = 0; z < sizeZ; z++)
+            {
+                if(tiles[x, z].isPlayerHere())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 	
 }
