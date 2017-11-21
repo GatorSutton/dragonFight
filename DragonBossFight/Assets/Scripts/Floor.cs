@@ -12,7 +12,7 @@ public class Floor : MonoBehaviour {
     private Tile[,] tiles;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         CreateFloor();
 	}
 

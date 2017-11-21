@@ -22,7 +22,7 @@ public class Tile : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rend = GetComponent<MeshRenderer>();
-        DH = GameObject.FindGameObjectWithTag("dragon").GetComponent<dragonHealth>();
+       // DH = GameObject.FindGameObjectWithTag("dragon").GetComponent<dragonHealth>();
         PH = GameObject.FindGameObjectWithTag("Player").GetComponent<playerHealth>();
 	}
 	

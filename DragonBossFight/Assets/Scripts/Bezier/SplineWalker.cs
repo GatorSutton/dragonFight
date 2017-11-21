@@ -11,6 +11,11 @@ public class SplineWalker : MonoBehaviour
     private float progress;
     private float target;
 
+    private void Start()
+    {
+        spline = GameObject.FindGameObjectWithTag("path").GetComponent<BezierSpline>();
+    }
+
     private void Update()
     {
         positionControls();

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /*
  * Wait until a player steps on a tile to start the game.
@@ -13,7 +14,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
 
-    public GameObject dragon;
+    public GameObject dragonPrefab;
     public GameObject player;
     public Floor floor;
 
@@ -26,7 +27,8 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
+        StartCoroutine(gameLoop());
 	}
 	
 	// Update is called once per frame
@@ -38,36 +40,48 @@ public class GameController : MonoBehaviour {
          
 	}
 
-    private void gameLoop()
+    private IEnumerator gameLoop()
     {
-        waitForStepOntoTile();
-        fightLoop();
-        endGame();
+        //need to spawn floor before beginning the game loop
+        yield return StartCoroutine(waitForStepOntoTile());
+        yield return StartCoroutine(fightLoop());
+        yield return StartCoroutine(waitForReset());
+        
     }
 
 
     private IEnumerator waitForStepOntoTile()
     {
-        while (!floor.isPlayerOnAnyTile() || skip)
+       // yield return  new WaitForSeconds(2f);
+        while (!floor.isPlayerOnAnyTile() && skip)
         {
             yield return null;
         }
+        skip = true;
+        //dragon entrance animation
+        //dragon gameObject is spawned
+        dH = GameObject.Instantiate(dragonPrefab).GetComponent<dragonHealth>();
     }
 
     private IEnumerator fightLoop()
     {
-        while (dH.HP > 0)
+
+        while (dH.HP > 0 && skip)
         {
             yield return null;
         }
+        skip = true;
+        //dragon death/win animation
     }
 
-    private IEnumerator endGame()
+    private IEnumerator waitForReset()
     {
-
-        yield return null;
+        while (skip)
+        {
+            yield return null;
+        }
+        skip = true;
     }
-
 
     
 

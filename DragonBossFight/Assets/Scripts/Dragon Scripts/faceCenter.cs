@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class faceCenter : MonoBehaviour {
 
-    public Transform target;
+    private Transform target;
 
 	// Use this for initialization
 	void Start () {
-		
+        target = GameObject.FindGameObjectWithTag("center").transform;
 	}
 	
 	// Update is called once per frame

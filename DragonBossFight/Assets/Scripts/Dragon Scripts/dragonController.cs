@@ -25,6 +25,7 @@ public class dragonController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        floor = GameObject.FindGameObjectWithTag("floor").GetComponent<Floor>();
         SW = GetComponent<SplineWalker>();
         action = Action.wait;
         resetAttacks();
