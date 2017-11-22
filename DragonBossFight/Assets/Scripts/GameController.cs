@@ -17,10 +17,13 @@ public class GameController : MonoBehaviour {
     public GameObject dragonPrefab;
     public GameObject player;
     public Floor floor;
+    public Transform startingLocation;
 
-
+    private GameObject dragon;
+    private dragonController dragonController;
     private dragonHealth dH;
-    private playerHealth pH;
+    public playerHealth pH;
+    private Renderer r;
 
     bool skip = true;
 
@@ -29,6 +32,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
 
         StartCoroutine(gameLoop());
+       
 	}
 	
 	// Update is called once per frame
@@ -60,7 +64,12 @@ public class GameController : MonoBehaviour {
         skip = true;
         //dragon entrance animation
         //dragon gameObject is spawned
-        dH = GameObject.Instantiate(dragonPrefab).GetComponent<dragonHealth>();
+        dragon = GameObject.Instantiate(dragonPrefab, startingLocation);
+        dH = dragon.GetComponent<dragonHealth>();
+        r = dragon.GetComponent<MeshRenderer>();
+        dragonController = dragon.GetComponent<dragonController>();
+        r.material = r.materials[0];
+
     }
 
     private IEnumerator fightLoop()
@@ -68,9 +77,22 @@ public class GameController : MonoBehaviour {
 
         while (dH.HP > 0 && skip)
         {
+            if(pH.HP <= 0)
+            {
+                //finish current attack
+                
+                //fly back to home
+                //wait 5 seconds
+                //reset all hp
+                resetAllHp();
+            }
             yield return null;
         }
         skip = true;
+
+
+        killDragon();
+        //clear tiles
         //dragon death/win animation
     }
 
@@ -81,6 +103,22 @@ public class GameController : MonoBehaviour {
             yield return null;
         }
         skip = true;
+        Destroy(dragon, 1);
+        StartCoroutine(gameLoop());
+    }
+
+    private void killDragon()
+    {
+        r.material = r.materials[1];
+        dragon.GetComponent<SplineWalker>().enabled = false;
+        dragon.GetComponent<dragonController>().enabled = false;
+    }
+
+    private void resetAllHp()
+    {
+
+        pH.healToFull();
+        dH.healToFull();
     }
 
     

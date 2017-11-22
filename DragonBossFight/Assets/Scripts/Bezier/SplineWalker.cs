@@ -21,14 +21,14 @@ public class SplineWalker : MonoBehaviour
         positionControls();
         setTarget(position);
         moveProgressTowardsTarget();
-        transform.localPosition = spline.GetPoint(progress);
+        transform.position = spline.GetPoint(progress);
     }
 
     public enum Position
     {
         Left,
         Front,
-        Right
+        Right,
     }
 
     private void positionControls()

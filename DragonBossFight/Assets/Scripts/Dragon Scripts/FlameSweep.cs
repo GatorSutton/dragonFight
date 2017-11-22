@@ -48,6 +48,7 @@ public class FlameSweep : FireAttack {
         }
         activeStatus = false;
     }
+
 }
 
 

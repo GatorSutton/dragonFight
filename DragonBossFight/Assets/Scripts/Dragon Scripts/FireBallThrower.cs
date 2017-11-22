@@ -59,4 +59,6 @@ public class FireBallThrower : FireAttack {
         usedValues.RemoveAt(i);
         return temp;
     }
+
+
 }

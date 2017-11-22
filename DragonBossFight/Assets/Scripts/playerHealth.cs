@@ -28,5 +28,11 @@ public class playerHealth : MonoBehaviour {
     public void takeDamage()
     {
         hp--;
+        print(hp);
+    }
+
+    public void healToFull()
+    {
+        hp = startingHealth;
     }
 }

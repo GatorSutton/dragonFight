@@ -62,5 +62,10 @@ public class Floor : MonoBehaviour {
         }
         return false;
     }
+
+    public void setStartingTiles()
+    {
+
+    }
 	
 }

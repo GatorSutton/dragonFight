@@ -16,10 +16,10 @@ public class dragonController : MonoBehaviour
 
     private FireAttack currentAttack;
     private SplineWalker SW;
-
-    private float waitTime = 10f;
-    private Action action;
+    public Action action;
     private bool actionComplete = true;
+
+    public bool attacking = true;
 
 
     // Use this for initialization
@@ -35,25 +35,7 @@ public class dragonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (actionComplete)
-        {
-            actionComplete = false;
-            switch (action)
-            {
-                case Action.move:
-                    changePosition();
-                    break;
-                case Action.attack:
-                    attack();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        checkForCompleteAction();
-        checkForEmptyAttackList();
+            attackController();
     }
 
     private void changePosition()
@@ -69,7 +51,7 @@ public class dragonController : MonoBehaviour
         fireAttacks.RemoveAt(index);
     }
 
-    private enum Action
+    public enum Action
     {
         attack,
         move,
@@ -121,6 +103,35 @@ public class dragonController : MonoBehaviour
         fireAttacks.Add(fireBallThrower);
         fireAttacks.Add(flameWave);
     }
+
+    private void attackController()
+    {
+        if (actionComplete)
+        {
+            actionComplete = false;
+            switch (action)
+            {
+                case Action.move:
+                    changePosition();
+                    break;
+                case Action.attack:
+                    attack();
+                    break;
+                case Action.wait:
+                    floor.setStartingTiles();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        checkForCompleteAction();
+        checkForEmptyAttackList();
+    }
+
+
+    
+
 
 
 
