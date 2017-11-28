@@ -86,18 +86,24 @@ public class GameController : MonoBehaviour {
             if(pH.HP <= 0)
             {
                 //finish current attack
-                while(dC.state == dragonController.dragonState.attack)
+                while(!dC.isActionComplete())
                 {
                     yield return null;
                 }
                 //fly back to home
                 dC.setState(dragonController.dragonState.exit);
-                while (dC.state == dragonController.dragonState.exit) 
+                while (!dC.isActionComplete())
                 {
                     yield return null;
                 }
                 //reset all hp
                 resetAllHp();
+                dC.setState(dragonController.dragonState.enter);
+                while (!dC.isActionComplete())
+                { 
+                    yield return null;
+                }
+                dC.setState(dragonController.dragonState.attack);
             }
             yield return null;
         }

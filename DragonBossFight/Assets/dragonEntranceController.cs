@@ -29,4 +29,9 @@ public class dragonEntranceController : MonoBehaviour {
         SW.setProgress(0f);
         SW.setPosition(SplineWalker.Position.Right);
     }
+
+    private void OnDisable()
+    {
+        actionComplete = false;
+    }
 }

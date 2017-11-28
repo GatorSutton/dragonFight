@@ -137,6 +137,11 @@ public class dragonAttackController : MonoBehaviour
         SW.setPosition(SplineWalker.Position.Front);
     }
 
+    public bool isAttacking()
+    {
+        return (action == Action.attack);
+    }
+
 
 
 

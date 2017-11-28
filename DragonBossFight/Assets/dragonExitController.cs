@@ -18,6 +18,11 @@ public class dragonExitController : MonoBehaviour {
          StartCoroutine(beginExit());
     }
 
+    private void OnDisable()
+    {
+        actionComplete = false;
+    }
+
     private IEnumerator beginExit()
     {
         SW.assignPath("path");

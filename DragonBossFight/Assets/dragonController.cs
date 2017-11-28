@@ -84,7 +84,8 @@ public class dragonController : MonoBehaviour {
 
             case dragonState.attack:
                 {
-
+                    status = (!attackControl.isAttacking());
+                    
                     break;
                 }
 
