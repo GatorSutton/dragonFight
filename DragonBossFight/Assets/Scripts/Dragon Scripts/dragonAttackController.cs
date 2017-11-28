@@ -17,13 +17,14 @@ public class dragonAttackController : MonoBehaviour
     private FireAttack currentAttack;
     private SplineWalker SW;
     private Action action;
-    private bool actionComplete = true;
+    private bool actionComplete = false;
     public bool attacking = true;
 
 
     // Use this for initialization
     void Awake()
     {
+        actionComplete = false;
         floor = GameObject.FindGameObjectWithTag("floor").GetComponent<Floor>();
         SW = GetComponent<SplineWalker>();
         action = Action.wait;

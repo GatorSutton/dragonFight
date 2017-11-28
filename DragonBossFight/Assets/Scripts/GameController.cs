@@ -70,12 +70,17 @@ public class GameController : MonoBehaviour {
         dC = dragon.GetComponent<dragonController>();
         r = dragon.GetComponent<MeshRenderer>();
         r.material = r.materials[0];
+        dC.setState(dragonController.dragonState.enter);
+        while (!dC.isActionComplete())
+        {
+            yield return null;
+        }
 
     }
 
     private IEnumerator fightLoop()
     {
-
+        dC.setState(dragonController.dragonState.attack);
         while (dH.HP > 0 && skip)
         {
             if(pH.HP <= 0)
@@ -87,7 +92,7 @@ public class GameController : MonoBehaviour {
                 }
                 //fly back to home
                 dC.setState(dragonController.dragonState.exit);
-                while (dC.state == dragonController.dragonState.exit) ;
+                while (dC.state == dragonController.dragonState.exit) 
                 {
                     yield return null;
                 }

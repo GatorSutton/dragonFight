@@ -5,17 +5,22 @@ using UnityEngine;
 public class dragonEntranceController : MonoBehaviour {
 
     private SplineWalker SW;
-    private bool actionComplete = false;
+    public bool actionComplete = false;
     public Transform startingLocation;
 
 	// Use this for initialization
 	void Awake () {
         SW = GetComponent<SplineWalker>();
+        actionComplete = false;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	    	
+	void Update ()
+    {
+	    if(SW.isPositionReached())
+        {
+            actionComplete = true;
+        }
 	}
 
     private void OnEnable()

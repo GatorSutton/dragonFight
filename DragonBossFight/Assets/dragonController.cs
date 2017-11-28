@@ -19,7 +19,7 @@ public class dragonController : MonoBehaviour {
     public dragonState state = dragonState.enter;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         exitControl = GetComponent<dragonExitController>();
         attackControl = GetComponent<dragonAttackController>();
         enterControl = GetComponent<dragonEntranceController>();
@@ -27,8 +27,8 @@ public class dragonController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.H))
-        {
+
+       
             
             switch(state)
             {
@@ -37,7 +37,6 @@ public class dragonController : MonoBehaviour {
                         enterControl.enabled = true;
                         attackControl.enabled = false;
                         exitControl.enabled = false;
-                        state = dragonState.attack;
                         break;
                     }
                 case dragonState.attack:
@@ -45,7 +44,6 @@ public class dragonController : MonoBehaviour {
                         enterControl.enabled = false;
                         attackControl.enabled = true;
                         exitControl.enabled = false;
-                        state = dragonState.exit;
                         break;
                     }
                 case dragonState.exit:
@@ -53,7 +51,6 @@ public class dragonController : MonoBehaviour {
                         enterControl.enabled = false;
                         attackControl.enabled = false;
                         exitControl.enabled = true;
-                        state = dragonState.enter;
                         break;
                     }
                 case dragonState.wait:
@@ -61,17 +58,45 @@ public class dragonController : MonoBehaviour {
                         enterControl.enabled = false;
                         attackControl.enabled = false;
                         exitControl.enabled = false;
-                        state = dragonState.wait;
                         break;
                     }
 
-            }
         }
 	}
 
     public void setState(dragonState currentState)
     {
         state = currentState;
+       // enterControl = GetComponent<dragonEntranceController>();
+    }
+
+    public bool isActionComplete()
+    {
+        bool status = false;
+        switch (state)
+        {
+            
+            case dragonState.enter:
+                {
+                    status = enterControl.actionComplete;
+                    break;
+                }
+
+            case dragonState.attack:
+                {
+
+                    break;
+                }
+
+            case dragonState.exit:
+                {
+                    status = exitControl.actionComplete;
+                    break;
+                }
+
+    }
+    
+        return status;
     }
 
 

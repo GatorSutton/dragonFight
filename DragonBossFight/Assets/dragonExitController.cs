@@ -12,11 +12,6 @@ public class dragonExitController : MonoBehaviour {
         SW = GetComponent<SplineWalker>();
         actionComplete = false;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     private void OnEnable()
     {
