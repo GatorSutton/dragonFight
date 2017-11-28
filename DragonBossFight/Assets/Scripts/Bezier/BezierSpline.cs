@@ -3,8 +3,8 @@ using System;
 
 public class BezierSpline : MonoBehaviour {
 
-	[SerializeField]
-	private Vector3[] points;
+    
+    public Vector3[] points;
 
 	[SerializeField]
 	private BezierControlPointMode[] modes;

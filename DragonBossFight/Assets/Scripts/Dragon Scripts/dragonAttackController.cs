@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class dragonController : MonoBehaviour
+public class dragonAttackController : MonoBehaviour
 {
 
     public Floor floor;
@@ -16,14 +16,13 @@ public class dragonController : MonoBehaviour
 
     private FireAttack currentAttack;
     private SplineWalker SW;
-    public Action action;
+    private Action action;
     private bool actionComplete = true;
-
     public bool attacking = true;
 
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         floor = GameObject.FindGameObjectWithTag("floor").GetComponent<Floor>();
         SW = GetComponent<SplineWalker>();
@@ -51,11 +50,12 @@ public class dragonController : MonoBehaviour
         fireAttacks.RemoveAt(index);
     }
 
-    public enum Action
+    private enum Action
     {
         attack,
         move,
-        wait
+        wait,
+        vulnerable
     }
 
     private void checkForCompleteAction()
@@ -129,8 +129,16 @@ public class dragonController : MonoBehaviour
         checkForEmptyAttackList();
     }
 
+    private void OnEnable()
+    {
+        SW.assignPath("path");
+        SW.setProgress(.5f);
+        SW.setPosition(SplineWalker.Position.Front);
+    }
 
-    
+
+
+
 
 
 

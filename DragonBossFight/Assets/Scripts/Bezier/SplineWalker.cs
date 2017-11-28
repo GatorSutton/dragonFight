@@ -13,7 +13,7 @@ public class SplineWalker : MonoBehaviour
 
     private void Start()
     {
-        spline = GameObject.FindGameObjectWithTag("path").GetComponent<BezierSpline>();
+      //  spline = GameObject.FindGameObjectWithTag("path").GetComponent<BezierSpline>();
     }
 
     private void Update()
@@ -21,7 +21,10 @@ public class SplineWalker : MonoBehaviour
         positionControls();
         setTarget(position);
         moveProgressTowardsTarget();
-        transform.position = spline.GetPoint(progress);
+        if (spline != null)
+        {
+            transform.position = spline.GetPoint(progress);
+        }
     }
 
     public enum Position
@@ -125,5 +128,20 @@ public class SplineWalker : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void assignPath(string path)
+    {
+        spline = GameObject.FindGameObjectWithTag(path).GetComponent<BezierSpline>();
+    }
+
+    public void setPosition(Position target)
+    {
+        position = target;
+    }
+
+    public void setProgress(float percentage)
+    {
+        progress = percentage;
     }
 }

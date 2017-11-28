@@ -20,10 +20,11 @@ public class GameController : MonoBehaviour {
     public Transform startingLocation;
 
     private GameObject dragon;
-    private dragonController dragonController;
     private dragonHealth dH;
+    private dragonController dC;
     public playerHealth pH;
     private Renderer r;
+
 
     bool skip = true;
 
@@ -66,8 +67,8 @@ public class GameController : MonoBehaviour {
         //dragon gameObject is spawned
         dragon = GameObject.Instantiate(dragonPrefab, startingLocation);
         dH = dragon.GetComponent<dragonHealth>();
+        dC = dragon.GetComponent<dragonController>();
         r = dragon.GetComponent<MeshRenderer>();
-        dragonController = dragon.GetComponent<dragonController>();
         r.material = r.materials[0];
 
     }
@@ -80,9 +81,16 @@ public class GameController : MonoBehaviour {
             if(pH.HP <= 0)
             {
                 //finish current attack
-                
+                while(dC.state == dragonController.dragonState.attack)
+                {
+                    yield return null;
+                }
                 //fly back to home
-                //wait 5 seconds
+                dC.setState(dragonController.dragonState.exit);
+                while (dC.state == dragonController.dragonState.exit) ;
+                {
+                    yield return null;
+                }
                 //reset all hp
                 resetAllHp();
             }
@@ -93,6 +101,7 @@ public class GameController : MonoBehaviour {
 
         killDragon();
         //clear tiles
+
         //dragon death/win animation
     }
 
@@ -111,7 +120,6 @@ public class GameController : MonoBehaviour {
     {
         r.material = r.materials[1];
         dragon.GetComponent<SplineWalker>().enabled = false;
-        dragon.GetComponent<dragonController>().enabled = false;
     }
 
     private void resetAllHp()

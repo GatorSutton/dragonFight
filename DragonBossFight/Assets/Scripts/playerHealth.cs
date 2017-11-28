@@ -27,8 +27,11 @@ public class playerHealth : MonoBehaviour {
 
     public void takeDamage()
     {
-        hp--;
-        print(hp);
+        if (hp > 0)
+        {
+            hp--;
+            print(hp);
+        }
     }
 
     public void healToFull()
