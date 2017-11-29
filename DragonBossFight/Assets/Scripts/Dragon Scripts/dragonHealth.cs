@@ -36,4 +36,5 @@ public class dragonHealth : MonoBehaviour {
     {
         hp = startingHealth;
     }
+
 }

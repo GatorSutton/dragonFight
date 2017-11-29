@@ -17,17 +17,21 @@ public class dragonAttackController : MonoBehaviour
     private FireAttack currentAttack;
     private SplineWalker SW;
     private Action action;
-    private bool actionComplete = false;
+    private bool actionComplete;
     public bool attacking = true;
+
+    public float vulnerableTime;
+    private bool resting;
+    private float restTimer;
 
 
     // Use this for initialization
     void Awake()
     {
-        actionComplete = false;
+        actionComplete = true;
         floor = GameObject.FindGameObjectWithTag("floor").GetComponent<Floor>();
         SW = GetComponent<SplineWalker>();
-        action = Action.wait;
+        action = Action.attack;
         resetAttacks();
 
     }
@@ -55,8 +59,7 @@ public class dragonAttackController : MonoBehaviour
     {
         attack,
         move,
-        wait,
-        vulnerable
+        rest,
     }
 
     private void checkForCompleteAction()
@@ -73,12 +76,20 @@ public class dragonAttackController : MonoBehaviour
             case Action.attack:
                 if (!currentAttack.getStatus())
                 {
-                    actionComplete = true;
-                    action = Action.move;
+                    if (fireAttacks.Count == 1)
+                    {
+                        actionComplete = true;
+                        action = Action.rest;
+                    }
+                    else
+                    {
+                        actionComplete = true;
+                        action = Action.move;
+                    }
                 }
                 break;
-            case Action.wait:
-                if(floor.isPlayerOnAnyTile())
+            case Action.rest:
+                if(updateTimer() < 0)
                 {
                     actionComplete = true;
                     action = Action.move;
@@ -100,13 +111,14 @@ public class dragonAttackController : MonoBehaviour
     private void resetAttacks()
     {
         fireAttacks.Add(flameSweep);
-        fireAttacks.Add(fireBlast);
-        fireAttacks.Add(fireBallThrower);
-        fireAttacks.Add(flameWave);
+       // fireAttacks.Add(fireBlast);
+        //fireAttacks.Add(fireBallThrower);
+        //fireAttacks.Add(flameWave);
     }
 
     private void attackController()
     {
+        print(action);
         if (actionComplete)
         {
             actionComplete = false;
@@ -118,8 +130,8 @@ public class dragonAttackController : MonoBehaviour
                 case Action.attack:
                     attack();
                     break;
-                case Action.wait:
-                    floor.setStartingTiles();
+                case Action.rest:
+                    resetTimer();
                     break;
                 default:
                     break;
@@ -140,6 +152,16 @@ public class dragonAttackController : MonoBehaviour
     public bool isAttacking()
     {
         return (action == Action.attack);
+    }
+
+    private void resetTimer()
+    {
+        restTimer = vulnerableTime;
+    }
+
+    private float updateTimer()
+    {
+        return restTimer -= Time.deltaTime;
     }
 
 
