@@ -21,7 +21,7 @@ public class dragonAttackController : MonoBehaviour
     public bool attacking = true;
 
     public float vulnerableTime;
-    private bool resting;
+    public bool resting = false;
     private float restTimer;
 
 
@@ -92,6 +92,7 @@ public class dragonAttackController : MonoBehaviour
                 if(updateTimer() < 0)
                 {
                     actionComplete = true;
+                    resting = false;
                     action = Action.move;
                 }
                 break;
@@ -111,14 +112,13 @@ public class dragonAttackController : MonoBehaviour
     private void resetAttacks()
     {
         fireAttacks.Add(flameSweep);
-       // fireAttacks.Add(fireBlast);
-        //fireAttacks.Add(fireBallThrower);
-        //fireAttacks.Add(flameWave);
+        fireAttacks.Add(fireBlast);
+        fireAttacks.Add(fireBallThrower);
+        fireAttacks.Add(flameWave);
     }
 
     private void attackController()
     {
-        print(action);
         if (actionComplete)
         {
             actionComplete = false;
@@ -157,11 +157,17 @@ public class dragonAttackController : MonoBehaviour
     private void resetTimer()
     {
         restTimer = vulnerableTime;
+        resting = true;
     }
 
     private float updateTimer()
     {
         return restTimer -= Time.deltaTime;
+    }
+    
+    public bool isResting()
+    {
+        return (action == Action.rest);
     }
 
 

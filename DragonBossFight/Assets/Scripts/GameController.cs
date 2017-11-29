@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour {
     public GameObject player;
     public Floor floor;
     public Transform startingLocation;
+    public Material material;
 
     private GameObject dragon;
     private dragonHealth dH;
@@ -57,19 +58,20 @@ public class GameController : MonoBehaviour {
 
     private IEnumerator waitForStepOntoTile()
     {
-       // yield return  new WaitForSeconds(2f);
-        while (!floor.isPlayerOnAnyTile() && skip)
+        floor.setSwitchTiles();
+        while (!floor.isEverySwitchOff() && skip)
         {
             yield return null;
         }
+        floor.clearAllTiles();
         skip = true;
+
         //dragon entrance animation
         //dragon gameObject is spawned
         dragon = GameObject.Instantiate(dragonPrefab, startingLocation);
+        material.color = Color.red;
         dH = dragon.GetComponent<dragonHealth>();
         dC = dragon.GetComponent<dragonController>();
-        r = dragon.GetComponent<MeshRenderer>();
-        r.material = r.materials[0];
         dC.setState(dragonController.dragonState.enter);
         while (!dC.isActionComplete())
         {
@@ -98,6 +100,15 @@ public class GameController : MonoBehaviour {
                 }
                 //reset all hp
                 resetAllHp();
+
+                floor.setSwitchTiles();
+                while (!floor.isEverySwitchOff() && skip)
+                {
+                    yield return null;
+                }
+                skip = true;
+                floor.clearAllTiles();
+
                 dC.setState(dragonController.dragonState.enter);
                 while (!dC.isActionComplete())
                 { 
@@ -129,8 +140,11 @@ public class GameController : MonoBehaviour {
 
     private void killDragon()
     {
-        r.material = r.materials[1];
+      
         dragon.GetComponent<SplineWalker>().enabled = false;
+        dragon.GetComponent<dragonHealth>().enabled = false;
+        dC.setState(dragonController.dragonState.wait);
+        material.color = Color.black;
     }
 
     private void resetAllHp()

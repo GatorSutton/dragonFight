@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour {
     public playerHealth PH;
 
     public float timeBetweenFlicker;
-    public enum States { NONE, WARN, FIRE, DAMAGE};
+    public enum States { NONE, WARN, FIRE, DAMAGE, SWITCH};
     [System.NonSerialized]
     public States myState = States.NONE;
     public Material[] materials;
@@ -30,6 +30,7 @@ public class Tile : MonoBehaviour {
 	void Update () {
         updateMaterial();
         checkForPlayerOnFire();
+        checkForPlayerOnSwitch();
 	}
 
     private void OnCollisionEnter(Collision collision)
@@ -90,12 +91,15 @@ public class Tile : MonoBehaviour {
                 rend.material = materials[0];
                 break;
             case States.FIRE:
-                rend.material = materials[2];
+                rend.material = materials[1];
                 break;
             case States.WARN:
-                rend.material = materials[3];
+                rend.material = materials[2];
                 break;
             case States.DAMAGE:
+                rend.material = materials[3];
+                break;
+            case States.SWITCH:
                 rend.material = materials[4];
                 break;
         }
@@ -155,6 +159,14 @@ public class Tile : MonoBehaviour {
     public bool isPlayerHere()
     {
         return playerHere;
+    }
+
+    private void checkForPlayerOnSwitch()
+    {
+        if(playerHere && myState == States.SWITCH)
+        {
+            myState = States.NONE;
+        }
     }
 
     

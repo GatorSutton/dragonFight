@@ -63,9 +63,41 @@ public class Floor : MonoBehaviour {
         return false;
     }
 
-    public void setStartingTiles()
+    public void setSwitchTiles()
     {
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int z = 0; z < sizeZ; z++)
+            {
+                tiles[x, z].myState = Tile.States.SWITCH;
+            }
+        }
+    }
 
+    public bool isEverySwitchOff()
+    {
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int z = 0; z < sizeZ; z++)
+            {
+                if (tiles[x, z].myState == Tile.States.SWITCH)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void clearAllTiles()
+    {
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int z = 0; z < sizeZ; z++)
+            {
+                tiles[x, z].myState = Tile.States.NONE;
+            }
+        }
     }
 	
 }
