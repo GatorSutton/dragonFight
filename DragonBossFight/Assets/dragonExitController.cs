@@ -6,6 +6,7 @@ public class dragonExitController : MonoBehaviour {
 
     private SplineWalker SW;
     public bool actionComplete = false;
+    public Material material;
 
     // Use this for initialization
     void Awake () {
@@ -25,6 +26,7 @@ public class dragonExitController : MonoBehaviour {
 
     private IEnumerator beginExit()
     {
+        material.color = Color.red;
         SW.assignPath("path");
         SW.setPosition(SplineWalker.Position.Front);
 

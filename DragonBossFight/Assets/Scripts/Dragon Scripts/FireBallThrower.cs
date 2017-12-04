@@ -33,7 +33,7 @@ public class FireBallThrower : FireAttack {
             yield return new WaitForSeconds(timeBetweenAttacks);
         }
         fireballCount = 0;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(6f);
         activeStatus = false;
     }
 
