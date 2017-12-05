@@ -7,6 +7,7 @@ public class Floor : MonoBehaviour {
     public Tile tilePrefab;
     public int sizeX;
     public int sizeZ;
+    public humanPlayerData hPD;
 
     [System.NonSerialized]
     private Tile[,] tiles;
@@ -15,6 +16,11 @@ public class Floor : MonoBehaviour {
 	void Awake () {
         CreateFloor();
 	}
+
+    private void Update()
+    {
+        checkForRealPlayer();
+    }
 
 
     private void CreateTile(int x, int z)
@@ -98,6 +104,26 @@ public class Floor : MonoBehaviour {
                 tiles[x, z].myState = Tile.States.NONE;
             }
         }
+    }
+
+    private void checkForRealPlayer()
+    {
+        bool[] list = hPD.getPlayerData();
+
+        /*
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int z = 0; z < sizeZ; z++)
+            {
+                tiles[x, z].playerHere = list[(x * sizeZ) + z];
+            }
+        }
+        */
+
+        tiles[3, 3].playerHere = list[0];
+        tiles[4, 3].playerHere = list[1];
+        tiles[4, 4].playerHere = list[2];
+        tiles[3, 4].playerHere = list[3]; 
     }
 	
 }

@@ -14,7 +14,7 @@ public class Tile : MonoBehaviour {
     public Material[] materials;
     public MeshRenderer rend;
 
-    bool playerHere = false;
+    public bool playerHere = false;
     bool warning = false;
     bool fire = false;
     bool takingDamage = false;
