@@ -17,6 +17,14 @@ public class FireBlast : FireAttack {
     private float _currentScale = 1f;
     private bool _upScale = true;
 
+    private Floor floor;
+
+    private void Start()
+    {
+        floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
+        targetScale = floor.sizeX - 1f;
+    }
+
     void Update () {
 
         if(Input.GetKeyDown(KeyCode.Alpha3))

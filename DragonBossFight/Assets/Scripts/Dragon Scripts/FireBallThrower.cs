@@ -11,6 +11,15 @@ public class FireBallThrower : FireAttack {
     private int fireballCount;
     private List<int> usedValues = null;
 
+    private Floor floor;
+
+    private void Start()
+    {
+        floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
+         numOfFireballs = floor.sizeX;
+
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -39,17 +48,18 @@ public class FireBallThrower : FireAttack {
 
     private void initList()
     {
-        usedValues = new List<int>(8);
-        for (int i = 0; i < 8; i++)
+        usedValues = new List<int>(numOfFireballs);
+        for (int i = 0; i < numOfFireballs; i++)
         {
             usedValues.Add(i);
         }
     }
 
-    private void throwOneFireball(int position)
+    private void throwOneFireball(float position)
     {
-        fireball.position = position;
+        fireball.position = position - (floor.sizeX / 2f) + .5f;
         Instantiate(fireball, this.transform);
+        fireball.floorLength = floor.sizeX;
     }
 
     private int uniqueRandomNumber()

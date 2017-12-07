@@ -6,11 +6,19 @@ public class FlameWave : FireAttack {
 
     public Transform warn;
     public Transform fire;
-    public float distanceToFirstSquare;
-    public float distanceToLastSquare;
     public float speed;
 
     private Vector3 homePosition = new Vector3(0f, 0f, 0f);
+    private Floor floor;
+    private float distanceToFirstSquare;
+    private float distanceToLastSquare;
+
+    void Start()
+    {
+        floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
+        distanceToFirstSquare = 10 - (floor.sizeX / 2f) + .5f;
+        distanceToLastSquare = 10 + (floor.sizeZ/ 2f) - .5f;
+    }
 
 	// Update is called once per frame
 	void Update () {

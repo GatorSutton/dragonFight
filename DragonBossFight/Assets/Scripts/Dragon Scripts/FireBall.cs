@@ -6,22 +6,25 @@ public class FireBall : MonoBehaviour {
 
     public Transform warn;
     public Transform fire;
-    public float distanceToFirstSquare;
-    public float distanceToLastSquare;
+    private float distanceToFirstSquare;
+    private float distanceToLastSquare;
     public float speed;
 
     private Vector3 homePosition = new Vector3(0f, 0f, 0f);
-    public int position;
+    public float position;
+    public float floorLength;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+        distanceToFirstSquare = 10 - (floorLength / 2f) + .5f;
+        distanceToLastSquare = 10 + (floorLength / 2f) - .5f;
         StartCoroutine(Attack());
     }
 	
 
     private IEnumerator Attack()
     {
-        Vector3 startingPosition = new Vector3(-3.5f + position, 0f, 0f);
+        Vector3 startingPosition = new Vector3(position, 0f, 0f);
         //Set warn and fire to initial position
         warn.localPosition = startingPosition + new Vector3(0f, 0f, distanceToFirstSquare);
         fire.localPosition = startingPosition;

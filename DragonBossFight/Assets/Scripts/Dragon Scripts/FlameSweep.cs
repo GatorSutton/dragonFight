@@ -9,8 +9,19 @@ public class FlameSweep : FireAttack {
     public float sweepSpeed;
     public float sweepRotation;
 
-	// Update is called once per frame
-	void Update ()
+    private Floor floor;
+    private float firstWarnPosition;
+    private float secondWarnPosition;
+
+    private void Start()
+    {
+        floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
+        firstWarnPosition = -(floor.sizeX * .5f) + .5f;
+        secondWarnPosition = (floor.sizeX * .5f) - .5f;
+    }
+
+    // Update is called once per frame
+    void Update ()
      {
 		if(Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -23,7 +34,7 @@ public class FlameSweep : FireAttack {
     {
         activeStatus = true;
         bool secondWarning = false;
-        warn.localPosition = new Vector3(-3.5f, 0f, 0f);
+        warn.localPosition = new Vector3(firstWarnPosition, 0f, 0f);
         yield return new WaitForSeconds(.5f);
         warn.localPosition = new Vector3(-10f, 0f, 0f);
 
@@ -36,7 +47,7 @@ public class FlameSweep : FireAttack {
             if(secondWarning == false && timeLeft < 3/sweepSpeed)
             {
                 secondWarning = true;
-                warn.localPosition = new Vector3(3.5f, 0f, 0f);
+                warn.localPosition = new Vector3(secondWarnPosition, 0f, 0f);
                 yield return new WaitForSeconds(.5f);
                 warn.localPosition = new Vector3(-10f, 0f, 0f);
             }

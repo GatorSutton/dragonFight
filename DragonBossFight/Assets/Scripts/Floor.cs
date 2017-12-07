@@ -120,10 +120,10 @@ public class Floor : MonoBehaviour {
         }
         */
 
-        tiles[3, 3].playerHere = list[0];
-        tiles[4, 3].playerHere = list[1];
-        tiles[4, 4].playerHere = list[2];
-        tiles[3, 4].playerHere = list[3]; 
+        tiles[0, 0].playerHere = list[0];
+        tiles[1, 0].playerHere = list[1];
+        tiles[1, 1].playerHere = list[2];
+        tiles[0, 1].playerHere = list[3]; 
     }
 	
 }
