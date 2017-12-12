@@ -76,7 +76,7 @@ public class dragonAttackController : MonoBehaviour
             case Action.attack:
                 if (!currentAttack.getStatus())
                 {
-                    if (fireAttacks.Count == 1)
+                    if (fireAttacks.Count == 0)
                     {
                         actionComplete = true;
                         action = Action.rest;
@@ -98,14 +98,6 @@ public class dragonAttackController : MonoBehaviour
                 break;
             default:
                 break;
-        }
-    }
-
-    private void checkForEmptyAttackList()
-    {
-        if (fireAttacks.Count == 0)
-        {
-            resetAttacks();
         }
     }
 
@@ -132,6 +124,7 @@ public class dragonAttackController : MonoBehaviour
                     break;
                 case Action.rest:
                     resetTimer();
+                    resetAttacks();
                     break;
                 default:
                     break;
@@ -139,7 +132,6 @@ public class dragonAttackController : MonoBehaviour
         }
 
         checkForCompleteAction();
-        checkForEmptyAttackList();
     }
 
     private void OnEnable()
@@ -147,7 +139,7 @@ public class dragonAttackController : MonoBehaviour
         SW.assignPath("path");
         SW.setProgress(.5f);
         SW.setPosition(SplineWalker.Position.Front);
-        checkForEmptyAttackList();
+        resetAttacks();
         action = Action.attack;
     }
 
