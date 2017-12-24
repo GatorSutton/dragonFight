@@ -7,19 +7,27 @@ public class Floor : MonoBehaviour {
     public Tile tilePrefab;
     public int sizeX;
     public int sizeZ;
-    public humanPlayerData hPD;
+    public SerialController serialController;
 
     [System.NonSerialized]
     private Tile[,] tiles;
+    private string message;
 
 	// Use this for initialization
 	void Awake () {
         CreateFloor();
-	}
+     
+    }
+
+    private void Start()
+    {
+        serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
+    }
 
     private void Update()
     {
         checkForRealPlayer();
+        updateSerialData();
     }
 
 
@@ -108,7 +116,7 @@ public class Floor : MonoBehaviour {
 
     private void checkForRealPlayer()
     {
-        bool[] list = hPD.getPlayerData();
+     //   bool[] list = hPD.getPlayerData();
 
         /*
         for (int x = 0; x < sizeX; x++)
@@ -119,11 +127,60 @@ public class Floor : MonoBehaviour {
             }
         }
         */
-
-        tiles[0, 0].playerHere = list[0];
-        tiles[1, 0].playerHere = list[1];
-        tiles[1, 1].playerHere = list[2];
-        tiles[0, 1].playerHere = list[3]; 
+        /*
+            tiles[0, 0].playerHere = list[0];
+            tiles[1, 0].playerHere = list[1];
+            tiles[1, 1].playerHere = list[2];
+            tiles[0, 1].playerHere = list[3];
+            */
     }
-	
+
+    public byte[] getFloorData()
+    {
+        byte[] list = new byte[sizeX * sizeZ];
+
+
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int z = 0; z < sizeZ; z++)
+            {
+                list[(x * sizeZ) + z] = (byte)tiles[x, z].myState;
+
+                if (tiles[x, z].myState == Tile.States.NONE && tiles[x, z].isPlayerHere())
+                {
+                    list[(x * sizeZ) + z] = 0xFF;
+                }
+
+            }
+
+        }
+        return list;
+    }
+
+    private void updateSerialData()
+    {
+        //---------------------------------------------------------------------
+        // Receive data
+        //---------------------------------------------------------------------
+
+        message = serialController.ReadSerialMessage();
+
+        if (message == null)
+            return;
+
+        // Check if the message is plain data or a connect/disconnect event.
+        if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_CONNECTED))
+            Debug.Log("Connection established");
+        else if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_DISCONNECTED))
+            Debug.Log("Connection attempt failed or disconnection detected");
+        else
+            Debug.Log("Message arrived: " + message);
+
+        //---------------------------------------------------------------------
+        // Send data
+        //---------------------------------------------------------------------
+
+        serialController.SendSerialMessage(message);
+    }
+     
 }

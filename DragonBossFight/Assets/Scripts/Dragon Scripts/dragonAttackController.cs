@@ -32,8 +32,6 @@ public class dragonAttackController : MonoBehaviour
         floor = GameObject.FindGameObjectWithTag("floor").GetComponent<Floor>();
         SW = GetComponent<SplineWalker>();
         action = Action.attack;
-        resetAttacks();
-
     }
 
     // Update is called once per frame

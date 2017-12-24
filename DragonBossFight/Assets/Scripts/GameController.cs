@@ -68,7 +68,7 @@ public class GameController : MonoBehaviour {
 
         //dragon entrance animation
         //dragon gameObject is spawned
-        dragon = GameObject.Instantiate(dragonPrefab, startingLocation);
+        dragon = GameObject.Instantiate(dragonPrefab, startingLocation.position, startingLocation.rotation);
         material.color = Color.red;
         dH = dragon.GetComponent<dragonHealth>();
         dC = dragon.GetComponent<dragonController>();

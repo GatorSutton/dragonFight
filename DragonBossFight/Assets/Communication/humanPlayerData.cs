@@ -24,7 +24,6 @@ public class humanPlayerData : MonoBehaviour
     private void creatBoolList(string data)
     {
         boolList = data.Select(x => x == '1').ToArray();
-
     }
 
     public bool[] getPlayerData()

@@ -30,6 +30,7 @@ public class playerHealth : MonoBehaviour {
         if (hp > 0)
         {
             hp--;
+            print("player health is: " + hp);
         }
     }
 
