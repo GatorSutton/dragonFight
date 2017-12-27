@@ -174,16 +174,25 @@ public class Floor : MonoBehaviour {
 
         }
         */
-
+        byte value;
         for (int x = 0; x < 2; x++)
         {
             for (int z = 0; z < 2; z++)
             {
-                list[(x * 2) + z] = (byte)(tiles[x, z].myState + 48);
+                value = (byte)(tiles[x, z].myState + 48);
 
                 if (tiles[x, z].myState == Tile.States.NONE && tiles[x, z].isPlayerHere())
                 {
-                    list[(x * 2) + z] = 70;
+                    value = 70;
+                }
+
+                if(x % 2 == 0)
+                {
+                    list[(x * 2) + z] = value;
+                }
+                else
+                {
+                    list[(x * 2 + 1) - z] = value;
                 }
 
             }

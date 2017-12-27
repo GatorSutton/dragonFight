@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour {
     public playerHealth PH;
 
     public float timeBetweenFlicker;
-    public enum States { NONE, WARN, FIRE, DAMAGE, SWITCH};
+    public enum States { NONE, WARN, FLICKEROFF, FIRE, DAMAGE, SWITCH};
     [System.NonSerialized]
     public States myState = States.NONE;
     public Material[] materials;
@@ -102,6 +102,9 @@ public class Tile : MonoBehaviour {
             case States.SWITCH:
                 rend.material = materials[4];
                 break;
+            case States.FLICKEROFF:
+                rend.material = materials[0];
+                break;
         }
         /*
         if(playerHere)
@@ -117,11 +120,11 @@ public class Tile : MonoBehaviour {
         WaitForSeconds wait = new WaitForSeconds(timeBetweenFlicker);
         myState = States.WARN;
         yield return wait;
-        myState = States.NONE;
+        myState = States.FLICKEROFF;
         yield return wait;
         myState = States.WARN;
         yield return wait;
-        myState = States.NONE;
+        myState = States.FLICKEROFF;
         yield return wait;
         myState = States.WARN;
         yield return wait;
@@ -144,11 +147,11 @@ public class Tile : MonoBehaviour {
         WaitForSeconds wait = new WaitForSeconds(timeBetweenFlicker);
         myState = States.DAMAGE;
         yield return wait;
-        myState = States.NONE;
+        myState = States.FLICKEROFF;
         yield return wait;
         myState = States.DAMAGE;
         yield return wait;
-        myState = States.NONE;
+        myState = States.FLICKEROFF;
         yield return wait;
         myState = States.DAMAGE;
         yield return wait;
