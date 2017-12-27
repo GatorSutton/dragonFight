@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SerialCommUnity (Serial Communication for Unity)
  * Author: Daniel Wilches <dwilches@gmail.com>
  *
@@ -13,7 +13,7 @@ using System.Linq;
 /**
  * Sample for reading using polling by yourself, and writing too.
  */
-public class SampleUserPolling_ReadWrite : MonoBehaviour
+public class ArduinoCommunicator : MonoBehaviour
 {
     public SerialController serialController;
     string messageIN;

@@ -1,33 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 
 public class Floor : MonoBehaviour {
 
     public Tile tilePrefab;
     public int sizeX;
     public int sizeZ;
-    public SerialController serialController;
+
 
     [System.NonSerialized]
     private Tile[,] tiles;
-    private string message;
+    ArduinoCommunicator AC;
 
 	// Use this for initialization
 	void Awake () {
         CreateFloor();
-     
     }
 
     private void Start()
     {
-        serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
+        AC = GameObject.Find("ArduinoCommunicator").GetComponent<ArduinoCommunicator>();
     }
 
     private void Update()
     {
         checkForRealPlayer();
-        updateSerialData();
+        setFloorData();
     }
 
 
@@ -116,7 +116,8 @@ public class Floor : MonoBehaviour {
 
     private void checkForRealPlayer()
     {
-     //   bool[] list = hPD.getPlayerData();
+        //   bool[] list = hPD.getPlayerData();
+        bool[] list = AC.getMessageIN();
 
         /*
         for (int x = 0; x < sizeX; x++)
@@ -127,19 +128,37 @@ public class Floor : MonoBehaviour {
             }
         }
         */
+
+        for (int x = 0; x < 2; x++)
+        {
+            for (int z = 0; z < 2; z++)
+            {
+                if (x % 2 == 0)
+                {
+                    tiles[x, z].playerHere = list[(x * 2) + z];
+                }
+                else
+                {
+                    tiles[x,z].playerHere = list[(x * 2 + 1) - z];
+                }
+            }
+        }
+
         /*
             tiles[0, 0].playerHere = list[0];
             tiles[1, 0].playerHere = list[1];
             tiles[1, 1].playerHere = list[2];
             tiles[0, 1].playerHere = list[3];
             */
+
     }
 
-    public byte[] getFloorData()
+    private void setFloorData()
     {
-        byte[] list = new byte[sizeX * sizeZ];
+        //byte[] list = new byte[sizeX * sizeZ];
+        byte[] list = new byte[4];
 
-
+        /*
         for (int x = 0; x < sizeX; x++)
         {
             for (int z = 0; z < sizeZ; z++)
@@ -154,33 +173,33 @@ public class Floor : MonoBehaviour {
             }
 
         }
-        return list;
-    }
+        */
 
-    private void updateSerialData()
-    {
-        //---------------------------------------------------------------------
-        // Receive data
-        //---------------------------------------------------------------------
+        for (int x = 0; x < 2; x++)
+        {
+            for (int z = 0; z < 2; z++)
+            {
+                list[(x * 2) + z] = (byte)(tiles[x, z].myState + 48);
 
-        message = serialController.ReadSerialMessage();
+                if (tiles[x, z].myState == Tile.States.NONE && tiles[x, z].isPlayerHere())
+                {
+                    list[(x * 2) + z] = 70;
+                }
 
-        if (message == null)
-            return;
+            }
 
-        // Check if the message is plain data or a connect/disconnect event.
-        if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_CONNECTED))
-            Debug.Log("Connection established");
-        else if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_DISCONNECTED))
-            Debug.Log("Connection attempt failed or disconnection detected");
-        else
-            Debug.Log("Message arrived: " + message);
+        }
 
-        //---------------------------------------------------------------------
-        // Send data
-        //---------------------------------------------------------------------
-
-        serialController.SendSerialMessage(message);
+        /*
+        byte[] list = new byte[4];
+        list[0] = (byte)(tiles[0, 0].myState + 48);
+        list[1] = (byte)(tiles[1, 0].myState + 48);
+        list[2] = (byte)(tiles[1, 1].myState + 48);
+        list[3] = (byte)(tiles[0, 1].myState + 48);
+        */
+        string output = Encoding.UTF8.GetString(list, 0, 4);
+        AC.setMessageOUT(output);
+        Debug.Log(output);
     }
      
 }
