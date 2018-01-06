@@ -6,6 +6,7 @@ using UnityEngine;
 public class FireAttack : MonoBehaviour {
 
     public bool activeStatus = false;
+    public int id;
 
     public virtual IEnumerator Attack()
     {

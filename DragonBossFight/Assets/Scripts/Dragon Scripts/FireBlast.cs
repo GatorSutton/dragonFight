@@ -7,7 +7,9 @@ public class FireBlast : FireAttack {
    
     public Transform warn;
     public Transform fire;
+    public ParticleSystem ps;
 
+    private ParticleSystem.EmissionModule em;
     private Vector3 gameCenter = new Vector3(0f, 0f, 0f);
     public float targetScale;
     public float initScale;
@@ -21,8 +23,10 @@ public class FireBlast : FireAttack {
 
     private void Start()
     {
+        em = ps.emission;
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
         targetScale = floor.sizeX - 1f;
+        id = 3;
     }
 
     void Update () {
@@ -35,6 +39,7 @@ public class FireBlast : FireAttack {
 
     public override IEnumerator Attack()
     {
+        em.enabled = true;
         activeStatus = true;
         _currentScale = initScale;
         //Move warn to the center
@@ -74,6 +79,7 @@ public class FireBlast : FireAttack {
         //Move back to under the dragon
         fire.localPosition = new Vector3(0f, 0f, 0f);
         activeStatus = false;
+        em.enabled = false;
 
     }
 

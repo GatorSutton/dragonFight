@@ -18,6 +18,7 @@ public class FlameWave : FireAttack {
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
         distanceToFirstSquare = 10 - (floor.sizeX / 2f) + .5f;
         distanceToLastSquare = 10 + (floor.sizeZ/ 2f) - .5f;
+        id = 1;
     }
 
 	// Update is called once per frame
@@ -48,7 +49,6 @@ public class FlameWave : FireAttack {
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForSeconds(2f);
-
         fire.localPosition = homePosition;
         activeStatus = false;
     }

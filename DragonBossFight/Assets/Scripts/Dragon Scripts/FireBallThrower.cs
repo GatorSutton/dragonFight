@@ -7,6 +7,7 @@ public class FireBallThrower : FireAttack {
     public FireBall fireball;
     public int numOfFireballs;
     public float timeBetweenAttacks;
+    public Animator anim;
 
     private int fireballCount;
     private List<int> usedValues = null;
@@ -17,7 +18,7 @@ public class FireBallThrower : FireAttack {
     {
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
          numOfFireballs = floor.sizeX;
-
+        id = 4;
     }
 
 
@@ -35,6 +36,7 @@ public class FireBallThrower : FireAttack {
     {
         activeStatus = true;
         initList();
+        anim.SetInteger("fireballCount", fireballCount);
         while(fireballCount < numOfFireballs)
         {
             throwOneFireball(uniqueRandomNumber());

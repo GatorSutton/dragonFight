@@ -13,6 +13,7 @@ public class dragonAttackController : MonoBehaviour
     public FireAttack flameWave;
 
     public List<FireAttack> fireAttacks = new List<FireAttack>();
+    public Animator anim;
 
     private FireAttack currentAttack;
     private SplineWalker SW;
@@ -32,6 +33,7 @@ public class dragonAttackController : MonoBehaviour
         floor = GameObject.FindGameObjectWithTag("floor").GetComponent<Floor>();
         SW = GetComponent<SplineWalker>();
         action = Action.attack;
+        
     }
 
     // Update is called once per frame
@@ -49,6 +51,7 @@ public class dragonAttackController : MonoBehaviour
     {
         int index = Random.Range(0, fireAttacks.Count);
         currentAttack = fireAttacks[index];
+        anim.SetInteger("attack", currentAttack.id);
         StartCoroutine(currentAttack.Attack());
         fireAttacks.RemoveAt(index);
     }

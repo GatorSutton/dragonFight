@@ -18,6 +18,7 @@ public class FlameSweep : FireAttack {
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
         firstWarnPosition = -(floor.sizeX * .5f) + .5f;
         secondWarnPosition = (floor.sizeX * .5f) - .5f;
+        id = 2;
     }
 
     // Update is called once per frame
