@@ -53,6 +53,7 @@ public class dragonController : MonoBehaviour {
                         exitControl.enabled = true;
                         break;
                     }
+                
                 case dragonState.wait:
                     {
                         enterControl.enabled = false;
@@ -60,6 +61,7 @@ public class dragonController : MonoBehaviour {
                         exitControl.enabled = false;
                         break;
                     }
+                    
 
         }
 	}
@@ -67,7 +69,6 @@ public class dragonController : MonoBehaviour {
     public void setState(dragonState currentState)
     {
         state = currentState;
-       // enterControl = GetComponent<dragonEntranceController>();
     }
 
     public bool isActionComplete()
