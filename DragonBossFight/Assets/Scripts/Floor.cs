@@ -208,7 +208,6 @@ public class Floor : MonoBehaviour {
         */
         string output = Encoding.UTF8.GetString(list, 0, 4);
         AC.setMessageOUT(output);
-        Debug.Log(output);
     }
      
 }

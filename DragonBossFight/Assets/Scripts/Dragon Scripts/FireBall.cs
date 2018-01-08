@@ -10,6 +10,7 @@ public class FireBall : MonoBehaviour {
     private float distanceToLastSquare;
     public float speed;
 
+    private float trackedTime;
     private Vector3 homePosition = new Vector3(0f, 0f, 0f);
     public float position;
     public float floorLength;
@@ -18,6 +19,7 @@ public class FireBall : MonoBehaviour {
 	void Awake () {
         distanceToFirstSquare = 10 - (floorLength / 2f) + .5f;
         distanceToLastSquare = 10 + (floorLength / 2f) - .5f;
+        trackedTime = 0;
         StartCoroutine(Attack());
     }
 	
@@ -32,12 +34,13 @@ public class FireBall : MonoBehaviour {
         yield return new WaitForSeconds(.5f);
         warn.localPosition = homePosition;
         //Move fireball through all square and back
-
         while (fire.localPosition.z < distanceToLastSquare)
         {
             fire.Translate(Vector3.forward * Time.deltaTime * speed, Space.Self);
+            trackedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+        Debug.Log(trackedTime);
         yield return new WaitForSeconds(2f);
         fire.localPosition = homePosition;
         Destroy(gameObject, 1);

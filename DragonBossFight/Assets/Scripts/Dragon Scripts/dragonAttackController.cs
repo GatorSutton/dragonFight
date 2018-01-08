@@ -106,8 +106,8 @@ public class dragonAttackController : MonoBehaviour
     {
         fireAttacks.Add(flameSweep);
         fireAttacks.Add(fireBlast);
-        fireAttacks.Add(fireBallThrower);
-        fireAttacks.Add(flameWave);
+       fireAttacks.Add(fireBallThrower);
+       fireAttacks.Add(flameWave);
     }
 
     private void attackController()
@@ -142,6 +142,11 @@ public class dragonAttackController : MonoBehaviour
         SW.setPosition(SplineWalker.Position.Front);
         resetAttacks();
         action = Action.attack;
+    }
+
+    private void OnDisable()
+    {
+        
     }
 
 
