@@ -8,6 +8,7 @@ public class FireBlast : FireAttack {
     public Transform warn;
     public Transform fire;
     public ParticleSystem ps;
+    public Animator anim;
 
     private ParticleSystem.EmissionModule em;
     private Vector3 gameCenter = new Vector3(0f, 0f, 0f);
@@ -39,6 +40,7 @@ public class FireBlast : FireAttack {
 
     public override IEnumerator Attack()
     {
+        anim.SetInteger("attack", id);
         em.enabled = true;
         activeStatus = true;
         _currentScale = initScale;

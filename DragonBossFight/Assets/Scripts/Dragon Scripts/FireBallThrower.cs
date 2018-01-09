@@ -36,8 +36,8 @@ public class FireBallThrower : FireAttack {
     {
         activeStatus = true;
         initList();
-        anim.SetInteger("fireballCount", fireballCount);
-        while(fireballCount < numOfFireballs)
+        anim.SetInteger("attack", id);
+        while (fireballCount < numOfFireballs)
         {
             throwOneFireball(uniqueRandomNumber());
             fireballCount++;

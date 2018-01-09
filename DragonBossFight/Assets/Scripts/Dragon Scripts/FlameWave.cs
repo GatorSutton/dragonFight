@@ -7,6 +7,7 @@ public class FlameWave : FireAttack {
     public Transform warn;
     public Transform fire;
     public float speed;
+    public Animator anim;
 
     private Vector3 homePosition = new Vector3(0f, 0f, 0f);
     private Floor floor;
@@ -32,6 +33,7 @@ public class FlameWave : FireAttack {
 
     public override IEnumerator Attack()
     {
+        anim.SetInteger("attack", id);
         activeStatus = true;
         Vector3 startingPosition = new Vector3(-3.5f + Random.Range(1,6), 0f, 0f);
         //Set warn and fire to initial position

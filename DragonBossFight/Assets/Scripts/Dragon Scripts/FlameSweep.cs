@@ -8,6 +8,9 @@ public class FlameSweep : FireAttack {
     public Transform warn;
     public float sweepSpeed;
     public float sweepRotation;
+    public Animator anim;
+    public Transform dragon;
+    public float rotateSpeed;
 
     private Floor floor;
     private float firstWarnPosition;
@@ -35,6 +38,15 @@ public class FlameSweep : FireAttack {
     {
         activeStatus = true;
         bool secondWarning = false;
+
+        //Spin the dragon around
+        while (dragon.rotation.eulerAngles.y < 359)
+        {
+            dragon.Rotate(0, Time.deltaTime * 60, 0, Space.Self);
+            yield return null;
+        }
+
+        anim.SetInteger("attack", id);
         warn.localPosition = new Vector3(firstWarnPosition, 0f, 0f);
         yield return new WaitForSeconds(.5f);
         warn.localPosition = new Vector3(-10f, 0f, 0f);
@@ -47,6 +59,8 @@ public class FlameSweep : FireAttack {
 
             if(secondWarning == false && timeLeft < 3/sweepSpeed)
             {
+                anim.SetBool("nextTailWhip", true);
+                dragon.localScale = new Vector3(-1, 1, 1);
                 secondWarning = true;
                 warn.localPosition = new Vector3(secondWarnPosition, 0f, 0f);
                 yield return new WaitForSeconds(.5f);
@@ -58,6 +72,15 @@ public class FlameSweep : FireAttack {
             t += Time.deltaTime;
             yield return null;
         }
+
+        //Unspin the dragon
+        while (dragon.rotation.eulerAngles.y > 180)
+        {
+            dragon.Rotate(0, -Time.deltaTime * 60, 0, Space.Self);
+            yield return null;
+        }
+
+        anim.SetBool("nextTailWhip", false);
         activeStatus = false;
     }
 
