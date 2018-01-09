@@ -40,7 +40,7 @@ public class FlameSweep : FireAttack {
         bool secondWarning = false;
 
         //Spin the dragon around
-        while (dragon.rotation.eulerAngles.y < 359)
+        while (dragon.localEulerAngles.y < 180  || dragon.localEulerAngles.y > 350)
         {
             dragon.Rotate(0, Time.deltaTime * 60, 0, Space.Self);
             yield return null;
@@ -74,7 +74,8 @@ public class FlameSweep : FireAttack {
         }
 
         //Unspin the dragon
-        while (dragon.rotation.eulerAngles.y > 180)
+        dragon.localScale = new Vector3(1, 1, 1);
+        while (dragon.localEulerAngles.y < 185)
         {
             dragon.Rotate(0, -Time.deltaTime * 60, 0, Space.Self);
             yield return null;

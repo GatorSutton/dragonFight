@@ -51,7 +51,6 @@ public class dragonAttackController : MonoBehaviour
     {
         int index = Random.Range(0, fireAttacks.Count);
         currentAttack = fireAttacks[index];
-        //anim.SetInteger("attack", currentAttack.id);
         StartCoroutine(currentAttack.Attack());
         fireAttacks.RemoveAt(index);
     }
@@ -104,10 +103,10 @@ public class dragonAttackController : MonoBehaviour
 
     private void resetAttacks()
     {
-        fireAttacks.Add(flameSweep);
-      //  fireAttacks.Add(fireBlast);
-      // fireAttacks.Add(fireBallThrower);
-      // fireAttacks.Add(flameWave);
+       fireAttacks.Add(flameSweep);
+       fireAttacks.Add(fireBlast);
+       fireAttacks.Add(fireBallThrower);
+       fireAttacks.Add(flameWave);
     }
 
     private void attackController()

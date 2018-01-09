@@ -18,7 +18,7 @@ public class FireballAnimationEnder : MonoBehaviour {
     {
        foreach(Transform child in transform)
         {
-            Destroy(child.gameObject);
+            Destroy(child.gameObject, .5f);
         }
     }
 }
