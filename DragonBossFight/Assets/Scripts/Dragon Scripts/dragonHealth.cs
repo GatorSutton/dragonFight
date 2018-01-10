@@ -5,6 +5,7 @@ using UnityEngine;
 public class dragonHealth : MonoBehaviour {
 
     public int startingHealth;
+    public HPController hpController;
 
     private int hp;
     public int HP
@@ -23,19 +24,22 @@ public class dragonHealth : MonoBehaviour {
 	void Awake () {
         hp = startingHealth;
        dAC = GetComponent<dragonAttackController>();
+        hpController = GameObject.Find("Front Camera").GetComponent<HPController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-         checkedForVulnerable();
+        checkedForVulnerable();
         if (Input.GetKeyDown(KeyCode.F) && vulnerable)
         {
-            print(hp);
+         
             hp--;
-        }
+            print(hp);
 
-	}
+        }
+        hpController.setHealth(((float)hp / (float)startingHealth));
+
+    }
 
     public void healToFull()
     {
