@@ -24,7 +24,7 @@ public class dragonHealth : MonoBehaviour {
 	void Awake () {
         hp = startingHealth;
        dAC = GetComponent<dragonAttackController>();
-        hpController = GameObject.Find("Front Camera").GetComponent<HPController>();
+        hpController = GameObject.Find("Front Camera").transform.FindChild("Canvas").FindChild("Healthbar").GetComponent<HPController>();
 	}
 	
 	// Update is called once per frame

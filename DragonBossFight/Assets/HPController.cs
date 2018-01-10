@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class HPController : MonoBehaviour {
 
-    public Image healthbar;
+    private Image healthbar;
     float tmpHealth = 1;
 
 	// Use this for initialization
 	void Start () {
-        healthbar = GameObject.Find("Front Camera").transform.FindChild("Canvas").FindChild("Healthbar").GetComponent<Image>();
+        healthbar = this.GetComponent<Image>();
 	}
 	
 	// Update is called once per frame
