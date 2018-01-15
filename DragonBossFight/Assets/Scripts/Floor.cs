@@ -116,7 +116,6 @@ public class Floor : MonoBehaviour {
 
     private void checkForRealPlayer()
     {
-        //   bool[] list = hPD.getPlayerData();
         bool[] list = AC.getMessageIN();
 
         /*
@@ -126,12 +125,19 @@ public class Floor : MonoBehaviour {
             {
                 tiles[x, z].playerHere = list[(x * sizeZ) + z];
             }
-        }
-        */
+            else
+            {
+            tiles[x,z].playerHere = list[(x * 2 + 1) - z];
+            }
 
-        for (int x = 0; x < 2; x++)
+        }
+        *
+
+
+        /*
+        for (int x = 0; x < sizeX; x++)
         {
-            for (int z = 0; z < 2; z++)
+            for (int z = 0; z < sizeZ; z++)
             {
                 if (x % 2 == 0)
                 {
@@ -143,20 +149,22 @@ public class Floor : MonoBehaviour {
                 }
             }
         }
+        */
+        
 
-        /*
+        
             tiles[0, 0].playerHere = list[0];
             tiles[1, 0].playerHere = list[1];
             tiles[1, 1].playerHere = list[2];
             tiles[0, 1].playerHere = list[3];
-            */
+            
 
     }
 
     private void setFloorData()
     {
-        //byte[] list = new byte[sizeX * sizeZ];
-        byte[] list = new byte[4];
+        byte[] list = new byte[sizeX * sizeZ];
+        //byte[] list = new byte[4];
 
         /*
         for (int x = 0; x < sizeX; x++)
@@ -174,10 +182,11 @@ public class Floor : MonoBehaviour {
 
         }
         */
+
         byte value;
-        for (int x = 0; x < 2; x++)
+        for (int x = 0; x < sizeX; x++)
         {
-            for (int z = 0; z < 2; z++)
+            for (int z = 0; z < sizeZ; z++)
             {
                 value = (byte)(tiles[x, z].myState + 48);
 
@@ -188,11 +197,11 @@ public class Floor : MonoBehaviour {
 
                 if(x % 2 == 0)
                 {
-                    list[(x * 2) + z] = value;
+                    list[(x * sizeZ) + z] = value;
                 }
                 else
                 {
-                    list[(x * 2 + 1) - z] = value;
+                    list[((x+1) * sizeZ)-z-1] = value;
                 }
 
             }
@@ -206,7 +215,7 @@ public class Floor : MonoBehaviour {
         list[2] = (byte)(tiles[1, 1].myState + 48);
         list[3] = (byte)(tiles[0, 1].myState + 48);
         */
-        string output = Encoding.UTF8.GetString(list, 0, 4);
+        string output = Encoding.UTF8.GetString(list, 0, sizeX*sizeZ);
         AC.setMessageOUT(output);
     }
      
