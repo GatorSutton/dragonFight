@@ -16,8 +16,12 @@ using System.Linq;
 public class ArduinoCommunicator : MonoBehaviour
 {
     public SerialController serialController;
+    public float timeBetweenSend;
+
     string messageIN;
     string messageOUT;
+    float timer;
+    
 
     // Initialization
     void Start()
@@ -28,6 +32,15 @@ public class ArduinoCommunicator : MonoBehaviour
     // Executed each frame
     void Update()
     {
+        timer += Time.deltaTime;
+        //---------------------------------------------------------------------
+        // Send data
+        //---------------------------------------------------------------------
+        if (timer > timeBetweenSend)
+        {
+            serialController.SendSerialMessage(messageOUT);
+            timer = 0;
+        }
         //---------------------------------------------------------------------
         // Receive data
         //---------------------------------------------------------------------
@@ -46,10 +59,6 @@ public class ArduinoCommunicator : MonoBehaviour
             Debug.Log("Message arrived: " + messageIN);
         messageIN = message;
 
-        //---------------------------------------------------------------------
-        // Send data
-        //---------------------------------------------------------------------
-        serialController.SendSerialMessage(messageOUT);
 
     }
 

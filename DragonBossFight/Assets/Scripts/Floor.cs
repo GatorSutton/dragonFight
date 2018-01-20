@@ -163,8 +163,8 @@ public class Floor : MonoBehaviour {
 
     private void setFloorData()
     {
-        byte[] list = new byte[sizeX * sizeZ];
-        //byte[] list = new byte[4];
+       // byte[] list = new byte[sizeX * sizeZ];
+        byte[] list = new byte[16];
 
         /*
         for (int x = 0; x < sizeX; x++)
@@ -182,7 +182,7 @@ public class Floor : MonoBehaviour {
 
         }
         */
-
+        /*
         byte value;
         for (int x = 0; x < sizeX; x++)
         {
@@ -207,15 +207,28 @@ public class Floor : MonoBehaviour {
             }
 
         }
-
-        /*
-        byte[] list = new byte[4];
-        list[0] = (byte)(tiles[0, 0].myState + 48);
-        list[1] = (byte)(tiles[1, 0].myState + 48);
-        list[2] = (byte)(tiles[1, 1].myState + 48);
-        list[3] = (byte)(tiles[0, 1].myState + 48);
         */
-        string output = Encoding.UTF8.GetString(list, 0, sizeX*sizeZ);
+        
+       // byte[] list = new byte[16];
+        list[0] = (byte)(tiles[0, 0].myState + 48);
+        list[1] = (byte)(tiles[0, 1].myState + 48);
+        list[2] = (byte)(tiles[0, 2].myState + 48);
+        list[3] = (byte)(tiles[0, 3].myState + 48);
+        list[4] = (byte)(tiles[0, 4].myState + 48);
+        list[5] = (byte)(tiles[0, 5].myState + 48);
+        list[6] = (byte)(tiles[0, 6].myState + 48);
+        list[7] = (byte)(tiles[0, 7].myState + 48);
+        list[8] = (byte)(tiles[1, 7].myState + 48);
+        list[9] = (byte)(tiles[1, 6].myState + 48);
+        list[10] = (byte)(tiles[1, 5].myState + 48);
+        list[11] = (byte)(tiles[1, 4].myState + 48);
+        list[12] = (byte)(tiles[1, 3].myState + 48);
+        list[13] = (byte)(tiles[1, 2].myState + 48);
+        list[14] = (byte)(tiles[1, 1].myState + 48);
+        list[15] = (byte)(tiles[1, 0].myState + 48);
+
+        //string output = Encoding.UTF8.GetString(list, 0, sizeX*sizeZ);
+        string output = Encoding.UTF8.GetString(list, 0, 16);
         AC.setMessageOUT(output);
     }
      
