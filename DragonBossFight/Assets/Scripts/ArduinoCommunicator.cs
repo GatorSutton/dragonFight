@@ -40,6 +40,7 @@ public class ArduinoCommunicator : MonoBehaviour
         {
             serialController.SendSerialMessage(messageOUT);
             timer = 0;
+
         }
         //---------------------------------------------------------------------
         // Receive data

@@ -26,7 +26,7 @@ public class Floor : MonoBehaviour {
 
     private void Update()
     {
-        checkForRealPlayer();
+       // checkForRealPlayer();
         setFloorData();
     }
 
@@ -163,8 +163,8 @@ public class Floor : MonoBehaviour {
 
     private void setFloorData()
     {
-       // byte[] list = new byte[sizeX * sizeZ];
-        byte[] list = new byte[16];
+        byte[] list = new byte[sizeX * sizeZ];
+
 
         /*
         for (int x = 0; x < sizeX; x++)
@@ -182,7 +182,8 @@ public class Floor : MonoBehaviour {
 
         }
         */
-        /*
+
+        
         byte value;
         for (int x = 0; x < sizeX; x++)
         {
@@ -207,9 +208,10 @@ public class Floor : MonoBehaviour {
             }
 
         }
-        */
-        
-       // byte[] list = new byte[16];
+
+
+        /*
+        byte[] list = new byte[3];
         list[0] = (byte)(tiles[0, 0].myState + 48);
         list[1] = (byte)(tiles[0, 1].myState + 48);
         list[2] = (byte)(tiles[0, 2].myState + 48);
@@ -226,9 +228,9 @@ public class Floor : MonoBehaviour {
         list[13] = (byte)(tiles[1, 2].myState + 48);
         list[14] = (byte)(tiles[1, 1].myState + 48);
         list[15] = (byte)(tiles[1, 0].myState + 48);
-
-        //string output = Encoding.UTF8.GetString(list, 0, sizeX*sizeZ);
-        string output = Encoding.UTF8.GetString(list, 0, 16);
+        */
+         string output = Encoding.UTF8.GetString(list, 0, sizeX*sizeZ);
+        // string output = Encoding.UTF8.GetString(list, 0, 1);
         AC.setMessageOUT(output);
     }
      
