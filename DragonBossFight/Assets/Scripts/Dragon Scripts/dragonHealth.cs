@@ -45,6 +45,12 @@ public class dragonHealth : MonoBehaviour {
     {
         hp = startingHealth;
     }
+
+    public void takeDamage()
+    {
+        hp--;
+        print(hp);
+    }
     
     private void checkedForVulnerable()
     {

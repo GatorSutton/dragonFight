@@ -38,7 +38,8 @@ public class ArduinoCommunicator : MonoBehaviour
         //---------------------------------------------------------------------
         if (timer > timeBetweenSend)
         {
-            serialController.SendSerialMessage(messageOUT);
+            //serialController.SendSerialMessage(messageOUT);
+            serialController.SendSerialMessage("F");
             timer = 0;
 
         }
