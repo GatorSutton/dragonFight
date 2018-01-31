@@ -15,6 +15,8 @@ public class dragonAttackController : MonoBehaviour
     public List<FireAttack> fireAttacks = new List<FireAttack>();
     public Animator anim;
 
+    public Collider headCollider;
+
     private FireAttack currentAttack;
     private SplineWalker SW;
     private Action action;
@@ -33,7 +35,8 @@ public class dragonAttackController : MonoBehaviour
         floor = GameObject.FindGameObjectWithTag("floor").GetComponent<Floor>();
         SW = GetComponent<SplineWalker>();
         action = Action.attack;
-        
+        restTimer = vulnerableTime;
+        headCollider.enabled = false;
     }
 
     // Update is called once per frame
@@ -80,6 +83,9 @@ public class dragonAttackController : MonoBehaviour
                     {
                         actionComplete = true;
                         action = Action.rest;
+                        anim.SetBool("resting", true);
+                        headCollider.enabled = true;
+                        print("resting");
                     }
                     else
                     {
@@ -94,6 +100,8 @@ public class dragonAttackController : MonoBehaviour
                     actionComplete = true;
                     resting = false;
                     action = Action.move;
+                    headCollider.enabled = false;
+                    anim.SetBool("resting", false);
                 }
                 break;
             default:
@@ -104,9 +112,9 @@ public class dragonAttackController : MonoBehaviour
     private void resetAttacks()
     {
        fireAttacks.Add(flameSweep);
-       fireAttacks.Add(fireBlast);
-       fireAttacks.Add(fireBallThrower);
-       fireAttacks.Add(flameWave);
+      // fireAttacks.Add(fireBlast);
+      // fireAttacks.Add(fireBallThrower);
+      // fireAttacks.Add(flameWave);
     }
 
     private void attackController()
@@ -162,6 +170,7 @@ public class dragonAttackController : MonoBehaviour
 
     private float updateTimer()
     {
+        print(restTimer);
         return restTimer -= Time.deltaTime;
     }
     

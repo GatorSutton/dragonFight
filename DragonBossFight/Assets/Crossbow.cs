@@ -36,7 +36,6 @@ public class Crossbow : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit, 20))
             {
-                // hit.collider.gameObject.GetComponent<dragonHealth>().takeDamage();
                 if (hit.collider.tag == "headshot")
                 {
                     hit.collider.transform.root.GetComponent<dragonHealth>().takeDamage();

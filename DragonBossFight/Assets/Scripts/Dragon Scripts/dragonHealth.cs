@@ -6,6 +6,7 @@ public class dragonHealth : MonoBehaviour {
 
     public int startingHealth;
     public HPController hpController;
+    public Animator anim;
 
     private int hp;
     public int HP
@@ -49,6 +50,7 @@ public class dragonHealth : MonoBehaviour {
     public void takeDamage()
     {
         hp--;
+        anim.SetTrigger("hit");
         print(hp);
     }
     
