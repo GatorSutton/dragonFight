@@ -25,6 +25,7 @@ public class Crossbow : MonoBehaviour {
         wiimote = WiimoteManager.Wiimotes[0];
         pointer = wiimote.Ir.GetPointingPosition();
 
+
         if (wiimote.Button.b && cdRemaining < 0 && pointer[0] > -.5)
         {
             cdRemaining = coolDownTime;
@@ -51,12 +52,11 @@ public class Crossbow : MonoBehaviour {
 
     Vector3 calculateArrowVector()
     {
-
-        Vector3 vector = new Vector3(pointer[0] - .5f, pointer[1] - .5f, 1f) - this.transform.position;
-        vector = Quaternion.Euler(0, offsetRotation, 0) * vector;
-        return vector;
- 
-    }
+        Vector3 vector = new Vector3((pointer[0] - .5f)*2f*.736f, (pointer[1] - .5f)*2f*.414f, 1f) - this.transform.position;    //scaled with the camera size change with variables to have 
+        vector = Quaternion.Euler(0, offsetRotation, 0) * vector;                                                                //it work with different aspect ratios. Need aspect ratio to
+        return vector;                                                                                                          //determine horizontal field of view angle. Then use that with 1
+                                                                                                                                //as adjacent triangle length to determine opposite for both vert
+    }                                                                                                                           // and horizontal to get the scalars.
 
 
 }
