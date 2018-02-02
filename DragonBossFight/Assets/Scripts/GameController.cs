@@ -19,12 +19,12 @@ public class GameController : MonoBehaviour {
     public Floor floor;
     public Transform startingLocation;
     public Material material;
+    public GameObject initialFloor;
 
     private GameObject dragon;
     private dragonHealth dH;
     private dragonController dC;
     public playerHealth pH;
-    private Renderer r;
 
 
     bool skip = true;
@@ -64,7 +64,9 @@ public class GameController : MonoBehaviour {
             yield return null;
         }
         floor.clearAllTiles();
+        initialFloor.SetActive(false);
         skip = true;
+        yield return new WaitForSeconds(10);
 
         //dragon entrance animation
         //dragon gameObject is spawned
