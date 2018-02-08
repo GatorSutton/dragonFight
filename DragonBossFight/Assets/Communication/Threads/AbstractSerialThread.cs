@@ -36,7 +36,7 @@ public abstract class AbstractSerialThread
     // Amount of milliseconds alloted to a single read or connect. An
     // exception is thrown when such operations take more than this time
     // to complete.
-    private const int readTimeout = 100;
+    private const int readTimeout = 1;
 
     // Amount of milliseconds alloted to a single write. An exception is thrown
     // when such operations take more than this time to complete.

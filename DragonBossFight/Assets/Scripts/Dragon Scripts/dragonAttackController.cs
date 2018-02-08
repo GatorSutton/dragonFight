@@ -111,10 +111,10 @@ public class dragonAttackController : MonoBehaviour
 
     private void resetAttacks()
     {
-       fireAttacks.Add(flameSweep);
-      // fireAttacks.Add(fireBlast);
-      // fireAttacks.Add(fireBallThrower);
-      // fireAttacks.Add(flameWave);
+    //   fireAttacks.Add(flameSweep);
+     //  fireAttacks.Add(fireBlast);
+       fireAttacks.Add(fireBallThrower);
+     //  fireAttacks.Add(flameWave);
     }
 
     private void attackController()
