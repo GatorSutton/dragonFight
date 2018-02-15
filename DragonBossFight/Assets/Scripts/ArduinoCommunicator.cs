@@ -33,6 +33,7 @@ public class ArduinoCommunicator : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
+        print(Time.deltaTime);
         //---------------------------------------------------------------------
         // Send data
         //---------------------------------------------------------------------
@@ -45,7 +46,7 @@ public class ArduinoCommunicator : MonoBehaviour
         //---------------------------------------------------------------------
         // Receive data
         //---------------------------------------------------------------------
-
+        
         string message = serialController.ReadSerialMessage();
 
         if (message == null)
@@ -59,7 +60,7 @@ public class ArduinoCommunicator : MonoBehaviour
         else
             Debug.Log("Message arrived: " + messageIN);
         messageIN = message;
-
+        
 
     }
 

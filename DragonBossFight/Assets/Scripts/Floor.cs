@@ -26,7 +26,7 @@ public class Floor : MonoBehaviour {
 
     private void Update()
     {
-       // checkForRealPlayer();
+     //   checkForRealPlayer();
         setFloorData();
     }
 
