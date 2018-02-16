@@ -12,10 +12,10 @@ public class dragonAttackController : MonoBehaviour
     public FireAttack fireBallThrower;
     public FireAttack flameWave;
 
+    public dragonHealth dH;
+
     public List<FireAttack> fireAttacks = new List<FireAttack>();
     public Animator anim;
-
-    public Collider headCollider;
 
     private FireAttack currentAttack;
     private SplineWalker SW;
@@ -36,7 +36,7 @@ public class dragonAttackController : MonoBehaviour
         SW = GetComponent<SplineWalker>();
         action = Action.attack;
         restTimer = vulnerableTime;
-        headCollider.enabled = false;
+        dH = GetComponent<dragonHealth>();
     }
 
     // Update is called once per frame
@@ -83,8 +83,8 @@ public class dragonAttackController : MonoBehaviour
                     {
                         actionComplete = true;
                         action = Action.rest;
-                        anim.SetBool("resting", true);
-                        headCollider.enabled = true;
+                        anim.speed = .2f;
+                        dH.setTargets();
                         print("resting");
                     }
                     else
@@ -100,8 +100,7 @@ public class dragonAttackController : MonoBehaviour
                     actionComplete = true;
                     resting = false;
                     action = Action.move;
-                    headCollider.enabled = false;
-                    anim.SetBool("resting", false);
+                    anim.speed = 1f;
                 }
                 break;
             default:
@@ -111,13 +110,10 @@ public class dragonAttackController : MonoBehaviour
 
     private void resetAttacks()
     {
-       //fireAttacks.Add(flameSweep);
-       //fireAttacks.Add(fireBlast);
-       fireAttacks.Add(fireBallThrower);
-        fireAttacks.Add(fireBallThrower);
-        fireAttacks.Add(fireBallThrower);
-        fireAttacks.Add(fireBallThrower);
-        //  fireAttacks.Add(flameWave);
+     //  fireAttacks.Add(flameSweep);
+     //  fireAttacks.Add(fireBlast);
+     //  fireAttacks.Add(fireBallThrower);
+          fireAttacks.Add(flameWave);
     }
 
     private void attackController()

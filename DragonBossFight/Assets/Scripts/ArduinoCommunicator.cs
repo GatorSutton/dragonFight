@@ -33,7 +33,6 @@ public class ArduinoCommunicator : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        print(Time.deltaTime);
         //---------------------------------------------------------------------
         // Send data
         //---------------------------------------------------------------------

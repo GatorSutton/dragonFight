@@ -8,6 +8,10 @@ public class dragonHealth : MonoBehaviour {
     public HPController hpController;
     public Animator anim;
 
+    public targetController headTarget;
+    public targetController leftWingTarget;
+    public targetController rightWingTarget;
+
     private int hp;
     public int HP
     {
@@ -69,6 +73,13 @@ public class dragonHealth : MonoBehaviour {
                 material.color = Color.red;
             }
         }
+    }
+
+    public void setTargets()
+    {
+        headTarget.startTarget();
+        leftWingTarget.startTarget();
+        rightWingTarget.startTarget();
     }
 
 }

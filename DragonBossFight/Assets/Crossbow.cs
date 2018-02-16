@@ -29,16 +29,18 @@ public class Crossbow : MonoBehaviour {
         if (wiimote.Button.b && cdRemaining < 0 && pointer[0] > -.5)
         {
             cdRemaining = coolDownTime;
-            Debug.DrawRay(transform.position, calculateArrowVector()*50, Color.green);
+            Debug.DrawRay(transform.position, calculateArrowVector()*100, Color.green);
 
             RaycastHit hit;
             Ray ray = new Ray(transform.position, calculateArrowVector());
 
-            if (Physics.Raycast(ray, out hit, 20))
+            if (Physics.Raycast(ray, out hit, 1000))
             {
-                if (hit.collider.tag == "headshot")
+                if (hit.collider.tag == "target")
                 {
-                    hit.collider.transform.root.GetComponent<dragonHealth>().takeDamage();
+                    //hit.collider.transform.root.GetComponent<dragonHealth>().takeDamage();
+                    hit.collider.gameObject.GetComponent<targetController>().takeHit();
+                    print("hit");
                 }
             }
         }

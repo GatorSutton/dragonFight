@@ -66,7 +66,7 @@ public class GameController : MonoBehaviour {
         floor.clearAllTiles();
         initialFloor.SetActive(false);
         skip = true;
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(1);
 
         //dragon entrance animation
         //dragon gameObject is spawned
