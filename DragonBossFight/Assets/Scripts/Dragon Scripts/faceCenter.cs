@@ -13,7 +13,8 @@ public class faceCenter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        focusAtCenter();
+        transform.LookAt(target);
+       // focusAtCenter();
     }
 
     private void focusAtCenter()
