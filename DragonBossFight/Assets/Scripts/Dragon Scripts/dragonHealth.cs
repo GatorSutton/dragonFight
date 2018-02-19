@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class dragonHealth : MonoBehaviour {
 
     public int startingHealth;
     public HPController hpController;
     public Animator anim;
-
-    public targetController headTarget;
-    public targetController leftWingTarget;
-    public targetController rightWingTarget;
+    public List<targetController> targets = new List<targetController>();
+    private Slider healthBar;
 
     private int hp;
     public int HP
@@ -20,7 +19,6 @@ public class dragonHealth : MonoBehaviour {
             return hp;
         }
     }
-    private bool vulnerable;
 
     private dragonAttackController dAC;
     public Material material;
@@ -30,56 +28,74 @@ public class dragonHealth : MonoBehaviour {
         hp = startingHealth;
        dAC = GetComponent<dragonAttackController>();
         hpController = GameObject.Find("Front Camera").transform.FindChild("Canvas").FindChild("Healthbar").GetComponent<HPController>();
+        healthBar = GameObject.Find("DragonHPBar").GetComponent<Slider>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        checkedForVulnerable();
-        if (Input.GetKeyDown(KeyCode.F) && vulnerable)
-        {
-         
+        if (Input.GetKeyDown(KeyCode.F))
+        {  
             hp--;
             print(hp);
-
         }
         hpController.setHealth(((float)hp / (float)startingHealth));
+
+        checkAllTargets();
 
     }
 
     public void healToFull()
     {
         hp = startingHealth;
+        setHealthBarSlider();
     }
 
-    public void takeDamage()
+    public void takeDamage(int amount)
     {
-        hp--;
+        hp = hp - amount;
         anim.SetTrigger("hit");
         print(hp);
+        setHealthBarSlider();
     }
     
-    private void checkedForVulnerable()
+    public void setTargets()
     {
-        if (dAC.enabled)
+        foreach(var target in targets)
         {
-            if (dAC.isResting())
-            {
-                vulnerable = true;
-                material.color = Color.white;
-            }
-            else
-            {
-                vulnerable = false;
-                material.color = Color.red;
-            }
+            target.startTarget();
         }
     }
 
-    public void setTargets()
+    private void checkAllTargets()
     {
-        headTarget.startTarget();
-        leftWingTarget.startTarget();
-        rightWingTarget.startTarget();
+        float count = 0;
+        foreach(var target in targets)
+        {
+            if(target.dead)
+            {
+                count++;
+            }
+
+        }
+        if (count == targets.Count)
+        {
+            takeDamage(10);
+            resetTargets();
+        }
+
+    }
+
+    private void resetTargets()
+    {
+        foreach(var target in targets)
+        {
+            target.reset();
+        }
+    }
+
+    private void setHealthBarSlider()
+    {
+        healthBar.value = ((float)hp / (float)startingHealth);
     }
 
 }

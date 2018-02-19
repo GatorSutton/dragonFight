@@ -11,6 +11,7 @@ public class targetController : MonoBehaviour {
     private float vulnerableTime = 10;
     public bool start;
     private Vector3 rotatingVector;
+    public bool dead;
 
     float time;
     Transform target;
@@ -53,6 +54,7 @@ public class targetController : MonoBehaviour {
         yield return new WaitForSeconds(vulnerableTime);
         vulnerable = false;
         target.gameObject.SetActive(false);
+        dead = false;
     }
 
     public void startTarget()
@@ -66,12 +68,17 @@ public class targetController : MonoBehaviour {
         if (vulnerable)
         {
             target.gameObject.SetActive(false);
-            print("hit motherfucker");
+            dead = true;
         }
     }
 
     public Vector3 getRotatingVector()
     {
         return rotatingVector;
+    }
+
+    public void reset()
+    {
+        dead = false;
     }
 }

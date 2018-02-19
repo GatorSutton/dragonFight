@@ -40,7 +40,6 @@ public class Crossbow : MonoBehaviour {
                 {
                     //hit.collider.transform.root.GetComponent<dragonHealth>().takeDamage();
                     hit.collider.gameObject.GetComponent<targetController>().takeHit();
-                    print("hit");
                 }
             }
         }
