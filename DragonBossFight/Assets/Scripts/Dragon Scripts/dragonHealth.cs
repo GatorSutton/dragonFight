@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class dragonHealth : MonoBehaviour {
 
+    public Animator anim;
     public int startingHealth;
     public HPController hpController;
-    public Animator anim;
     public List<targetController> targets = new List<targetController>();
     private Slider healthBar;
 
@@ -81,6 +81,8 @@ public class dragonHealth : MonoBehaviour {
         {
             takeDamage(10);
             resetTargets();
+            anim.speed = 1;
+            anim.SetTrigger("hit");
         }
 
     }
