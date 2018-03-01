@@ -56,6 +56,11 @@ public class dragonHealth : MonoBehaviour {
         anim.SetTrigger("hit");
         print(hp);
         setHealthBarSlider();
+
+        if(hp <= 0)
+        {
+            anim.SetTrigger("dead");
+        }
     }
     
     public void setTargets()
