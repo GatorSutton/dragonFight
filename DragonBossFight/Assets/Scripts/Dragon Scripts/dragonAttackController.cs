@@ -13,9 +13,11 @@ public class dragonAttackController : MonoBehaviour
     public FireAttack flameWave;
 
     public dragonHealth dH;
+  
 
     public List<FireAttack> fireAttacks = new List<FireAttack>();
     public Animator anim;
+
 
     private FireAttack currentAttack;
     private SplineWalker SW;
@@ -26,6 +28,7 @@ public class dragonAttackController : MonoBehaviour
     public float vulnerableTime;
     public bool resting = false;
     private float restTimer;
+    private playerHealth pH;
 
 
     // Use this for initialization
@@ -37,6 +40,7 @@ public class dragonAttackController : MonoBehaviour
         action = Action.attack;
         restTimer = vulnerableTime;
         dH = GetComponent<dragonHealth>();
+        pH = GameObject.FindGameObjectWithTag("Player").GetComponent<playerHealth>();
     }
 
     // Update is called once per frame
@@ -79,7 +83,7 @@ public class dragonAttackController : MonoBehaviour
             case Action.attack:
                 if (!currentAttack.getStatus())
                 {
-                    if (fireAttacks.Count == 0)
+                    if (fireAttacks.Count == 0 && pH.HP > 0)
                     {
                         actionComplete = true;
                         action = Action.rest;
@@ -149,12 +153,6 @@ public class dragonAttackController : MonoBehaviour
         resetAttacks();
         action = Action.attack;
     }
-
-    private void OnDisable()
-    {
-        
-    }
-
 
     public bool isAttacking()
     {
