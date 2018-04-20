@@ -36,11 +36,11 @@ public abstract class AbstractSerialThread
     // Amount of milliseconds alloted to a single read or connect. An
     // exception is thrown when such operations take more than this time
     // to complete.
-    private const int readTimeout = 1;
+    private const int readTimeout = 30;
 
     // Amount of milliseconds alloted to a single write. An exception is thrown
     // when such operations take more than this time to complete.
-    private const int writeTimeout = 100;
+    private const int writeTimeout = 30;
 
     // Internal synchronized queues used to send and receive messages from the
     // serial device. They serve as the point of communication between the

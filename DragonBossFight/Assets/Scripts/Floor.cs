@@ -13,6 +13,7 @@ public class Floor : MonoBehaviour {
     [System.NonSerialized]
     private Tile[,] tiles;
     ArduinoCommunicator AC;
+    ArduinoCommunicator ACSensors;
 
 	// Use this for initialization
 	void Awake () {
@@ -22,11 +23,12 @@ public class Floor : MonoBehaviour {
     private void Start()
     {
         AC = GameObject.Find("ArduinoCommunicator").GetComponent<ArduinoCommunicator>();
+        ACSensors = GameObject.Find("ArduinoCommunicatorSensors").GetComponent<ArduinoCommunicator>();
     }
 
     private void Update()
     {
-     //   checkForRealPlayer();
+        checkForRealPlayer();
         setFloorData();
     }
 
@@ -116,7 +118,7 @@ public class Floor : MonoBehaviour {
 
     private void checkForRealPlayer()
     {
-        bool[] list = AC.getMessageIN();
+        bool[] list = ACSensors.getMessageIN();
 
         /*
         for (int x = 0; x < sizeX; x++)
@@ -165,26 +167,9 @@ public class Floor : MonoBehaviour {
     {
         byte[] list = new byte[sizeX * sizeZ];
 
-
-        /*
-        for (int x = 0; x < sizeX; x++)
-        {
-            for (int z = 0; z < sizeZ; z++)
-            {
-                list[(x * sizeZ) + z] = (byte)tiles[x, z].myState;
-
-                if (tiles[x, z].myState == Tile.States.NONE && tiles[x, z].isPlayerHere())
-                {
-                    list[(x * sizeZ) + z] = 0xFF;
-                }
-
-            }
-
-        }
-        */
-
         
         byte value;
+        /*
         for (int x = 0; x < sizeX; x++)
         {
             for (int z = 0; z < sizeZ; z++)
@@ -208,29 +193,25 @@ public class Floor : MonoBehaviour {
             }
 
         }
-
-
-        /*
-        byte[] list = new byte[3];
-        list[0] = (byte)(tiles[0, 0].myState + 48);
-        list[1] = (byte)(tiles[0, 1].myState + 48);
-        list[2] = (byte)(tiles[0, 2].myState + 48);
-        list[3] = (byte)(tiles[0, 3].myState + 48);
-        list[4] = (byte)(tiles[0, 4].myState + 48);
-        list[5] = (byte)(tiles[0, 5].myState + 48);
-        list[6] = (byte)(tiles[0, 6].myState + 48);
-        list[7] = (byte)(tiles[0, 7].myState + 48);
-        list[8] = (byte)(tiles[1, 7].myState + 48);
-        list[9] = (byte)(tiles[1, 6].myState + 48);
-        list[10] = (byte)(tiles[1, 5].myState + 48);
-        list[11] = (byte)(tiles[1, 4].myState + 48);
-        list[12] = (byte)(tiles[1, 3].myState + 48);
-        list[13] = (byte)(tiles[1, 2].myState + 48);
-        list[14] = (byte)(tiles[1, 1].myState + 48);
-        list[15] = (byte)(tiles[1, 0].myState + 48);
         */
-         string output = Encoding.UTF8.GetString(list, 0, sizeX*sizeZ);
-        // string output = Encoding.UTF8.GetString(list, 0, 1);
+
+        for (int x = 0; x < sizeX; x++)
+        {
+            for (int z = 0; z < sizeZ; z++)
+            {
+                value = (byte)(tiles[x, z].myState + 48);
+                if (tiles[x, z].myState == Tile.States.NONE && tiles[x, z].isPlayerHere())
+                {
+                    value = 70;
+                }
+                list[(x * sizeZ) + z] = value;
+            }
+        }
+
+
+
+
+                string output = Encoding.UTF8.GetString(list, 0, sizeX*sizeZ);
         AC.setMessageOUT(output);
     }
      

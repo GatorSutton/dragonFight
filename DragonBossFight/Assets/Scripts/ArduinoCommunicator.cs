@@ -23,11 +23,6 @@ public class ArduinoCommunicator : MonoBehaviour
     float timer;
     
 
-    // Initialization
-    void Start()
-    {
-        serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
-    }
 
     // Executed each frame
     void Update()
