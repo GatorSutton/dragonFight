@@ -11,6 +11,7 @@ public class dragonHealth : MonoBehaviour {
     public List<targetController> targets = new List<targetController>();
     public AudioClip audioHit;
     public AudioClip audioDead;
+    public AudioClip audioSlow;
 
     private Slider healthBar;
     private AudioSource audioSource;
@@ -77,6 +78,8 @@ public class dragonHealth : MonoBehaviour {
     
     public void setTargets()
     {
+        audioSource.clip = audioSlow;
+        audioSource.Play();
         foreach(var target in targets)
         {
             target.startTarget();
