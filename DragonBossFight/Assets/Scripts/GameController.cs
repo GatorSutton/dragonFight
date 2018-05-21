@@ -43,6 +43,11 @@ public class GameController : MonoBehaviour {
         {
             skip = false;
         }
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
          
 	}
 

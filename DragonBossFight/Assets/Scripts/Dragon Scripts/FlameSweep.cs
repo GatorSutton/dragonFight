@@ -11,6 +11,8 @@ public class FlameSweep : FireAttack {
     public Animator anim;
     public Transform dragon;
     public float rotateSpeed;
+    public AudioSource audioSourceLanding;
+    public AudioSource audioSourceWoosh;
 
     private Floor floor;
     private float firstWarnPosition;
@@ -46,11 +48,13 @@ public class FlameSweep : FireAttack {
             yield return null;
         }
 
-        while(dragon.position.y >  -10)
+        audioSourceLanding.PlayDelayed(.5f);
+        while (dragon.position.y >  -10)
         {
             dragon.Translate(0, -Time.deltaTime* 10, 0);
             yield return null;
         }
+        
 
         anim.SetInteger("attack", id);
         warn.localPosition = new Vector3(firstWarnPosition, 0f, 0f);
@@ -58,6 +62,7 @@ public class FlameSweep : FireAttack {
         warn.localPosition = new Vector3(-10f, 0f, 0f);
 
         //fire sweep
+        audioSourceWoosh.PlayDelayed(3);
         float timeLeft = 6/sweepSpeed;
         float t = -Mathf.PI / (2*sweepSpeed);
         while (timeLeft > 0)
@@ -65,6 +70,7 @@ public class FlameSweep : FireAttack {
 
             if(secondWarning == false && timeLeft < 3/sweepSpeed)
             {
+                audioSourceWoosh.PlayDelayed(3);
                 anim.SetBool("nextTailWhip", true);
                 dragon.localScale = new Vector3(-1, 1, 1);
                 secondWarning = true;

@@ -9,6 +9,7 @@ public class FlameWave : FireAttack {
     public float speed;
     public Animator anim;
 
+    private AudioSource audioSource;
     private Vector3 homePosition = new Vector3(0f, 0f, 0f);
     private Floor floor;
     private float distanceToFirstSquare;
@@ -16,6 +17,7 @@ public class FlameWave : FireAttack {
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
         distanceToFirstSquare = 10 - (floor.sizeX / 2f) + .5f;
         distanceToLastSquare = 10 + (floor.sizeZ/ 2f) - .5f;
@@ -33,6 +35,7 @@ public class FlameWave : FireAttack {
 
     public override IEnumerator Attack()
     {
+        audioSource.PlayDelayed(1f);
         anim.SetInteger("attack", id);
         activeStatus = true;
         Vector3 startingPosition = new Vector3(-3.5f + Random.Range(1,6), 0f, 0f);

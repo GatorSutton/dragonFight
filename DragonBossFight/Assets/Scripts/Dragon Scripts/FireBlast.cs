@@ -9,6 +9,7 @@ public class FireBlast : FireAttack {
     public Transform fire;
     public ParticleSystem ps;
     public Animator anim;
+    public AudioSource audioSource;
 
     private ParticleSystem.EmissionModule em;
     private Vector3 gameCenter = new Vector3(0f, 0f, 0f);
@@ -28,6 +29,7 @@ public class FireBlast : FireAttack {
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
         targetScale = floor.sizeX - 1f;
         id = 3;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update () {
@@ -41,6 +43,7 @@ public class FireBlast : FireAttack {
     public override IEnumerator Attack()
     {
         anim.SetInteger("attack", id);
+        audioSource.Play();
         em.enabled = true;
         activeStatus = true;
         _currentScale = initScale;
@@ -79,6 +82,7 @@ public class FireBlast : FireAttack {
             yield return new WaitForSeconds(waitTime);
         }
         //Move back to under the dragon
+        audioSource.Stop();
         fire.localPosition = new Vector3(0f, 0f, 0f);
         activeStatus = false;
         em.enabled = false;
