@@ -46,6 +46,12 @@ public class FlameSweep : FireAttack {
             yield return null;
         }
 
+        while(dragon.position.y >  -10)
+        {
+            dragon.Translate(0, -Time.deltaTime* 10, 0);
+            yield return null;
+        }
+
         anim.SetInteger("attack", id);
         warn.localPosition = new Vector3(firstWarnPosition, 0f, 0f);
         yield return new WaitForSeconds(.5f);
@@ -75,6 +81,11 @@ public class FlameSweep : FireAttack {
 
         //Unspin the dragon
         dragon.localScale = new Vector3(1, 1, 1);
+        while (dragon.position.y < 1)
+        {
+            dragon.Translate(0, Time.deltaTime * 10, 0);
+            yield return null;
+        }
         while (dragon.localEulerAngles.y < 185)
         {
             dragon.Rotate(0, -Time.deltaTime * 60, 0, Space.Self);

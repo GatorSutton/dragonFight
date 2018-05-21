@@ -18,7 +18,7 @@ public class ArduinoCommunicator : MonoBehaviour
     public SerialController serialController;
     public float timeBetweenSend;
 
-    string messageIN;
+    string messageIN = "non empty string";
     string messageOUT;
     float timer;
     
