@@ -9,7 +9,11 @@ public class dragonHealth : MonoBehaviour {
     public int startingHealth;
     public HPController hpController;
     public List<targetController> targets = new List<targetController>();
+    public AudioClip audioHit;
+    public AudioClip audioDead;
+
     private Slider healthBar;
+    private AudioSource audioSource;
 
     private int hp;
     public int HP
@@ -25,6 +29,7 @@ public class dragonHealth : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+        audioSource = GetComponent<AudioSource>();
         hp = startingHealth;
        dAC = GetComponent<dragonAttackController>();
         hpController = GameObject.Find("Front Camera").transform.FindChild("Canvas").FindChild("Healthbar").GetComponent<HPController>();
@@ -53,13 +58,20 @@ public class dragonHealth : MonoBehaviour {
     public void takeDamage(int amount)
     {
         hp = hp - amount;
-        anim.SetTrigger("hit");
+        audioSource.clip = audioHit;
+        if (hp > 0)
+        {
+            audioSource.Play();
+            anim.SetTrigger("hit");
+        }
         print(hp);
         setHealthBarSlider();
 
         if(hp <= 0)
         {
             anim.SetTrigger("dead");
+            audioSource.clip = audioHit;
+            audioSource.Play();
         }
     }
     

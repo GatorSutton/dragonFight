@@ -17,9 +17,11 @@ public class targetController : MonoBehaviour {
     Transform target;
     bool vulnerable = false;
     Transform center;
+    AudioSource audioSource;
 
     // Use this for initialization
     void Start() {
+        audioSource = GetComponent<AudioSource>();
         target = transform.Find("target").transform;
         target.gameObject.SetActive(false);
         center = GameObject.FindGameObjectWithTag("center").transform;
@@ -67,6 +69,7 @@ public class targetController : MonoBehaviour {
     {
         if (vulnerable)
         {
+            audioSource.Play();
             target.gameObject.SetActive(false);
             dead = true;
         }
