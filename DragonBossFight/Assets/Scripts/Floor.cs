@@ -152,31 +152,44 @@ public class Floor : MonoBehaviour {
             }
         }
         */
-
-        if (list.Length == 64)
+        if (list.Length == sizeX * sizeZ)
         {
-            tiles[0, 0].playerHere = list[0];
-            tiles[0, 1].playerHere = list[1];
-            tiles[0, 2].playerHere = list[2];
-            tiles[0, 3].playerHere = list[3];
-            tiles[1, 0].playerHere = list[4];
-            tiles[1, 1].playerHere = list[5];
-            tiles[1, 2].playerHere = list[6];
-            tiles[1, 3].playerHere = list[7];
-
-            tiles[2, 0].playerHere = list[8];
-            tiles[2, 1].playerHere = list[9];
-            tiles[2, 2].playerHere = list[10];
-            tiles[2, 3].playerHere = list[11];
-            tiles[3, 0].playerHere = list[12];
-            tiles[3, 1].playerHere = list[13];
-            tiles[3, 2].playerHere = list[14];
-            tiles[3, 3].playerHere = list[15];
+            for (int x = 0; x < sizeX; x++)
+            {
+                for (int z = 0; z < sizeZ; z++)
+                {
+                    tiles[x, z].playerHere = list[(x * sizeZ) + z];
+                }
+            }
         }
-        
+
+            /*
+            if (list.Length == 64)
+            {
+                tiles[0, 0].playerHere = list[0];
+                tiles[0, 1].playerHere = list[1];
+                tiles[0, 2].playerHere = list[2];
+                tiles[0, 3].playerHere = list[3];
+                tiles[1, 0].playerHere = list[4];
+                tiles[1, 1].playerHere = list[5];
+                tiles[1, 2].playerHere = list[6];
+                tiles[1, 3].playerHere = list[7];
+
+                tiles[2, 0].playerHere = list[8];
+                tiles[2, 1].playerHere = list[9];
+                tiles[2, 2].playerHere = list[10];
+                tiles[2, 3].playerHere = list[11];
+                tiles[3, 0].playerHere = list[12];
+                tiles[3, 1].playerHere = list[13];
+                tiles[3, 2].playerHere = list[14];
+                tiles[3, 3].playerHere = list[15];
+            }
+
+            */
 
 
-    }
+
+        }
 
     private void setFloorData()
     {
