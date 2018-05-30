@@ -27,15 +27,15 @@ public class CanvasController : MonoBehaviour {
                 switch (SW.position)
                 {
                     case SplineWalker.Position.Left:
-                        canvas.targetDisplay = 1;
+                        canvas.targetDisplay = 0;
                         crossbow.offsetRotation = -90;
                         break;
                     case SplineWalker.Position.Front:
-                        canvas.targetDisplay = 2;
+                        canvas.targetDisplay = 1;
                         crossbow.offsetRotation = 0;
                         break;
                     case SplineWalker.Position.Right:
-                        canvas.targetDisplay = 0;
+                        canvas.targetDisplay = 2;
                         crossbow.offsetRotation = 90;
                         break;
                 }
