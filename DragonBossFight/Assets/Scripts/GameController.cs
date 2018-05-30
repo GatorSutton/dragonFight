@@ -48,6 +48,11 @@ public class GameController : MonoBehaviour {
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
          
 	}
 
@@ -162,9 +167,16 @@ public class GameController : MonoBehaviour {
         dH.healToFull();
     }
 
-    
+    void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("Screenmanager Resolution Width", 1600);
+        PlayerPrefs.SetInt("Screenmanager Resolution Height", 900);
+        PlayerPrefs.SetInt("Screenmanager Is Fullscreen mode", 1);
+    }
 
 
 
-   
+
+
+
 }
