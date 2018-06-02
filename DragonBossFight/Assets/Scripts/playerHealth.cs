@@ -7,7 +7,6 @@ public class playerHealth : MonoBehaviour {
 
     public int startingHealth;
     private Slider healthBar;
-    private HPController hpController;
     private int hp;
     public int HP
     {
