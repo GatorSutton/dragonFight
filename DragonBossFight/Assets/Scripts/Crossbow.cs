@@ -11,6 +11,7 @@ public class Crossbow : MonoBehaviour {
     private float cdRemaining;
     private float[] pointer;
     public float offsetRotation = 0;
+    public int wiiMoteNumber;
 
     // Use this for initialization
     void Start () {
@@ -22,7 +23,7 @@ public class Crossbow : MonoBehaviour {
         if (!WiimoteManager.HasWiimote()) { return; }
 
 
-        wiimote = WiimoteManager.Wiimotes[0];
+        wiimote = WiimoteManager.Wiimotes[wiiMoteNumber];
         pointer = wiimote.Ir.GetPointingPosition();
 
 

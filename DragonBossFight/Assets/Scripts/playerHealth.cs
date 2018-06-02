@@ -20,13 +20,11 @@ public class playerHealth : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         hp = startingHealth;
-        hpController = GameObject.Find("Front Camera").transform.FindChild("Canvas").FindChild("PlayerHealth").GetComponent<HPController>();
         healthBar = GameObject.Find("PlayerHPBar").GetComponent<Slider>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        hpController.setHealth((float)hp / (float)startingHealth);
         setHealthBarSlider();
     }
 
