@@ -33,7 +33,6 @@ public class dragonHealth : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         hp = startingHealth;
        dAC = GetComponent<dragonAttackController>();
-        hpController = GameObject.Find("Front Camera").transform.FindChild("Canvas").FindChild("Healthbar").GetComponent<HPController>();
         healthBar = GameObject.Find("DragonHPBar").GetComponent<Slider>();
 	}
 	
@@ -44,7 +43,6 @@ public class dragonHealth : MonoBehaviour {
             hp--;
             print(hp);
         }
-        hpController.setHealth(((float)hp / (float)startingHealth));
 
         checkAllTargets();
 
