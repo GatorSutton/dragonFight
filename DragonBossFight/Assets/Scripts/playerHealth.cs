@@ -16,10 +16,13 @@ public class playerHealth : MonoBehaviour {
         }
     }
 
+    private AudioSource AS;
+
 	// Use this for initialization
 	void Start () {
         hp = startingHealth;
         healthBar = GameObject.Find("PlayerHPBar").GetComponent<Slider>();
+        AS = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -32,6 +35,7 @@ public class playerHealth : MonoBehaviour {
         if (hp > 0)
         {
             hp--;
+            AS.Play();
             print("player health is: " + hp);
         }
     }
