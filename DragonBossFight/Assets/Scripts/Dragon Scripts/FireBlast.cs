@@ -27,7 +27,7 @@ public class FireBlast : FireAttack {
     {
         em = ps.emission;
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
-        targetScale = floor.sizeX - 1f;
+        targetScale = floor.sizeX - 3f;
         id = 3;
         audioSource = GetComponent<AudioSource>();
     }

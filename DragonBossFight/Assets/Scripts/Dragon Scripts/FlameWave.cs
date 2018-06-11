@@ -48,7 +48,7 @@ public class FlameWave : FireAttack {
         //Move fireball through all square and back
         yield return null;
 
-        while (fire.localPosition.z < distanceToLastSquare)
+        while (fire.localPosition.z < distanceToLastSquare - 1f)
         {
             fire.Translate(Vector3.forward * Time.deltaTime * speed, Space.Self);
             yield return new WaitForEndOfFrame();

@@ -17,7 +17,6 @@ public class FireBallThrower : FireAttack {
     private void Start()
     {
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
-         numOfFireballs = floor.sizeX;
         id = 4;
     }
 
@@ -59,7 +58,7 @@ public class FireBallThrower : FireAttack {
 
     private void throwOneFireball(float position)
     {
-        fireball.position = position - (floor.sizeX / 2f) + .5f;
+        fireball.position = (position%(floor.sizeX)) - (floor.sizeX / 2f) + .5f;
         Instantiate(fireball, this.transform);
         fireball.floorLength = floor.sizeX;
     }

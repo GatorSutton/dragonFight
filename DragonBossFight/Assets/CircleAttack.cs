@@ -13,6 +13,7 @@ public class CircleAttack : FireAttack {
 	// Use this for initialization
 	void Start () {
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
+        id = 5;
     }
 	
 	// Update is called once per frame
