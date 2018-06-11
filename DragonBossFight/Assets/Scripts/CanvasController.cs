@@ -28,7 +28,7 @@ public class CanvasController : MonoBehaviour {
                 {
                     case SplineWalker.Position.Left:
                         canvas.targetDisplay = 0;
-                        crossbow.offsetRotation = -90;
+                        crossbow.offsetRotation = 270;
                         break;
                     case SplineWalker.Position.Front:
                         canvas.targetDisplay = 1;
