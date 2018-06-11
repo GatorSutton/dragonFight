@@ -12,6 +12,7 @@ public class dragonAttackController : MonoBehaviour
     public FireAttack fireBallThrower;
     public FireAttack flameWave;
     public FireAttack circleAttack;
+    public FireAttack safeSpotsAttack;
 
     public dragonHealth dH;
   
@@ -115,11 +116,12 @@ public class dragonAttackController : MonoBehaviour
 
     private void resetAttacks()
     {
-      //   fireAttacks.Add(flameSweep);
-       fireAttacks.Add(fireBlast);
-     //  fireAttacks.Add(fireBallThrower);
+        // fireAttacks.Add(flameSweep);
+      // fireAttacks.Add(fireBlast);
+      // fireAttacks.Add(fireBallThrower);
      // fireAttacks.Add(flameWave);
-       // fireAttacks.Add(circleAttack);
+      //  fireAttacks.Add(circleAttack);
+        fireAttacks.Add(safeSpotsAttack);
     }
 
     private void attackController()
