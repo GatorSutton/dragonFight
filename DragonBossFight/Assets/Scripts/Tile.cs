@@ -31,6 +31,7 @@ public class Tile : MonoBehaviour {
         updateMaterial();
         checkForPlayerOnFire();
         checkForPlayerOnSwitch();
+        checkForNoTriggers();                               //if an attack collider is deleted instead of moving off of the tiles
 	}
 
     private void OnCollisionEnter(Collision collision)
@@ -170,6 +171,11 @@ public class Tile : MonoBehaviour {
         {
             myState = States.NONE;
         }
+    }
+
+    private void checkForNoTriggers()
+    {
+
     }
 
     
