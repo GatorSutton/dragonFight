@@ -6,17 +6,8 @@ public class dragonAttackController : MonoBehaviour
 {
 
     public Floor floor;
-
-    public FireAttack flameSweep;
-    public FireAttack fireBlast;
-    public FireAttack fireBallThrower;
-    public FireAttack flameWave;
-    public FireAttack circleAttack;
-    public FireAttack safeSpotsAttack;
-
+    public FireAttack[] allPossibleAttacks;
     public dragonHealth dH;
-  
-
     public List<FireAttack> fireAttacks = new List<FireAttack>();
     public Animator anim;
 
@@ -116,12 +107,13 @@ public class dragonAttackController : MonoBehaviour
 
     private void resetAttacks()
     {
-        // fireAttacks.Add(flameSweep);
-      // fireAttacks.Add(fireBlast);
-      // fireAttacks.Add(fireBallThrower);
-     // fireAttacks.Add(flameWave);
-      //  fireAttacks.Add(circleAttack);
-        fireAttacks.Add(safeSpotsAttack);
+        foreach (FireAttack f in allPossibleAttacks)
+        {
+            fireAttacks.Add(f);
+        }
+        fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
+        fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
+
     }
 
     private void attackController()
