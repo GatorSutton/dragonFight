@@ -107,6 +107,7 @@ public class dragonAttackController : MonoBehaviour
 
     private void resetAttacks()
     {
+        fireAttacks.Clear();
         foreach (FireAttack f in allPossibleAttacks)
         {
             fireAttacks.Add(f);
