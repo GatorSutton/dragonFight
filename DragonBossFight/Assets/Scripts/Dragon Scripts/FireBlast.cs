@@ -13,10 +13,10 @@ public class FireBlast : FireAttack {
 
     private ParticleSystem.EmissionModule em;
     private Vector3 gameCenter = new Vector3(0f, 0f, 0f);
+    private Vector3 offsetGameCenter;
     public float targetScale;
     public float initScale;
     public float growFactor;
-    public float waitTime;
 
     private float _currentScale = 1f;
     private bool _upScale = true;
@@ -27,7 +27,6 @@ public class FireBlast : FireAttack {
     {
         em = ps.emission;
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
-        targetScale = floor.sizeX - 3f;
         id = 3;
         audioSource = GetComponent<AudioSource>();
     }
@@ -47,14 +46,15 @@ public class FireBlast : FireAttack {
         em.enabled = true;
         activeStatus = true;
         _currentScale = initScale;
+        offsetGameCenter = gameCenter + new Vector3((Random.Range(0, 2) * 2 - 1) * floor.sizeX / 2, 0f, (Random.Range(0, 2) * 2 - 1) * floor.sizeZ / 2);                              //randomly place the center on one of the 4 corners
         //Move warn to the center
-        warn.position = gameCenter;
+        warn.position = offsetGameCenter;
         yield return new WaitForSeconds(.5f);
         //Move warn back
         warn.localPosition = new Vector3(0f, 0f, 0f);
         yield return new WaitForSeconds(1f);
         //Move fireball to the center
-        fire.position = gameCenter;
+        fire.position = offsetGameCenter;
         //grow fireball
         while(_upScale)
         {
@@ -65,7 +65,7 @@ public class FireBlast : FireAttack {
             }
             _currentScale *= growFactor;
             fire.localScale = Vector3.one * _currentScale;
-            yield return new WaitForSeconds(waitTime);
+            yield return new WaitForEndOfFrame();
         }
         //wait 2 seconds as large fireball
         yield return new WaitForSeconds(2f);
@@ -79,7 +79,7 @@ public class FireBlast : FireAttack {
             }
             _currentScale /= growFactor;
             fire.localScale = Vector3.one * _currentScale;
-            yield return new WaitForSeconds(waitTime);
+            yield return new WaitForEndOfFrame();
         }
         //Move back to under the dragon
         audioSource.Stop();
@@ -88,5 +88,6 @@ public class FireBlast : FireAttack {
         em.enabled = false;
 
     }
+  
 
 }

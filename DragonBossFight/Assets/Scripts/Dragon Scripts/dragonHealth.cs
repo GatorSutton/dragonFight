@@ -97,7 +97,7 @@ public class dragonHealth : MonoBehaviour {
         }
         if (count == targets.Count)
         {
-            takeDamage(10);
+            takeDamage(100);
             resetTargets();
             anim.speed = 1;
             anim.SetTrigger("hit");
