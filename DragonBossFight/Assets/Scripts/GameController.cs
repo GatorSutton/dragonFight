@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour {
     public Material material;
     public GameObject initialFloor;
     public Canvas canvas;
+    public GameObject menu;
 
     private GameObject dragon;
     private dragonHealth dH;
@@ -50,12 +51,12 @@ public class GameController : MonoBehaviour {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            menu.SetActive(!menu.activeSelf);
         }
-         
-	}
+
+    }
 
     private IEnumerator gameLoop()
     {
