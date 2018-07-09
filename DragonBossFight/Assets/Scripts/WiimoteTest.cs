@@ -77,5 +77,23 @@ public class WiimoteTest : MonoBehaviour {
             WiimoteManager.Cleanup(wiimote);
             wiimote = null;
         }
+
+        if (wiimote2 != null)
+        {
+            WiimoteManager.Cleanup(wiimote);
+            wiimote2 = null;
+        }
+
+        if (wiimote3 != null)
+        {
+            WiimoteManager.Cleanup(wiimote);
+            wiimote3 = null;
+        }
+
+        if (wiimote4 != null)
+        {
+            WiimoteManager.Cleanup(wiimote);
+            wiimote4 = null;
+        }
     }
 }

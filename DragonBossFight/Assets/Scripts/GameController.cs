@@ -152,7 +152,7 @@ public class GameController : MonoBehaviour {
         }
         skip = true;
         Destroy(dragon, 1);
-        StartCoroutine(gameLoop());
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void killDragon()
@@ -161,7 +161,6 @@ public class GameController : MonoBehaviour {
         dragon.GetComponent<SplineWalker>().enabled = false;
         dragon.GetComponent<dragonHealth>().enabled = false;
         dC.setState(dragonController.dragonState.wait);
-        material.color = Color.black;
     }
 
     private void resetAllHp()
@@ -176,7 +175,11 @@ public class GameController : MonoBehaviour {
         PlayerPrefs.SetInt("Screenmanager Resolution Width", 1600);
         PlayerPrefs.SetInt("Screenmanager Resolution Height", 900);
         PlayerPrefs.SetInt("Screenmanager Is Fullscreen mode", 1);
+
+        PlayerPrefs.DeleteKey("difficulty");
+        PlayerPrefs.DeleteKey("name");
     }
+
 
 
 
