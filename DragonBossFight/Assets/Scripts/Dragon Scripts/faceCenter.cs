@@ -9,18 +9,13 @@ public class faceCenter : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         target = GameObject.FindGameObjectWithTag("center").transform;
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
         transform.LookAt(target);
-       // focusAtCenter();
-    }
+        transform.LookAt(new Vector3(target.position.x, this.transform.position.y, target.position.z));
 
-    private void focusAtCenter()
-    {
-        Vector3 relativePos = target.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(relativePos);
-        transform.rotation = rotation;
     }
 }
