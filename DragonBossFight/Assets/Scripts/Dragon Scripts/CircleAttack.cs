@@ -6,8 +6,11 @@ public class CircleAttack : FireAttack {
 
     public float speed;
     public float rotations;
+    public Animator anim;
 
     private Floor floor;
+    private AudioSource aS;
+    
 
 
 	// Use this for initialization
@@ -15,11 +18,6 @@ public class CircleAttack : FireAttack {
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
         id = 5;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public override IEnumerator Attack()
     {

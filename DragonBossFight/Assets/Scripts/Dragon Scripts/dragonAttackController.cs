@@ -8,15 +8,16 @@ public class dragonAttackController : MonoBehaviour
     public Floor floor;
     public FireAttack[] allPossibleAttacks;
     public dragonHealth dH;
-    public List<FireAttack> fireAttacks = new List<FireAttack>();
+
     public Animator anim;
 
-
+    private List<FireAttack> fireAttacks = new List<FireAttack>();
     private FireAttack currentAttack;
     private SplineWalker SW;
     private Action action;
     private bool actionComplete;
     public bool attacking = true;
+    private PushBack pB;
 
     public float vulnerableTime;
     public bool resting = false;
@@ -27,6 +28,7 @@ public class dragonAttackController : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
+        pB = GetComponent<PushBack>();
         actionComplete = true;
         floor = GameObject.FindGameObjectWithTag("floor").GetComponent<Floor>();
         SW = GetComponent<SplineWalker>();
@@ -80,8 +82,10 @@ public class dragonAttackController : MonoBehaviour
                     {
                         actionComplete = true;
                         action = Action.rest;
+                        //move set Targets into the wall push back to make timing easier
+                        StartCoroutine(pB.pushWall(10f));
                         anim.speed = .2f;
-                        dH.setTargets();
+                        //dH.setTargets();  
                         print("resting");
                     }
                     else
@@ -107,6 +111,7 @@ public class dragonAttackController : MonoBehaviour
 
     private void resetAttacks()
     {
+        
         fireAttacks.Clear();
         /*
         foreach (FireAttack f in allPossibleAttacks)
