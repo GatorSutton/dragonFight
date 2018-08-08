@@ -30,22 +30,24 @@ public class PushBack : MonoBehaviour {
         boxCollider.tag = "warn";
         boxCollider.isTrigger = true;
         boxCollider.size = new Vector3(floor.sizeX, 1, floor.sizeZ);
-        boxCollider.center = new Vector3(0, 0, floor.sizeZ/2);
-        boxCollider.transform.localPosition = new Vector3(0f, 0f, 0f);
+        boxCollider.transform.localPosition = new Vector3(0f, 0f, -floor.sizeZ/2);
+        //boxCollider.center = new Vector3(0, 0, floor.sizeZ/2);
+        boxCollider.center = new Vector3(0, 0, 0);
 
-        while (Vector3.Magnitude(wall.transform.position - gameCenter.position) > floor.sizeZ/2)
+
+        while (Vector3.Magnitude(wall.transform.position - gameCenter.position) > floor.sizeZ)
         {
             wall.transform.position = Vector3.MoveTowards(wall.transform.position, gameCenter.position, 5 * Time.deltaTime);
             print("moving");
             yield return new WaitForEndOfFrame();
         }
 
-        boxCollider.transform.localPosition = new Vector3(0, 0, 0);
+        boxCollider.transform.localPosition = new Vector3(0, 0, -floor.sizeZ/2);
         yield return new WaitForFixedUpdate();
         boxCollider.tag = "fire";
         yield return new WaitForSeconds(3f);
         
-        while (Vector3.Magnitude(wall.transform.position - gameCenter.position)  > 0.1)
+        while (Vector3.Magnitude(wall.transform.position - gameCenter.position)  > floor.sizeX/2)
         {
             wall.transform.position = Vector3.MoveTowards(wall.transform.position, gameCenter.position, speed * Time.deltaTime);
             print("moving");
