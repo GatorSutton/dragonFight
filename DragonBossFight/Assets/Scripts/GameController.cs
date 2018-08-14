@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour {
     public GameObject initialFloor;
     public Canvas canvas;
     public GameObject menu;
+    public NotificationController nC;
 
     private GameObject dragon;
     private dragonHealth dH;
@@ -79,7 +80,7 @@ public class GameController : MonoBehaviour {
         floor.clearAllTiles();
         initialFloor.SetActive(false);
         skip = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(10f);
         canvas.targetDisplay = 1;
 
         //dragon entrance animation
@@ -103,6 +104,7 @@ public class GameController : MonoBehaviour {
         {
             if(pH.HP <= 0)
             {
+                nC.flashMessage("Ouch Try Again");
                 //finish current attack
                 while(!dC.isActionComplete())
                 {
@@ -138,6 +140,7 @@ public class GameController : MonoBehaviour {
 
 
         killDragon();
+        nC.flashMessage("Victory");
         //clear tiles
 
         //dragon death/win animation

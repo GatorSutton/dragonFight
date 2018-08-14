@@ -14,11 +14,7 @@ public class safeSpotsAttack : FireAttack {
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
         id = 6;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 
     public override IEnumerator Attack()
     {

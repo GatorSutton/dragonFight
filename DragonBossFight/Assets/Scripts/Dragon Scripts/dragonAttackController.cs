@@ -24,6 +24,10 @@ public class dragonAttackController : MonoBehaviour
     private float restTimer;
     private playerHealth pH;
 
+    public delegate void AttackAction();
+    public static event AttackAction attackBegin;
+    public static event AttackAction attackEnd;
+
 
     // Use this for initialization
     void Awake()
@@ -51,6 +55,7 @@ public class dragonAttackController : MonoBehaviour
 
     private void attack()
     {
+        attackBegin();                                                      //event
         int index = Random.Range(0, fireAttacks.Count);
         currentAttack = fireAttacks[index];
         StartCoroutine(currentAttack.Attack());
@@ -78,6 +83,7 @@ public class dragonAttackController : MonoBehaviour
             case Action.attack:
                 if (!currentAttack.getStatus())
                 {
+                    attackEnd();                                                //event
                     if (fireAttacks.Count == 0 && pH.HP > 0)
                     {
                         actionComplete = true;
@@ -113,15 +119,15 @@ public class dragonAttackController : MonoBehaviour
     {
         
         fireAttacks.Clear();
-        /*
+        
         foreach (FireAttack f in allPossibleAttacks)
          {
              fireAttacks.Add(f);
          }
          fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
          fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
-        */
-        fireAttacks.Add(allPossibleAttacks[3]);
+        
+        //fireAttacks.Add(allPossibleAttacks[3]);
 
     }
 

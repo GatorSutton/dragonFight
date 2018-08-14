@@ -19,8 +19,11 @@ public class Tile : MonoBehaviour {
     bool fire = false;
     bool takingDamage = false;
 
-	// Use this for initialization
-	void Start () {
+    public delegate void TileAction();
+    public static event TileAction OnHit;
+
+    // Use this for initialization
+    void Start () {
         rend = GetComponent<MeshRenderer>();
        // DH = GameObject.FindGameObjectWithTag("dragon").GetComponent<dragonHealth>();
         PH = GameObject.FindGameObjectWithTag("Player").GetComponent<playerHealth>();
@@ -139,6 +142,7 @@ public class Tile : MonoBehaviour {
         {
             StartCoroutine(flickerDamage());
             PH.takeDamage();
+            OnHit();
         }
     }
 

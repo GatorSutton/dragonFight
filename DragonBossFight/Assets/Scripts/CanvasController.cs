@@ -28,25 +28,40 @@ public class CanvasController : MonoBehaviour {
                     switch (SW.position)
                     {
 
-                    case SplineWalker.Position.Left:                     
-                            canvas.targetDisplay = 0;
-                            crossbow.offsetRotation = 270;
+                    case SplineWalker.Position.Left:
+                        Invoke("leftView", 2);
                             break;
 
                     case SplineWalker.Position.Front:
-                        canvas.targetDisplay = 1;
-                        crossbow.offsetRotation = 0;
+                        Invoke("frontView", 2);
                         break;
 
                     case SplineWalker.Position.Right:
-                        canvas.targetDisplay = 2;                     
-                        crossbow.offsetRotation = 90;
+                        Invoke("rightView", 2);
                         break;
                    }
             }
         }
 
 
+    }
+
+    private void leftView()
+    {
+        canvas.targetDisplay = 0;
+        crossbow.offsetRotation = 270;
+    }
+
+    private void frontView()
+    {
+        canvas.targetDisplay = 1;
+        crossbow.offsetRotation = 0;
+    }
+
+    private void rightView()
+    {
+        canvas.targetDisplay = 2;
+        crossbow.offsetRotation = 90;
     }
 
 
