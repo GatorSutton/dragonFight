@@ -6,32 +6,55 @@ using UnityEngine.UI;
 public class ScoreController : MonoBehaviour {
 
     public NotificationController Notification;
+    public int defenseBonus;
+    public int attackBonus;
 
     private bool flawless;
     private Text scoreText;
-    private int score;
-    private int bonus;
+    private int m_Score;
+    public int Score
+    {
+        get { return m_Score; }
+        set
+        {
+            if (m_Score == value) return;
+            m_Score = value;
+            if (OnVariableChange != null)
+                OnVariableChange(m_Score);
+        }
+    }
+
+    public delegate void OnVariableChangeDelegate(int newVal);
+    public event OnVariableChangeDelegate OnVariableChange;
+
+
+    private int animatedScore;
+   
     private int multiplier;
 
 	// Use this for initialization
 	void Start () {
-        bonus = 200;
         multiplier = 1;
-        score = 0;
+        m_Score = 0;
         flawless = true;
         scoreText = GetComponent<Text>();
         updateScore();
 	}
 
-    void updateScore()
+    public IEnumerator updateScore()
     {
-        scoreText.text = score.ToString();
+        while(animatedScore < m_Score)
+        {
+            animatedScore += 10;
+            scoreText.text = animatedScore.ToString();
+            yield return new WaitForEndOfFrame();
+        }
+  
     }
 
     void changeScore(int amount)
     {
-        score += amount;
-        updateScore();
+        Score += amount;
     }
 
     void flawlessReset()
@@ -49,6 +72,8 @@ public class ScoreController : MonoBehaviour {
         Tile.OnHit += notFlawless;
         dragonAttackController.attackBegin += flawlessReset;
         dragonAttackController.attackEnd += checkForBonus;
+        dragonHealth.takeHit += awardAttackBonus;
+        OnVariableChange += VariableChangeHandler;
     }
 
     void OnDisable()
@@ -62,15 +87,37 @@ public class ScoreController : MonoBehaviour {
     {
         if(flawless)
         {
+            string message = buildMessage();
+            Notification.flashMessage(message);
+            changeScore(defenseBonus * multiplier);
             multiplier += 1;
-            changeScore(bonus*multiplier);
-            Notification.flashMessage("FLAWLESS");
-        
         }
         else
         {
             multiplier = 1;
         }
+    }
+
+    string buildMessage()
+    {
+        string message = "FLAWLESS";
+        if(multiplier > 1)
+        {
+            message += " X " + multiplier;
+        }
+        return message;
+    }
+
+    void awardAttackBonus()
+    {
+        Notification.flashMessage("SICK");
+        changeScore(attackBonus);
+    }
+
+
+    void VariableChangeHandler(int newVal)
+    {
+        StartCoroutine(updateScore());
     }
 
 

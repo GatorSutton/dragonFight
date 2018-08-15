@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class NotificationController : MonoBehaviour {
 
+
     private Text notification;
     private float time;
     private Vector3 startPosition;
@@ -17,6 +18,7 @@ public class NotificationController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 		if(time > 0){
             time -= Time.deltaTime;
         }
@@ -24,9 +26,8 @@ public class NotificationController : MonoBehaviour {
         notification.color = Color.Lerp(Color.clear, Color.white, time);
         transform.position = new Vector3(startPosition.x, Mathf.Lerp(startPosition.y+150f, startPosition.y, time), startPosition.z);
 
-	}
+    }
 
-    [SerializeField]
     public void flashMessage(string message){
         notification.text = message;
         time = 2;

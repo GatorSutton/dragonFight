@@ -84,6 +84,7 @@ public class dragonAttackController : MonoBehaviour
                 if (!currentAttack.getStatus())
                 {
                     attackEnd();                                                //event
+
                     if (fireAttacks.Count == 0 && pH.HP > 0)
                     {
                         actionComplete = true;

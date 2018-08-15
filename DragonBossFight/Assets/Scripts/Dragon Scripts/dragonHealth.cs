@@ -7,11 +7,13 @@ public class dragonHealth : MonoBehaviour {
 
     public Animator anim;
     public int startingHealth;
-    public HPController hpController;
     public List<targetController> targets = new List<targetController>();
     public AudioClip audioHit;
     public AudioClip audioDead;
     public AudioClip audioSlow;
+    public NotificationController nC;
+    public float finishHimTime;
+    public targetController weakPointPrefab;
 
     private Slider healthBar;
     private AudioSource audioSource;
@@ -28,8 +30,11 @@ public class dragonHealth : MonoBehaviour {
     private dragonAttackController dAC;
     public Material material;
 
-	// Use this for initialization
-	void Awake () {
+    public delegate void HealthAction();
+    public static event HealthAction takeHit;
+
+    // Use this for initialization
+    void Awake () {
         audioSource = GetComponent<AudioSource>();
         hp = startingHealth;
        dAC = GetComponent<dragonAttackController>();
@@ -39,9 +44,8 @@ public class dragonHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (Input.GetKeyDown(KeyCode.F))
-        {  
-            hp--;
-            print(hp);
+        {
+            takeDamage(100);
         }
 
         checkAllTargets();
@@ -68,7 +72,8 @@ public class dragonHealth : MonoBehaviour {
 
         if(hp <= 0)
         {
-            anim.SetTrigger("dead");
+            finishHim();
+            //anim.SetTrigger("dead");
             audioSource.clip = audioHit;
             audioSource.Play();
         }
@@ -101,6 +106,7 @@ public class dragonHealth : MonoBehaviour {
             resetTargets();
             anim.speed = 1;
             anim.SetTrigger("hit");
+            takeHit();
         }
 
     }
@@ -117,5 +123,26 @@ public class dragonHealth : MonoBehaviour {
     {
         healthBar.value = ((float)hp / (float)startingHealth);
     }
+    
+    
+    private IEnumerator finishHim()
+    {
+        {
+            targetController finalTarget = Instantiate(weakPointPrefab);
+            finalTarget.startFinalTarget();
+            //starting the final target should set its parent to one of the weakpoints in the list on the targetControllers ... moving should reparent and home in
+
+            yield return new WaitForSeconds(finishHimTime);
+            // show a counter through notification
+            //circle the floor with fire for cool effect
+        }
+        anim.SetTrigger("dead");
+
+    }
+    
+
+
+
+
 
 }
