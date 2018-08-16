@@ -17,6 +17,7 @@ public class dragonHealth : MonoBehaviour {
 
     private Slider healthBar;
     private AudioSource audioSource;
+    ScoreController sC;
 
     private int hp;
     public int HP
@@ -39,7 +40,9 @@ public class dragonHealth : MonoBehaviour {
         hp = startingHealth;
        dAC = GetComponent<dragonAttackController>();
         healthBar = GameObject.Find("DragonHPBar").GetComponent<Slider>();
-	}
+        nC = GameObject.FindGameObjectWithTag("notification").GetComponent<NotificationController>();
+        sC = GameObject.Find("Score").GetComponent<ScoreController>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -66,16 +69,17 @@ public class dragonHealth : MonoBehaviour {
         {
             audioSource.Play();
             anim.SetTrigger("hit");
+            anim.speed = 1;
         }
         print(hp);
         setHealthBarSlider();
 
         if(hp <= 0)
         {
-            finishHim();
+            StartCoroutine(finishHim());
             //anim.SetTrigger("dead");
-            audioSource.clip = audioHit;
-            audioSource.Play();
+            //audioSource.clip = audioHit;
+            //audioSource.Play();
         }
     }
     
@@ -102,11 +106,9 @@ public class dragonHealth : MonoBehaviour {
         }
         if (count == targets.Count)
         {
-            takeDamage(100);
             resetTargets();
-            anim.speed = 1;
-            anim.SetTrigger("hit");
             takeHit();
+            takeDamage(100);
         }
 
     }
@@ -128,16 +130,38 @@ public class dragonHealth : MonoBehaviour {
     private IEnumerator finishHim()
     {
         {
+            // remove all other weakpoints from scene
+            var oldTargets = GameObject.FindGameObjectsWithTag("target");
+            print(oldTargets.Length);
+            foreach(var target in oldTargets)
+            {
+                print(target.gameObject.name);
+                Destroy(target);
+            }
+
+
+            audioSource.clip = audioSlow;
+            audioSource.Play();
+            anim.speed = .2f;
             targetController finalTarget = Instantiate(weakPointPrefab);
             finalTarget.startFinalTarget();
             //starting the final target should set its parent to one of the weakpoints in the list on the targetControllers ... moving should reparent and home in
 
             yield return new WaitForSeconds(finishHimTime);
+            nC.flashMessage(buildMessage(finalTarget.counter));
+            sC.Score += finalTarget.counter * 1000;
             // show a counter through notification
             //circle the floor with fire for cool effect
         }
         anim.SetTrigger("dead");
+        // fall until hit the ground
+    }
 
+    private string buildMessage(int hits)
+    {
+        string message = hits.ToString() + " HITS!";
+        return message;
+       
     }
     
 

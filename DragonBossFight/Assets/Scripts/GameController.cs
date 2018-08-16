@@ -139,8 +139,7 @@ public class GameController : MonoBehaviour {
         skip = true;
 
 
-        killDragon();
-        nC.flashMessage("Victory");
+        haltDragon();
         //clear tiles
 
         //dragon death/win animation
@@ -158,11 +157,9 @@ public class GameController : MonoBehaviour {
         SceneManager.LoadScene("MainMenu");
     }
 
-    private void killDragon()
+    private void haltDragon()
     {
-      
         dragon.GetComponent<SplineWalker>().enabled = false;
-        dragon.GetComponent<dragonHealth>().enabled = false;
         dC.setState(dragonController.dragonState.wait);
     }
 

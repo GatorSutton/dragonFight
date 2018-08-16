@@ -110,7 +110,6 @@ public class ScoreController : MonoBehaviour {
 
     void awardAttackBonus()
     {
-        Notification.flashMessage("SICK");
         changeScore(attackBonus);
     }
 
