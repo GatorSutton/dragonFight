@@ -18,8 +18,8 @@ public class playerHealth : MonoBehaviour {
 
     private AudioSource AS;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         hp = startingHealth;
         healthBar = GameObject.Find("PlayerHPBar").GetComponent<Slider>();
         AS = GetComponent<AudioSource>();

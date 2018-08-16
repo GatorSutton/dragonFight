@@ -45,7 +45,14 @@ public class ScoreController : MonoBehaviour {
     {
         while(animatedScore < m_Score)
         {
-            animatedScore += 10;
+            if(animatedScore + 100 < m_Score)
+            {
+                animatedScore += 100;
+            }
+            else
+            {
+                animatedScore += 10;
+            }
             scoreText.text = animatedScore.ToString();
             yield return new WaitForEndOfFrame();
         }

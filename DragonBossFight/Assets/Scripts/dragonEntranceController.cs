@@ -7,6 +7,7 @@ public class dragonEntranceController : MonoBehaviour {
     private SplineWalker SW;
     public bool actionComplete = false;
     public Transform startingLocation;
+    public float timeBeforeAttacking;
 
 	// Use this for initialization
 	void Awake () {
@@ -15,6 +16,7 @@ public class dragonEntranceController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
+    /*
 	void Update ()
     {
 	    if(SW.isPositionReached())
@@ -22,16 +24,32 @@ public class dragonEntranceController : MonoBehaviour {
             actionComplete = true;
         }
 	}
+    */
 
     private void OnEnable()
     {
-        SW.assignPath("entrance");
-        SW.setProgress(0f);
-        SW.setPosition(SplineWalker.Position.Right);
+        StartCoroutine(enterScene());
+        //SW.assignPath("entrance");
+        //SW.setProgress(0f);
+        //SW.setPosition(SplineWalker.Position.Right);
     }
 
     private void OnDisable()
     {
         actionComplete = false;
+        StopAllCoroutines();
+    }
+
+     private IEnumerator enterScene()
+    {
+        SW.assignPath("entrance");
+        SW.setProgress(0f);
+        SW.setPosition(SplineWalker.Position.Right);
+        while (!SW.isPositionReached())
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        yield return new WaitForSeconds(timeBeforeAttacking);
+        actionComplete = true;
     }
 }

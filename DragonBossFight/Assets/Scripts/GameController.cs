@@ -28,6 +28,8 @@ public class GameController : MonoBehaviour {
     private dragonHealth dH;
     private dragonController dC;
     public playerHealth pH;
+    private ScoreController sC;
+
 
 
     bool skip = true;
@@ -37,6 +39,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
 
         StartCoroutine(gameLoop());
+        sC = GameObject.Find("Score").GetComponent<ScoreController>();
        
 	}
 	
@@ -104,13 +107,15 @@ public class GameController : MonoBehaviour {
         {
             if(pH.HP <= 0)
             {
-                nC.flashMessage("Ouch Try Again");
+                nC.flashMessage("YOU DIED");
                 //finish current attack
                 while(!dC.isActionComplete())
                 {
                     yield return null;
                 }
                 //fly back to home
+                nC.flashMessage("REWINDING TIME");
+                sC.Score = 0;
                 dC.setState(dragonController.dragonState.exit);
                 while (!dC.isActionComplete())
                 {

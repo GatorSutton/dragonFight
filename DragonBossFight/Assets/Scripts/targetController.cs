@@ -76,6 +76,7 @@ public class targetController : MonoBehaviour {
     {
         nC.flashMessage("FINISH HIM");
         //set position at one of the four random on list
+        print(weakSpots.Count);
         transform.SetParent(weakSpots[position].transform);
         transform.localPosition = new Vector3(0f, 0f, 0f);
         finalTarget = true;
@@ -141,6 +142,8 @@ public class targetController : MonoBehaviour {
         vulnerable = false;
         position = differentRandomPosition(position);
         transform.SetParent(weakSpots[position].transform);            //finds a different random weakpoint
+        //transform.localPosition = new Vector3(0f, 0f, 0f);
+        
         var startPosition = transform.localPosition;
         float t = 0;
 
@@ -150,12 +153,8 @@ public class targetController : MonoBehaviour {
             t += Time.deltaTime * 10;
             yield return new WaitForEndOfFrame();
         }
+        transform.localPosition = new Vector3(0f, 0f, 0f);
         vulnerable = true;
-
-        //add possiblie move locations
-        //enable vulnerability at end of move
-        //randomly selected one of the other move locations'
-        //transform.position = Vector3.Lerp(currentPosition, nextPosition, t);
     }
 
     private int differentRandomPosition(int current)        //pick a position that the target is not currently at
@@ -165,6 +164,7 @@ public class targetController : MonoBehaviour {
         return list[Random.Range(0, 3)];    
     }
 
-    
+
+
 
 }
