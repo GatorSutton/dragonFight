@@ -39,14 +39,23 @@ public class safeSpotsAttack : FireAttack {
             Destroy(spots[random]);
             spots.RemoveAt(random);
         }
-         yield return new WaitForFixedUpdate();
         foreach(var spot in spots)
         {
             spot.transform.Translate(0, -1000, 0);
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
 
-        foreach(var spot in spots)
+        foreach (var spot in spots)
+        {
+            spot.transform.Translate(0, 1000, 0);
+        }
+        yield return new WaitForSeconds(3f);
+        foreach (var spot in spots)
+        {
+            spot.transform.Translate(0, -1000, 0);
+        }
+
+        foreach (var spot in spots)
         {
             spot.gameObject.tag = "fire";
         }

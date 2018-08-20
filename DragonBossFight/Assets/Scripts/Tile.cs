@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour {
     public playerHealth PH;
 
     public float timeBetweenFlicker;
-    public enum States { NONE, WARN, FLICKEROFF, FIRE, DAMAGE, SWITCH};
+    public enum States { NONE, WARN, FLICKEROFF, FIRE, DAMAGE, SWITCH, FAKEFIRE};
     [System.NonSerialized]
     public States myState = States.NONE;
     public Material[] materials;
@@ -67,6 +67,11 @@ public class Tile : MonoBehaviour {
         {
             StartCoroutine(flickerWarn());
         }
+
+        if(other.tag == "fakefire")
+        {
+            myState = States.FAKEFIRE;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -74,6 +79,11 @@ public class Tile : MonoBehaviour {
         if (other.tag == "fire")
         {
             fire = false;
+            myState = States.NONE;
+        }
+
+        if (other.tag == "fakefire")
+        {
             myState = States.NONE;
         }
     }
@@ -84,6 +94,11 @@ public class Tile : MonoBehaviour {
         {
                 fire = true;
                 myState = States.FIRE;
+        }
+
+        if(other.tag == "warn" && !warning)
+        {
+            StartCoroutine(flickerWarn());
         }
     }
 
@@ -109,6 +124,9 @@ public class Tile : MonoBehaviour {
             case States.FLICKEROFF:
                 rend.material = materials[0];
                 break;
+            case States.FAKEFIRE:
+                rend.material = materials[1];
+                break;
         }
         /*
         if(playerHere)
@@ -133,6 +151,7 @@ public class Tile : MonoBehaviour {
         myState = States.WARN;
         yield return wait;
         myState = States.NONE;
+        yield return wait;
         warning = false;
     }
 

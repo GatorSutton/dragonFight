@@ -130,6 +130,7 @@ public class dragonHealth : MonoBehaviour {
     private IEnumerator finishHim()
     {
         {
+            //make player invulnerable
             // remove all other weakpoints from scene
             var oldTargets = GameObject.FindGameObjectsWithTag("target");
             print(oldTargets.Length);

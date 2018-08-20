@@ -38,19 +38,17 @@ public class PushBack : MonoBehaviour {
         while (Vector3.Magnitude(wall.transform.position - gameCenter.position) > floor.sizeZ)
         {
             wall.transform.position = Vector3.MoveTowards(wall.transform.position, gameCenter.position, 5 * Time.deltaTime);
-            print("moving");
             yield return new WaitForEndOfFrame();
         }
 
         boxCollider.transform.localPosition = new Vector3(0, 0, -floor.sizeZ/2);
         yield return new WaitForFixedUpdate();
-        boxCollider.tag = "fire";
+        boxCollider.tag = "fakefire";
         yield return new WaitForSeconds(3f);
         
         while (Vector3.Magnitude(wall.transform.position - gameCenter.position)  > floor.sizeX/2)
         {
             wall.transform.position = Vector3.MoveTowards(wall.transform.position, gameCenter.position, speed * Time.deltaTime);
-            print("moving");
             yield return new WaitForEndOfFrame();
         }
 
