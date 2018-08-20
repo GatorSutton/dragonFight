@@ -15,6 +15,7 @@ public class targetController : MonoBehaviour {
     public bool dead;
     public List<GameObject> weakSpots = new List<GameObject>();
 
+    private particlesController PC;
     private int position = 0;
     float time;
     Transform target;
@@ -27,6 +28,7 @@ public class targetController : MonoBehaviour {
 
     private void Awake()
     {
+        PC = this.GetComponentInChildren<particlesController>();
         nC = GameObject.FindGameObjectWithTag("notification").GetComponent<NotificationController>();
         weakSpots = GameObject.FindGameObjectsWithTag("weakParent").ToList();
         audioSource = GetComponent<AudioSource>();
@@ -111,15 +113,17 @@ public class targetController : MonoBehaviour {
     {
         if (vulnerable)
         {
-            if (!finalTarget)
+            if (!audioSource.isPlaying)
             {
                 audioSource.Play();
+            }
+            if (!finalTarget)
+            {
                 target.gameObject.SetActive(false);
                 dead = true;
             }
             else
             {
-                audioSource.Play();
                 StartCoroutine(moveTarget());
             }
         }
@@ -138,6 +142,7 @@ public class targetController : MonoBehaviour {
     private IEnumerator moveTarget()
     {
         counter++;
+        PC.spawnSparks();
         //nC.flashMessage(counter++.ToString());
         vulnerable = false;
         position = differentRandomPosition(position);
@@ -163,6 +168,7 @@ public class targetController : MonoBehaviour {
         list.Remove(current);
         return list[Random.Range(0, 3)];    
     }
+
 
 
 
