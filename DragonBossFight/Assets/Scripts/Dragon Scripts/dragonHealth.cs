@@ -18,6 +18,7 @@ public class dragonHealth : MonoBehaviour {
     private Slider healthBar;
     private AudioSource audioSource;
     ScoreController sC;
+    private bool dragDead;
 
     private int hp;
     public int HP
@@ -36,6 +37,7 @@ public class dragonHealth : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
+        dragDead = false;
         audioSource = GetComponent<AudioSource>();
         hp = startingHealth;
        dAC = GetComponent<dragonAttackController>();
@@ -155,6 +157,7 @@ public class dragonHealth : MonoBehaviour {
             //circle the floor with fire for cool effect
         }
         anim.SetTrigger("dead");
+        dragDead = true;
         // fall until hit the ground
     }
 
@@ -163,6 +166,11 @@ public class dragonHealth : MonoBehaviour {
         string message = hits.ToString() + " HITS!";
         return message;
        
+    }
+
+    public bool isDragDead()
+    {
+        return dragDead;
     }
     
 

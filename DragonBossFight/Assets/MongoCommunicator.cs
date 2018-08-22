@@ -18,19 +18,38 @@ using MongoDB.Driver.Linq;
 
 public class MongoCommunicator : MonoBehaviour
 {
-    private static string username = System.Environment.GetEnvironmentVariable("mongoname");
-    private static string password = System.Environment.GetEnvironmentVariable("mongopassword");
+    //no peeking at my username and password please
+    private static string username = Environment.GetEnvironmentVariable("mongoname");
+    private static string password = Environment.GetEnvironmentVariable("mongopassword");
+
+    private string team;
+    private string boss;
+    private ScoreController sC;
+
     //string connectionString = "mongodb://localhost:27017";
     string connectionString = "mongodb://" + username + ":" + password + "@ds125862.mlab.com:25862/battlewareleaderboard";
-    string team = "test";
-    int score = 1000;
-    string boss = "dragon";
 
-    void Start()
+    private void Start()
     {
+        team = PlayerPrefs.GetString("name");
+        boss = PlayerPrefs.GetString("boss");
+        sC = GameObject.Find("Score").GetComponent<ScoreController>();
+    }
 
-        print(username);
-        print(password);
+    private void OnEnable()
+    {
+        GameController.gameOver += loadScore;
+    }
+
+    private void OnDisable()
+    {
+        GameController.gameOver -= loadScore;
+    }
+
+    public void loadScore()
+    {
+        print(team + boss + sC.Score);
+
         /*
 		 * 1. establish connection
 		 */
@@ -53,7 +72,7 @@ public class MongoCommunicator : MonoBehaviour
 
         scorecollection.Insert(new BsonDocument{
             { "team", team },
-            { "score", score },
+            { "score", sC.Score },
             { "boss", boss }
         });
         Debug.Log("2. INSERTED A DOC");

@@ -30,17 +30,18 @@ public class GameController : MonoBehaviour {
     public playerHealth pH;
     private ScoreController sC;
 
-
-
     bool skip = true;
 
+    public delegate void GameAction();
+    public static event GameAction gameOver;
 
-	// Use this for initialization
-	void Start () {
+
+
+    // Use this for initialization
+    void Start () {
 
         StartCoroutine(gameLoop());
         sC = GameObject.Find("Score").GetComponent<ScoreController>();
-       
 	}
 	
 	// Update is called once per frame
@@ -67,9 +68,13 @@ public class GameController : MonoBehaviour {
         //need to spawn floor before beginning the game loop
         yield return StartCoroutine(waitForStepOntoTile());
         yield return StartCoroutine(fightLoop());
+        yield return StartCoroutine(waitForFinishHim());
         yield return StartCoroutine(waitForReset());
         
     }
+
+
+    
 
 
     private IEnumerator waitForStepOntoTile()
@@ -148,11 +153,22 @@ public class GameController : MonoBehaviour {
         //clear tiles
 
         //dragon death/win animation
-        
+    }
+
+    private IEnumerator waitForFinishHim()
+    {
+        print("starting waitForfinish");
+        while (!dH.isDragDead())
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        print("ending waitForfinish");
     }
 
     private IEnumerator waitForReset()
     {
+        print("gameover");
+        gameOver();
         while (skip)
         {
             yield return null;
@@ -183,6 +199,7 @@ public class GameController : MonoBehaviour {
 
         PlayerPrefs.DeleteKey("difficulty");
         PlayerPrefs.DeleteKey("name");
+        PlayerPrefs.DeleteKey("score");
     }
 
 

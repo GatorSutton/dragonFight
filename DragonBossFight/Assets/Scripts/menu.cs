@@ -22,6 +22,8 @@ public class menu : MonoBehaviour {
     {
         PlayerPrefs.DeleteKey("name");
         PlayerPrefs.DeleteKey("difficulty");
+        PlayerPrefs.DeleteKey("score");
+        PlayerPrefs.SetString("boss", "dragon");
     }
 
 
