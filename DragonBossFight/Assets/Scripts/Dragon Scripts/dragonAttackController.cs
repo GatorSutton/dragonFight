@@ -89,10 +89,8 @@ public class dragonAttackController : MonoBehaviour
                     {
                         actionComplete = true;
                         action = Action.rest;
-                        //move set Targets into the wall push back to make timing easier
                         StartCoroutine(pB.pushWall(10f));
                         anim.speed = .2f;
-                        //dH.setTargets();  
                         print("resting");
                     }
                     else
@@ -120,15 +118,15 @@ public class dragonAttackController : MonoBehaviour
     {
         
         fireAttacks.Clear();
-        /*
+        
         foreach (FireAttack f in allPossibleAttacks)
          {
              fireAttacks.Add(f);
          }
          fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
          fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
-        */
-        fireAttacks.Add(allPossibleAttacks[3]);
+        
+        //fireAttacks.Add(allPossibleAttacks[3]);
 
     }
 
