@@ -69,12 +69,14 @@ public class MongoCommunicator : MonoBehaviour
 		 */
 
 
-
-        scorecollection.Insert(new BsonDocument{
-            { "team", team },
+        if (team != null)   //load the teams score to the mongodb if a team name was entered
+        {
+            scorecollection.Insert(new BsonDocument{
+            { "team", team }, 
             { "score", sC.Score },
             { "boss", boss }
         });
-        Debug.Log("2. INSERTED A DOC");
+            Debug.Log("2. INSERTED A DOC");
+        }
     }
 }
