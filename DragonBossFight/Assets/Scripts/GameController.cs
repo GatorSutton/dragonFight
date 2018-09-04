@@ -79,7 +79,6 @@ public class GameController : MonoBehaviour {
 
     private IEnumerator waitForStepOntoTile()
     {
-        canvas.targetDisplay = 4;
         floor.setSwitchTiles();
         while (!floor.isEverySwitchOff() && skip)
         {
@@ -88,8 +87,6 @@ public class GameController : MonoBehaviour {
         floor.clearAllTiles();
         initialFloor.SetActive(false);
         skip = true;
-        yield return new WaitForSeconds(1f);
-        canvas.targetDisplay = 1;
 
         //dragon entrance animation
         //dragon gameObject is spawned
