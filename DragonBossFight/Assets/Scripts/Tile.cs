@@ -34,7 +34,6 @@ public class Tile : MonoBehaviour {
         updateMaterial();
         checkForPlayerOnFire();
         checkForPlayerOnSwitch();
-        checkForPlayerOnSelector();
 	}
 
     private void OnCollisionEnter(Collision collision)
@@ -137,13 +136,16 @@ public class Tile : MonoBehaviour {
             case States.FAKEFIRE:
                 rend.material = materials[1];
                 break;
+            case States.SELECTOR:
+                rend.material = materials[1];
+                break;
         }
-        /*
-        if(playerHere)
+        
+        if(playerHere && myState != States.SELECTOR)
         {
-            rend.material = materials[1];
+            rend.material = materials[5];
         }
-        */
+        
     }
 
     private IEnumerator flickerWarn()
@@ -203,14 +205,6 @@ public class Tile : MonoBehaviour {
         if(playerHere && myState == States.SWITCH)
         {
             myState = States.NONE;
-        }
-    }
-
-    private void checkForPlayerOnSelector()
-    {
-        if (playerHere && myState == States.SELECTOR)
-        {
-            
         }
     }
 
