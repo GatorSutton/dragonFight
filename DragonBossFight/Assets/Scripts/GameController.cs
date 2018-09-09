@@ -66,6 +66,7 @@ public class GameController : MonoBehaviour {
     private IEnumerator gameLoop()
     {
         //need to spawn floor before beginning the game loop
+        //yield return StartCoroutine(waitForDialogFinished()); 
         yield return StartCoroutine(waitForStepOntoTile());
         yield return StartCoroutine(fightLoop());
         yield return StartCoroutine(waitForFinishHim());

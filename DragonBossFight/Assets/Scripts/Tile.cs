@@ -137,7 +137,7 @@ public class Tile : MonoBehaviour {
                 rend.material = materials[1];
                 break;
             case States.SELECTOR:
-                rend.material = materials[1];
+                rend.material = materials[6];
                 break;
         }
         

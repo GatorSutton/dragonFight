@@ -8,15 +8,12 @@ public class floorButton : MonoBehaviour {
     List<Tile> buttonTiles = new List<Tile>();
     bool playerOnButton = false;
     public float percentage = 0;
-    
 
-    // Use this for initialization
-    void Start()
+    private void OnEnable()
     {
-        //find all tiles within the box collider and add to list
-
-    
+        percentage = 0;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -39,8 +36,6 @@ public class floorButton : MonoBehaviour {
         {
             percentage -= .01f;
         }
-
-        print(percentage);
     }
 
     private void OnTriggerEnter(Collider collider)
