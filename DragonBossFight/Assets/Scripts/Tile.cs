@@ -9,7 +9,7 @@ public class Tile : MonoBehaviour {
 
     public float timeBetweenFlicker;
     public enum States { NONE, WARN, FLICKEROFF, FIRE, DAMAGE, SWITCH, FAKEFIRE, SELECTOR};
-    [System.NonSerialized]
+    //[System.NonSerialized]
     public States myState = States.NONE;
     public Material[] materials;
     public MeshRenderer rend;

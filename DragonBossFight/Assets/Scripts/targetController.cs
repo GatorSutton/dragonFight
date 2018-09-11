@@ -26,6 +26,10 @@ public class targetController : MonoBehaviour {
     AudioSource audioSource;
     NotificationController nC;
 
+    public delegate void TargetAction();
+    public static event TargetAction TargetShot;
+    public static event TargetAction TargetSelfDestruct;
+
     private void Awake()
     {
         PC = this.GetComponentInChildren<particlesController>();
@@ -72,6 +76,7 @@ public class targetController : MonoBehaviour {
         vulnerable = false;
         target.gameObject.SetActive(false);
         dead = false;
+        TargetSelfDestruct();
     }
 
     private IEnumerator shrinkFinalTarget()
@@ -121,6 +126,7 @@ public class targetController : MonoBehaviour {
             {
                 target.gameObject.SetActive(false);
                 dead = true;
+                TargetShot();
             }
             else
             {

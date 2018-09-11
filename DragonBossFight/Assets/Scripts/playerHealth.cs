@@ -19,7 +19,7 @@ public class playerHealth : MonoBehaviour {
     private AudioSource AS;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         hp = startingHealth;
         healthBar = GameObject.Find("PlayerHPBar").GetComponent<Slider>();
         AS = GetComponent<AudioSource>();
@@ -27,7 +27,10 @@ public class playerHealth : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        setHealthBarSlider();
+        if (healthBar.IsActive())
+        {
+            setHealthBarSlider();
+        }
     }
 
     public void takeDamage()

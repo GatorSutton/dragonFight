@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour {
     public Canvas canvas;
     public GameObject menu;
     public NotificationController nC;
+    public dialogController dialogController;
 
     private GameObject dragon;
     private dragonHealth dH;
@@ -74,8 +75,31 @@ public class GameController : MonoBehaviour {
         
     }
 
+    /*
+    private IEnumerator waitForDialogFinished()
+    {
+        
+        while (!dialogController.isFinished && skip)
+        {
+            yield return null;
+        }
+        floor.clearAllTiles();
+        initialFloor.SetActive(false);
+        skip = true;
 
-    
+        //dragon entrance animation
+        //dragon gameObject is spawned
+        dragon = GameObject.Instantiate(dragonPrefab, startingLocation.position, startingLocation.rotation);
+        material.color = Color.red;
+        dH = dragon.GetComponent<dragonHealth>();
+        dC = dragon.GetComponent<dragonController>();
+        dC.setState(dragonController.dragonState.enter);
+        while (!dC.isActionComplete())
+        {
+            yield return null;
+        }
+    }
+    */
 
 
     private IEnumerator waitForStepOntoTile()
