@@ -16,7 +16,6 @@ public class Tile : MonoBehaviour {
 
     public bool playerHere = false;
     bool warning = false;
-    bool fire = false;
     bool takingDamage = false;
 
     public delegate void TileAction();
@@ -58,7 +57,6 @@ public class Tile : MonoBehaviour {
     {
         if(other.tag == "fire"  && !takingDamage)
         {
-            fire = true;
             myState = States.FIRE;
         }
 
@@ -82,7 +80,6 @@ public class Tile : MonoBehaviour {
     {
         if (other.tag == "fire")
         {
-            fire = false;
             myState = States.NONE;
         }
 
@@ -101,7 +98,6 @@ public class Tile : MonoBehaviour {
     {
         if(other.tag == "fire" && !takingDamage)
         {
-                fire = true;
                 myState = States.FIRE;
         }
 
@@ -169,7 +165,8 @@ public class Tile : MonoBehaviour {
 
     private void checkForPlayerOnFire()
     {
-        if(playerHere && fire && !takingDamage)
+        //if(playerHere && fire && !takingDamage)
+        if(playerHere && (myState == States.FIRE) && !takingDamage)
         {
             StartCoroutine(flickerDamage());
             PH.takeDamage();

@@ -14,6 +14,14 @@ public class floorButton : MonoBehaviour {
         percentage = 0;
     }
 
+    private void OnDisable()
+    {
+        foreach(Tile tile in buttonTiles)
+        {
+            tile.myState = Tile.States.NONE;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()

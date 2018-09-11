@@ -10,6 +10,8 @@ public class knightAttack : MonoBehaviour {
     public int snakeSize;
 
     //attacks the players and starts back the dialog when done.
+    public delegate void KnightAttackAction();
+    public static event KnightAttackAction TaskComplete;
 
     // Use this for initialization
     void Start () {
@@ -19,7 +21,7 @@ public class knightAttack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.S))
+		if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             StartCoroutine("snakeSwing");
         }
@@ -61,10 +63,12 @@ public class knightAttack : MonoBehaviour {
         while (!notHit)
         {
             notHit = true;
-            for (int i = 0; i < snakeList.Count; i++)
+            for (int i = 0; i < snakeList.Count+snakeSize; i++)
             {
-                snakeList[i].myState = Tile.States.FIRE;
-
+                if (i < snakeList.Count)
+                {
+                    snakeList[i].myState = Tile.States.FIRE;
+                }
                 if (i - snakeSize >= 0)
                 {
                     snakeList[i - snakeSize].myState = Tile.States.NONE;
@@ -72,12 +76,17 @@ public class knightAttack : MonoBehaviour {
 
                 yield return new WaitForSeconds(.15f);
             }
-            if(!notHit)
+            if (!notHit)
             {
                 nC.flashMessage("TRY AGAIN");
             }
-        }   
-        yield return null;
+            else
+            {
+                nC.flashMessage("Noice");
+            }
+        }
+        yield return new WaitForSeconds(5f);
+        TaskComplete();
     }
 
 

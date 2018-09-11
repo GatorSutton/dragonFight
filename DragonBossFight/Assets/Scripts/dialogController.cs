@@ -41,6 +41,9 @@ public class dialogController : MonoBehaviour {
         conversationNodes.Add(confident);
         conversationNodes.Add(defense);
         conversationNodes.Add(offense);
+        conversationNodes.Add(success);
+        conversationNodes.Add(gameTime);
+        conversationNodes.Add(training);
 
         toggleConversation();
         //askQuestion(currentConversation);
@@ -58,6 +61,7 @@ public class dialogController : MonoBehaviour {
     {
         playerResponseController.ResponseChosen += questionAnswered;
         knightTarget.taskComplete += targetSuccess;
+        knightAttack.TaskComplete += dodgeSuccess;
         
     }
 
@@ -65,12 +69,14 @@ public class dialogController : MonoBehaviour {
     {
         playerResponseController.ResponseChosen -= questionAnswered;
         knightTarget.taskComplete -= targetSuccess;
+        knightAttack.TaskComplete -= dodgeSuccess;
     }
 
     private void targetSuccess()
     {
         attackSuccess = true;
         toggleConversation();
+        currentID = success.id;
         askQuestion(success);
     }
 
@@ -78,6 +84,7 @@ public class dialogController : MonoBehaviour {
     {
         defenseSuccess = true;
         toggleConversation();
+        currentID = success.id;
         askQuestion(success);
     }
 
@@ -128,12 +135,14 @@ public class dialogController : MonoBehaviour {
             {
                 case -1:
                     print("attack players");
+                    kA.startSnakeSwing();
                     break;
                 case -2:
                     print("spawn target");
                     kT.spawnTarget();
                     break;
                 case -3:
+                    isFinished = true;
                     print("start game");
                     break;
             }
@@ -150,9 +159,8 @@ public class dialogController : MonoBehaviour {
     private ConversationNode defense = new ConversationNode(3, "Attacks will turn the ground beneath you red. Don't stand on them to stay healthy", "Bring it on!", -1, "Hit me with your best shot", -1);
     private ConversationNode offense = new ConversationNode(4, "Blast these targets with your crossbows to practice aiming", "OK", -2, "OK", -2);
     private ConversationNode success = new ConversationNode(5, "Great job. Complete both to continue. What next?", "Attack Practice", 4, "Defense Practice",  3);
-    private ConversationNode failure = new ConversationNode(6, "I would try that again if I were you. What Next?", "Attack Practice", 4, "Defense Practice", 3);
-    private ConversationNode gameTime = new ConversationNode(7, "What would you like to do?", "Practice a little more", 8, "Bring on the dragon!", -3);
-    private ConversationNode training = new ConversationNode(8, "What would you like to practice?", "We would like to try dodging", 3, "We want more crossbow practice", 4);
+    private ConversationNode gameTime = new ConversationNode(6, "What would you like to do?", "Practice a little more", 7, "Bring on the dragon!", -3);
+    private ConversationNode training = new ConversationNode(7, "What would you like to practice?", "We would like to try dodging", 3, "We want more crossbow practice", 4);
 
 
 }

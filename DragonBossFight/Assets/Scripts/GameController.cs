@@ -67,15 +67,15 @@ public class GameController : MonoBehaviour {
     private IEnumerator gameLoop()
     {
         //need to spawn floor before beginning the game loop
-        //yield return StartCoroutine(waitForDialogFinished()); 
-        yield return StartCoroutine(waitForStepOntoTile());
+        yield return StartCoroutine(waitForDialogFinished());
+        //yield return StartCoroutine(waitForStepOntoTile());
         yield return StartCoroutine(fightLoop());
         yield return StartCoroutine(waitForFinishHim());
         yield return StartCoroutine(waitForReset());
         
     }
 
-    /*
+    
     private IEnumerator waitForDialogFinished()
     {
         
@@ -86,6 +86,8 @@ public class GameController : MonoBehaviour {
         floor.clearAllTiles();
         initialFloor.SetActive(false);
         skip = true;
+
+        // turn on UI healthbars
 
         //dragon entrance animation
         //dragon gameObject is spawned
@@ -99,7 +101,7 @@ public class GameController : MonoBehaviour {
             yield return null;
         }
     }
-    */
+    
 
 
     private IEnumerator waitForStepOntoTile()
