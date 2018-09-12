@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour {
     public GameObject menu;
     public NotificationController nC;
     public dialogController dialogController;
+    public hpBarsController hpBC;
 
     private GameObject dragon;
     private dragonHealth dH;
@@ -88,6 +89,7 @@ public class GameController : MonoBehaviour {
         skip = true;
 
         // turn on UI healthbars
+        hpBC.toggleHPBars();
 
         //dragon entrance animation
         //dragon gameObject is spawned

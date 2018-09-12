@@ -17,7 +17,7 @@ public class hpBarsController : MonoBehaviour {
 		
 	}
 
-    void toggleHPBars()
+    public void toggleHPBars()
     {
         dragonHPBar.SetActive(!dragonHPBar.activeSelf);
         playerHPBar.SetActive(!playerHPBar.activeSelf);

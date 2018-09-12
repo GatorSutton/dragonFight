@@ -5,9 +5,10 @@ using UnityEngine;
 public class dialogController : MonoBehaviour {
 
     public bool isFinished = false;
-    bool defenseSuccess = false;
-    bool attackSuccess = false;
+    public bool defenseSuccess = false;
+    public bool attackSuccess = false;
     bool dialogUIVisible = false;
+    Animator anim;
 
     //list of conversation nodes which point to each other based on the responses
     List<ConversationNode> conversationNodes = new List<ConversationNode>();
@@ -31,6 +32,7 @@ public class dialogController : MonoBehaviour {
         pRCLeft = GameObject.Find("PlayerResponseLeft").GetComponent<playerResponseController>();
         kA = GetComponent<knightAttack>();
         kT = GetComponent<knightTarget>();
+        anim = GetComponent<Animator>();
     }
 
     // Use this for initialization
@@ -93,6 +95,7 @@ public class dialogController : MonoBehaviour {
         if(defenseSuccess && attackSuccess)
         {
             cn = gameTime;
+            currentID = cn.id;
         }
 
         if(dialogUIVisible)
@@ -142,7 +145,8 @@ public class dialogController : MonoBehaviour {
                     kT.spawnTarget();
                     break;
                 case -3:
-                    isFinished = true;
+                    //start coroutine to kick players into pit
+                    StartCoroutine(kickOff());
                     print("start game");
                     break;
             }
@@ -161,6 +165,17 @@ public class dialogController : MonoBehaviour {
     private ConversationNode success = new ConversationNode(5, "Great job. Complete both to continue. What next?", "Attack Practice", 4, "Defense Practice",  3);
     private ConversationNode gameTime = new ConversationNode(6, "What would you like to do?", "Practice a little more", 7, "Bring on the dragon!", -3);
     private ConversationNode training = new ConversationNode(7, "What would you like to practice?", "We would like to try dodging", 3, "We want more crossbow practice", 4);
+
+
+    private IEnumerator kickOff()
+    {
+        anim.SetBool("Walk", true);
+        yield return new WaitForSeconds(1.3f);
+        anim.SetBool("Walk", false);
+        anim.SetTrigger("Kick");
+        yield return new WaitForSeconds(.5f);
+        isFinished = true;
+    }
 
 
 }

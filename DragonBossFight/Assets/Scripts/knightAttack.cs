@@ -8,6 +8,9 @@ public class knightAttack : MonoBehaviour {
     NotificationController nC;
     private Floor floor;
     public int snakeSize;
+    List<Tile> snakeList = new List<Tile>();
+    Animator anim;
+
 
     //attacks the players and starts back the dialog when done.
     public delegate void KnightAttackAction();
@@ -17,6 +20,7 @@ public class knightAttack : MonoBehaviour {
     void Start () {
         nC = GameObject.Find("Notification").GetComponent<NotificationController>();
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
+        anim = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
@@ -45,7 +49,6 @@ public class knightAttack : MonoBehaviour {
 
     private IEnumerator snakeSwing()
     {
-        List<Tile> snakeList = new List<Tile>();
 
         for (int i = 0; i < floor.sizeX * floor.sizeZ; i++)
         {
@@ -63,19 +66,12 @@ public class knightAttack : MonoBehaviour {
         while (!notHit)
         {
             notHit = true;
-            for (int i = 0; i < snakeList.Count+snakeSize; i++)
-            {
-                if (i < snakeList.Count)
-                {
-                    snakeList[i].myState = Tile.States.FIRE;
-                }
-                if (i - snakeSize >= 0)
-                {
-                    snakeList[i - snakeSize].myState = Tile.States.NONE;
-                }
-
-                yield return new WaitForSeconds(.15f);
-            }
+            StartCoroutine(moveSnake());
+            yield return new WaitForSeconds(5f);
+            StartCoroutine(moveSnake());
+            yield return new WaitForSeconds(5f);
+            yield return StartCoroutine(moveSnake());
+            
             if (!notHit)
             {
                 nC.flashMessage("TRY AGAIN");
@@ -85,6 +81,7 @@ public class knightAttack : MonoBehaviour {
                 nC.flashMessage("Noice");
             }
         }
+        
         yield return new WaitForSeconds(5f);
         TaskComplete();
     }
@@ -96,6 +93,26 @@ public class knightAttack : MonoBehaviour {
 
         StartCoroutine("snakeSwing");
     }
+
+    private IEnumerator moveSnake()
+    {
+        anim.SetTrigger("Swing");
+        for (int i = 0; i < snakeList.Count + snakeSize; i++)
+        {
+            if (i < snakeList.Count)
+            {
+                snakeList[i].myState = Tile.States.FIRE;
+            }
+            if (i - snakeSize >= 0)
+            {
+                snakeList[i - snakeSize].myState = Tile.States.NONE;
+            }
+
+            yield return new WaitForSeconds(.15f);
+        }
+    }
+
+
 
     
 }
