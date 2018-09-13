@@ -9,6 +9,7 @@ public class dialogController : MonoBehaviour {
     public bool attackSuccess = false;
     bool dialogUIVisible = false;
     Animator anim;
+    BoxCollider bC;
 
     //list of conversation nodes which point to each other based on the responses
     List<ConversationNode> conversationNodes = new List<ConversationNode>();
@@ -33,6 +34,7 @@ public class dialogController : MonoBehaviour {
         kA = GetComponent<knightAttack>();
         kT = GetComponent<knightTarget>();
         anim = GetComponent<Animator>();
+        bC = GetComponent<BoxCollider>();
     }
 
     // Use this for initialization
@@ -46,18 +48,10 @@ public class dialogController : MonoBehaviour {
         conversationNodes.Add(success);
         conversationNodes.Add(gameTime);
         conversationNodes.Add(training);
-
         toggleConversation();
         //askQuestion(currentConversation);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            askQuestion(currentConversation);
-        }
-    }
 
     private void OnEnable()
     {
@@ -72,6 +66,12 @@ public class dialogController : MonoBehaviour {
         playerResponseController.ResponseChosen -= questionAnswered;
         knightTarget.taskComplete -= targetSuccess;
         knightAttack.TaskComplete -= dodgeSuccess;
+    }
+
+    public void startDialog()
+    {
+        bC.enabled = false;
+        askQuestion(currentConversation);
     }
 
     private void targetSuccess()

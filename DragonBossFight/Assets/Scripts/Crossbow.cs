@@ -46,6 +46,10 @@ public class Crossbow : MonoBehaviour
                     //hit.collider.transform.root.GetComponent<dragonHealth>().takeDamage();
                     hit.collider.gameObject.GetComponent<targetController>().takeHit();
                 }
+                if (hit.collider.name == "knight")
+                {
+                    hit.collider.gameObject.GetComponent<dialogController>().startDialog();
+                }
             }
         }
 
