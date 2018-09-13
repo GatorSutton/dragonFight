@@ -7,10 +7,12 @@ public class knightTarget : MonoBehaviour {
     //spawns a target on the knight and starts back up the dialog when done
 
     public targetController tC;
-    public Transform head;
+    public Transform[] targetSpots;
     dialogController dC;
-    targetController testTarget;
+    [SerializeField]
+    List<targetController> testTargets = new List<targetController>();
     NotificationController nC;
+    int counter = 0;
 
     public delegate void KnightAction();
     public static event KnightAction taskComplete;
@@ -18,45 +20,64 @@ public class knightTarget : MonoBehaviour {
     private void Start()
     {
         nC = GameObject.Find("Notification").GetComponent<NotificationController>();
-        testTarget = Instantiate(tC, head);
+        //testTarget = Instantiate(tC, head);
+        foreach(Transform spot in targetSpots)
+        {
+            testTargets.Add(Instantiate(tC, spot));
+        }
     }
 
     // Update is called once per frame
     void Update () {
-		
+        //print(counter);
 	}
 
     private void OnEnable()
     {
-        targetController.TargetShot += success;
-        targetController.TargetSelfDestruct += failure;
+        targetController.TargetShot += addToCountandCheck;
+        targetController.TargetMissed += failure;
     }
 
     private void OnDisable()
     {
-        targetController.TargetShot -= success;
-        targetController.TargetSelfDestruct -= failure;
+        targetController.TargetShot -= addToCountandCheck;
+        targetController.TargetMissed -= failure;
     }
 
-    private void success()
+    private void addToCountandCheck()
     {
-        taskComplete();
+        counter++;
+        if(counter == testTargets.Count)
+        {
+            taskComplete();
+        }
     }
 
     private void failure()
     {
-        restartTarget();
+        restartTargets();
     }
 
-    public void spawnTarget()
+    public void spawnTargets()
     {
-        testTarget.startTarget();
+        counter = 0;
+        //testTarget.startTarget();
+        foreach(targetController tC in testTargets)
+        {
+            tC.startTarget();
+        }
+
     }
 
-    private void restartTarget()
+    private void restartTargets()
     {
+        counter = 0;
         nC.flashMessage("Try Again");
-        testTarget.startTarget();
+        //testTarget.startTarget();
+        foreach (targetController tC in testTargets)
+        {
+            tC.startTarget();
+        }
     }
 
 

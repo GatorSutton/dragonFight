@@ -25,19 +25,22 @@ public class targetController : MonoBehaviour {
     Transform center;
     AudioSource audioSource;
     NotificationController nC;
+    SphereCollider sC;
 
     public delegate void TargetAction();
     public static event TargetAction TargetShot;
-    public static event TargetAction TargetSelfDestruct;
+    public static event TargetAction TargetMissed;
 
     private void Awake()
     {
+        sC = GetComponent<SphereCollider>();
         PC = this.GetComponentInChildren<particlesController>();
         nC = GameObject.FindGameObjectWithTag("notification").GetComponent<NotificationController>();
         weakSpots = GameObject.FindGameObjectsWithTag("weakParent").ToList();
         audioSource = GetComponent<AudioSource>();
         target = transform.Find("target").transform;
-        target.gameObject.SetActive(false);
+        //target.gameObject.SetActive(false);
+        targetOff();
         center = GameObject.FindGameObjectWithTag("center").transform;
     }
 
@@ -63,7 +66,9 @@ public class targetController : MonoBehaviour {
 
     private IEnumerator shrinkTarget()
     {
-        target.gameObject.SetActive(true);
+        dead = false;
+        // target.gameObject.SetActive(true);
+        targetOn();
         target.localScale = new Vector3(startScale, startScale, 1f);
         while (target.localScale.x > targetScale)
         {
@@ -74,9 +79,13 @@ public class targetController : MonoBehaviour {
         vulnerable = true;
         yield return new WaitForSeconds(vulnerableTime);
         vulnerable = false;
-        target.gameObject.SetActive(false);
-        dead = false;
-        TargetSelfDestruct();
+        //target.gameObject.SetActive(false);
+        targetOff();
+        if(!dead)
+        {
+            TargetMissed();
+        }
+        print("just dissapated");
     }
 
     private IEnumerator shrinkFinalTarget()
@@ -87,7 +96,8 @@ public class targetController : MonoBehaviour {
         transform.SetParent(weakSpots[position].transform);
         transform.localPosition = new Vector3(0f, 0f, 0f);
         finalTarget = true;
-        target.gameObject.SetActive(true);
+       // target.gameObject.SetActive(true);
+        targetOn();
         target.localScale = new Vector3(startScale, startScale, 1f);
         while (target.localScale.x > targetScale)
         {
@@ -98,7 +108,8 @@ public class targetController : MonoBehaviour {
         vulnerable = true;
         yield return new WaitForSeconds(20f);
         vulnerable = false;
-        target.gameObject.SetActive(false);
+        //target.gameObject.SetActive(false);
+        targetOff();
         dead = false;
     }
 
@@ -124,9 +135,12 @@ public class targetController : MonoBehaviour {
             }
             if (!finalTarget)
             {
-                target.gameObject.SetActive(false);
-                dead = true;
-                TargetShot();
+                if (!dead)
+                {
+                    target.gameObject.SetActive(false);
+                    dead = true;
+                    TargetShot();
+                }
             }
             else
             {
@@ -173,6 +187,20 @@ public class targetController : MonoBehaviour {
         var list = new List<int> { 0, 1, 2, 3 };
         list.Remove(current);
         return list[Random.Range(0, 3)];    
+    }
+
+    private void targetOff()
+    {
+        target.gameObject.SetActive(false);
+        sC.enabled = false;
+        
+    }
+
+    private void targetOn()
+    {
+        target.gameObject.SetActive(true);
+        sC.enabled = true;
+
     }
 
 

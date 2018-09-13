@@ -142,7 +142,7 @@ public class dialogController : MonoBehaviour {
                     break;
                 case -2:
                     print("spawn target");
-                    kT.spawnTarget();
+                    kT.spawnTargets();
                     break;
                 case -3:
                     //start coroutine to kick players into pit
