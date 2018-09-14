@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class knightAttack : MonoBehaviour {
 
-    bool notHit = false;
+    bool notHit = true;
     NotificationController nC;
     private Floor floor;
     public int snakeSize;
@@ -61,9 +61,9 @@ public class knightAttack : MonoBehaviour {
                 snakeList.Add(floor.getTile(floor.sizeX - 1 - (i % floor.sizeX), i / floor.sizeX));
             }
         }       //add tiles to list in a snaking pattern
+        
 
-
-        while (!notHit)
+        do
         {
             notHit = true;
             StartCoroutine(moveSnake());
@@ -71,7 +71,7 @@ public class knightAttack : MonoBehaviour {
             StartCoroutine(moveSnake());
             yield return new WaitForSeconds(5f);
             yield return StartCoroutine(moveSnake());
-            
+
             if (!notHit)
             {
                 nC.flashMessage("TRY AGAIN");
@@ -80,8 +80,9 @@ public class knightAttack : MonoBehaviour {
             {
                 nC.flashMessage("Noice");
             }
-        }
-        
+        } while (!notHit);
+
+
         yield return new WaitForSeconds(5f);
         TaskComplete();
     }
