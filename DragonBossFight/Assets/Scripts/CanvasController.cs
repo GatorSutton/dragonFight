@@ -43,7 +43,7 @@ public class CanvasController : MonoBehaviour {
             }
         }
 
-        if(other.tag == "center")
+        if(other.name == "Cameras")
         {
             Invoke("frontView", 1);
         }
