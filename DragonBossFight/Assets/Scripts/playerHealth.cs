@@ -35,10 +35,10 @@ public class playerHealth : MonoBehaviour {
 
     public void takeDamage()
     {
+        AS.Play();
         if (hp > 0)
         {
             hp--;
-            AS.Play();
             print("player health is: " + hp);
         }
     }

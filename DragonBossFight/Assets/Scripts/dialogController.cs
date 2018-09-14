@@ -70,6 +70,7 @@ public class dialogController : MonoBehaviour {
 
     public void startDialog()
     {
+        anim.SetTrigger("Hit");
         bC.enabled = false;
         StartCoroutine(askQuestion(currentConversation));
     }
@@ -102,10 +103,15 @@ public class dialogController : MonoBehaviour {
         {
             toggleConversation();
         }
+
+        pRCLeft.gameObject.SetActive(false);
+        pRCRight.gameObject.SetActive(false);
         //toggleConversation();
         //Set Knight Question
         yield return StartCoroutine(kRC.setSentence(cn.KnightQuestion));
         //Set player Responses
+        pRCLeft.gameObject.SetActive(true);
+        pRCRight.gameObject.SetActive(true);
         pRCRight.setSentence(cn.rightResponse);
         pRCLeft.setSentence(cn.leftResponse);
     }
@@ -157,7 +163,7 @@ public class dialogController : MonoBehaviour {
 
 
 
-    private ConversationNode intro = new ConversationNode(0, "So you have come to fight the dragon?", "We are scared", 1, "This will be easy", 2);
+    private ConversationNode intro = new ConversationNode(0, "Ow!. So you have come to fight the dragon?", "We are scared", 1, "This will be easy", 2);
     private ConversationNode fear = new ConversationNode(1, "As you should be. Let's train before you begin.", "How do we attack?", 4, "How do we defend?", 3);
     private ConversationNode confident = new ConversationNode(2, "Pride comes before fall. Let's learn before we begin.", "How do we attack?", 4, "How do we defend?", 3);
     private ConversationNode defense = new ConversationNode(3, "Attacks will turn the ground beneath you red. Don't stand on them to stay healthy", "Bring it on!", -1, "Hit me with your best shot", -1);

@@ -43,6 +43,13 @@ public class CanvasController : MonoBehaviour {
             }
         }
 
+        if(other.tag == "center")
+        {
+            Invoke("frontView", 1);
+        }
+
+        
+
 
     }
 

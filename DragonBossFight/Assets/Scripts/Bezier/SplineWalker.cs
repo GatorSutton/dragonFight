@@ -5,7 +5,6 @@ public class SplineWalker : MonoBehaviour
     public bool lookForward;
     public BezierSpline spline;
 
-    [HideInInspector]
     public Position position;
     public float duration;
     private float progress;
@@ -13,7 +12,7 @@ public class SplineWalker : MonoBehaviour
 
     private void Start()
     {
-      //  spline = GameObject.FindGameObjectWithTag("path").GetComponent<BezierSpline>();
+        //  spline = GameObject.FindGameObjectWithTag("path").GetComponent<BezierSpline>();
     }
 
     private void Update()
