@@ -6,6 +6,7 @@ using TMPro;
 public class knightResponseController : MonoBehaviour {
 
     //controls the knights questions and the players responses
+    public float timeBetweenChars;
 
     private GameObject knightResponse;
     private TextMeshProUGUI knightText;
@@ -16,8 +17,13 @@ public class knightResponseController : MonoBehaviour {
         knightText = knightResponse.GetComponentInChildren<TextMeshProUGUI>();
 	}
 
-    public void setSentence(string words)
+    public IEnumerator setSentence(string words)
     {
-        knightText.text = words;
+        knightText.text = "";
+        foreach (char c in words)
+        {
+            knightText.text += c;
+            yield return new WaitForSeconds(timeBetweenChars);
+        }
     }
 }

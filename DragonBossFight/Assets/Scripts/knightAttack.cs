@@ -54,11 +54,11 @@ public class knightAttack : MonoBehaviour {
         {
             if (i / floor.sizeX % 2 == 0)
             {
-                snakeList.Add(floor.getTile(i % floor.sizeX, i / floor.sizeX));
+                snakeList.Add(floor.getTile(i / floor.sizeX, i % floor.sizeX));
             }
             else
             {
-                snakeList.Add(floor.getTile(floor.sizeX - 1 - (i % floor.sizeX), i / floor.sizeX));
+                snakeList.Add(floor.getTile(i / floor.sizeX, floor.sizeX - 1 - (i % floor.sizeX)));
             }
         }       //add tiles to list in a snaking pattern
         

@@ -71,7 +71,7 @@ public class dialogController : MonoBehaviour {
     public void startDialog()
     {
         bC.enabled = false;
-        askQuestion(currentConversation);
+        StartCoroutine(askQuestion(currentConversation));
     }
 
     private void targetSuccess()
@@ -79,7 +79,7 @@ public class dialogController : MonoBehaviour {
         attackSuccess = true;
         toggleConversation();
         currentID = success.id;
-        askQuestion(success);
+        StartCoroutine(askQuestion(success));
     }
 
     private void dodgeSuccess()
@@ -87,10 +87,10 @@ public class dialogController : MonoBehaviour {
         defenseSuccess = true;
         toggleConversation();
         currentID = success.id;
-        askQuestion(success);
+        StartCoroutine(askQuestion(success));
     }
 
-    private void askQuestion(ConversationNode cn)
+    private IEnumerator askQuestion(ConversationNode cn)
     {
         if(defenseSuccess && attackSuccess)
         {
@@ -104,7 +104,7 @@ public class dialogController : MonoBehaviour {
         }
         //toggleConversation();
         //Set Knight Question
-        kRC.setSentence(cn.KnightQuestion);
+        yield return StartCoroutine(kRC.setSentence(cn.KnightQuestion));
         //Set player Responses
         pRCRight.setSentence(cn.rightResponse);
         pRCLeft.setSentence(cn.leftResponse);
@@ -128,7 +128,7 @@ public class dialogController : MonoBehaviour {
 
         if (currentID >= 0)
         {
-            askQuestion(currentConversation);
+            StartCoroutine(askQuestion(currentConversation));
         }
         else
         {
@@ -175,6 +175,8 @@ public class dialogController : MonoBehaviour {
         anim.SetTrigger("Kick");
         yield return new WaitForSeconds(.5f);
         isFinished = true;
+        yield return new WaitForSeconds(3f);
+        this.gameObject.SetActive(false);
     }
 
 
