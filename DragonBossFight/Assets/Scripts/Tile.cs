@@ -144,7 +144,7 @@ public class Tile : MonoBehaviour {
         
     }
 
-    private IEnumerator flickerWarn()
+    public IEnumerator flickerWarn()
     {
         warning = true;
         WaitForSeconds wait = new WaitForSeconds(timeBetweenFlicker);

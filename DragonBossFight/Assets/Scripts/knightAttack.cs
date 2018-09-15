@@ -65,7 +65,9 @@ public class knightAttack : MonoBehaviour {
                 snakeList.Add(floor.getTile(i / floor.sizeX, floor.sizeX - 1 - (i % floor.sizeX)));
             }
         }       //add tiles to list in a snaking pattern
-        
+
+
+
 
         do
         {
@@ -79,6 +81,7 @@ public class knightAttack : MonoBehaviour {
             if (!notHit)
             {
                 nC.flashMessage("TRY AGAIN");
+                yield return new WaitForSeconds(3f);
             }
             else
             {
@@ -101,6 +104,12 @@ public class knightAttack : MonoBehaviour {
 
     private IEnumerator moveSnake()
     {
+        for (int i = 0; i < snakeSize; i++)
+        {
+           StartCoroutine(snakeList[i].flickerWarn());
+        }                       //Warn the snake entrance
+        yield return new WaitForSeconds(3f);
+
         anim.SetTrigger("Swing");
         for (int i = 0; i < snakeList.Count + snakeSize; i++)
         {
@@ -122,6 +131,7 @@ public class knightAttack : MonoBehaviour {
         GameObject snake = Instantiate(throwingSnakePrefab, throwingHand.position, Quaternion.Euler(0, 90, 0));
         Rigidbody rb = snake.GetComponent<Rigidbody>();
         rb.AddForce(new Vector3(250f, 0, 0));
+        Destroy(snake, 5f);
         
 
     }

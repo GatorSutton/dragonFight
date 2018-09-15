@@ -60,11 +60,11 @@ public class playerResponseController : MonoBehaviour {
     {
         if (responseDirection == dialogController.ResponseDirection.left)
         {
-            fB = Instantiate(fBPrefab, new Vector3(0f, 0f, floor.sizeX/2), Quaternion.identity, floor.transform);
+            fB = Instantiate(fBPrefab, new Vector3(0f, 0f, -floor.sizeX/2), Quaternion.identity, floor.transform);
         }
         else
         {
-            fB = Instantiate(fBPrefab, new Vector3(0f, 0f, -floor.sizeX / 2), Quaternion.identity, floor.transform);
+            fB = Instantiate(fBPrefab, new Vector3(0f, 0f, floor.sizeX / 2), Quaternion.identity, floor.transform);
         }
     }
 }
