@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class knightAttack : MonoBehaviour {
 
+    public GameObject throwingSnakePrefab;
+    public Transform throwingHand;
+
+
     bool notHit = true;
     NotificationController nC;
     private Floor floor;
@@ -111,6 +115,15 @@ public class knightAttack : MonoBehaviour {
 
             yield return new WaitForSeconds(.15f);
         }
+    }
+
+    public void throwObject()
+    {
+        GameObject snake = Instantiate(throwingSnakePrefab, throwingHand.position, Quaternion.Euler(0, 90, 0));
+        Rigidbody rb = snake.GetComponent<Rigidbody>();
+        rb.AddForce(new Vector3(250f, 0, 0));
+        
+
     }
 
 

@@ -83,7 +83,7 @@ public class targetController : MonoBehaviour {
         targetOff();
         if(!dead)
         {
-            TargetMissed();
+            TargetMissed?.Invoke();
         }
         print("just dissapated");
     }
