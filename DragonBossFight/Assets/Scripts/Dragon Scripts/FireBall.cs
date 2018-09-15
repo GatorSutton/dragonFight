@@ -35,8 +35,8 @@ public class FireBall : MonoBehaviour {
         while (fire.localPosition.z < distanceToLastSquare)
         {
             fire.Translate(Vector3.forward * Time.deltaTime * speed, Space.Self);
-          //  print(Vector3.forward * Time.deltaTime * speed);
-            yield return new WaitForEndOfFrame();
+            //  print(Vector3.forward * Time.deltaTime * speed);
+            yield return null;
         }
 
         yield return new WaitForSeconds(2f);

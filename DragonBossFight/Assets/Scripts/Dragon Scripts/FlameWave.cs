@@ -51,7 +51,7 @@ public class FlameWave : FireAttack {
         while (fire.localPosition.z < distanceToLastSquare - 1f)
         {
             fire.Translate(Vector3.forward * Time.deltaTime * speed, Space.Self);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
         yield return new WaitForSeconds(2f);
         fire.localPosition = homePosition;

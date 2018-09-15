@@ -65,7 +65,7 @@ public class FireBlast : FireAttack {
             }
             _currentScale *= growFactor;
             fire.localScale = Vector3.one * _currentScale;
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
         //wait 2 seconds as large fireball
         yield return new WaitForSeconds(2f);
@@ -79,7 +79,7 @@ public class FireBlast : FireAttack {
             }
             _currentScale /= growFactor;
             fire.localScale = Vector3.one * _currentScale;
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
         //Move back to under the dragon
         audioSource.Stop();

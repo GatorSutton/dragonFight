@@ -40,22 +40,22 @@ public class CircleAttack : FireAttack {
             while (orb.transform.position.z < floor.sizeX / 4)
             {
                 orb.transform.Translate(Vector3.forward * Time.deltaTime * speed);
-                yield return new WaitForEndOfFrame();
+                yield return null;
             }
             while (orb.transform.position.x < floor.sizeX / 4)
             {
                 orb.transform.Translate(Vector3.right * Time.deltaTime * speed);
-                yield return new WaitForEndOfFrame();
+                yield return null;
             }
             while (orb.transform.position.z > -floor.sizeX / 4)
             {
                 orb.transform.Translate(Vector3.back * Time.deltaTime * speed);
-                yield return new WaitForEndOfFrame();
+                yield return null;
             }
             while (orb.transform.position.x > -floor.sizeX / 4)
             {
                 orb.transform.Translate(Vector3.left * Time.deltaTime * speed);
-                yield return new WaitForEndOfFrame();
+                yield return null;
             }
         }
 
