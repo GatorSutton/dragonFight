@@ -5,6 +5,8 @@ using UnityEngine;
 public class safeSpotsAttack : FireAttack {
 
     public int safeSpaces;
+    public GameObject fireball;
+    public GameObject dragonFireBall;
 
     private Floor floor;
     private List<GameObject> spots = null;
@@ -19,6 +21,13 @@ public class safeSpotsAttack : FireAttack {
     public override IEnumerator Attack()
     {
         activeStatus = true;
+        GameObject fb = Instantiate(dragonFireBall, this.transform);
+        fb.AddComponent<moveToObject>();
+        yield return new WaitForSeconds(10f);
+        Destroy(fb);
+
+
+
         spots = new List<GameObject>();
         for (int i = 0; i < floor.sizeX; i++)
         {

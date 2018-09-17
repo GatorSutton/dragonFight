@@ -7,6 +7,7 @@ public class CircleAttack : FireAttack {
     public float speed;
     public float rotations;
     public Animator anim;
+    public GameObject squareEffect;
 
     private Floor floor;
     private AudioSource aS;
@@ -22,6 +23,8 @@ public class CircleAttack : FireAttack {
     public override IEnumerator Attack()
     {
         activeStatus = true;
+        Instantiate(squareEffect, this.transform);
+        yield return new WaitForSeconds(2f);
         var orb = new GameObject();
         var boxCollider = orb.gameObject.AddComponent<BoxCollider>();
         boxCollider.tag = "warn";

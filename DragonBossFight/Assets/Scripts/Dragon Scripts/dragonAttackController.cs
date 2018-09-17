@@ -118,15 +118,15 @@ public class dragonAttackController : MonoBehaviour
     {
         
         fireAttacks.Clear();
-        
+        /*
         foreach (FireAttack f in allPossibleAttacks)
          {
              fireAttacks.Add(f);
          }
          fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
          fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
-        
-        //fireAttacks.Add(allPossibleAttacks[2]);
+        */
+        fireAttacks.Add(allPossibleAttacks[3]);
 
     }
 
