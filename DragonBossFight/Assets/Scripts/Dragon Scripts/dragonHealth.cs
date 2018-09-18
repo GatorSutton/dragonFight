@@ -41,7 +41,6 @@ public class dragonHealth : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         hp = startingHealth;
        dAC = GetComponent<dragonAttackController>();
-        healthBar = GameObject.Find("DragonHPBar").GetComponent<Slider>();
         nC = GameObject.FindGameObjectWithTag("notification").GetComponent<NotificationController>();
         sC = GameObject.Find("Score").GetComponent<ScoreController>();
     }
@@ -125,7 +124,14 @@ public class dragonHealth : MonoBehaviour {
 
     private void setHealthBarSlider()
     {
-        healthBar.value = ((float)hp / (float)startingHealth);
+        if (healthBar != null)
+        {
+            healthBar.value = ((float)hp / (float)startingHealth);
+        }
+        else
+        {
+            healthBar = GameObject.Find("DragonHPBar").GetComponent<Slider>();
+        }
     }
     
     

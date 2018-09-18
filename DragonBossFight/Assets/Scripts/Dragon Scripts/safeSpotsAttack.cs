@@ -5,7 +5,6 @@ using UnityEngine;
 public class safeSpotsAttack : FireAttack {
 
     public int safeSpaces;
-    public GameObject fireball;
     public GameObject dragonFireBall;
 
     private Floor floor;

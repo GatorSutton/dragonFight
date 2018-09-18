@@ -139,7 +139,10 @@ public class targetController : MonoBehaviour {
                 {
                     target.gameObject.SetActive(false);
                     dead = true;
-                    TargetShot();
+                    if (TargetShot != null)
+                    {
+                        TargetShot();
+                    }
                 }
             }
             else

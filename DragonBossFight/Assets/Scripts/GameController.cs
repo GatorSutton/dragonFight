@@ -88,9 +88,8 @@ public class GameController : MonoBehaviour {
         initialFloor.SetActive(false);
         skip = true;
 
-        // turn on UI healthbars
-        hpBC.toggleHPBars();
 
+        yield return new WaitForSeconds(10f);
         //dragon entrance animation
         //dragon gameObject is spawned
         dragon = GameObject.Instantiate(dragonPrefab, startingLocation.position, startingLocation.rotation);
@@ -133,6 +132,8 @@ public class GameController : MonoBehaviour {
 
     private IEnumerator fightLoop()
     {
+        // turn on UI healthbars
+        hpBC.toggleHPBars();
         dC.setState(dragonController.dragonState.attack);
         while (dH.HP > 0 && skip)
         {

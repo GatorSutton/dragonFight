@@ -21,6 +21,8 @@ public class Tile : MonoBehaviour {
     public delegate void TileAction();
     public static event TileAction OnHit;
 
+    int framesHitCount;
+
     // Use this for initialization
     void Start () {
         rend = GetComponent<MeshRenderer>();
