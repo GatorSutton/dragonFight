@@ -28,8 +28,14 @@ public class Floor : MonoBehaviour {
 
     private void Update()
     {
-        checkForRealPlayer();
-        setFloorData();
+        if (ACSensors != null)
+        {
+            checkForRealPlayer();
+        }
+        if (AC != null)
+        {
+            setFloorData();
+        }
     }
 
 
@@ -118,6 +124,7 @@ public class Floor : MonoBehaviour {
 
     private void checkForRealPlayer()
     {
+
         bool[] list = ACSensors.getMessageIN();
 
         /*

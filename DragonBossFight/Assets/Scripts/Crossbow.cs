@@ -70,4 +70,5 @@ public class Crossbow : MonoBehaviour
                                                                                                                                       //as adjacent triangle length to determine opposite for both vert
     }                                                                                                                                 // and horizontal to get the scalars.
 
+
 }

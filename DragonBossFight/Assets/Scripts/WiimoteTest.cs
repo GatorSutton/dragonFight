@@ -16,7 +16,7 @@ public class WiimoteTest : MonoBehaviour {
     private Wiimote wiimote2;
     private Wiimote wiimote3;
     private Wiimote wiimote4;
-    private bool init = true;
+    public bool init = true;
     private Vector3 wmpOffset = Vector3.zero;
 
     // Use this for initialization
@@ -46,21 +46,21 @@ public class WiimoteTest : MonoBehaviour {
         do
         {
             ret = wiimote.ReadWiimoteData();
-            ret2 = wiimote2.ReadWiimoteData();
-            ret3 = wiimote3.ReadWiimoteData();
-            ret4 = wiimote4.ReadWiimoteData();
-        } while (ret > 0  || ret2 > 0 || ret3 > 0 || ret4 > 0);
+             ret2 = wiimote2.ReadWiimoteData();
+              ret3 = wiimote3.ReadWiimoteData();
+              ret4 = wiimote4.ReadWiimoteData();
+        } while (ret > 0);// || ret2 > 0);//|| ret3 > 0 || ret4 > 0);
         
 
         float[] pointer = wiimote.Ir.GetPointingPosition();
         ir_pointer.anchorMin = new Vector2(pointer[0], pointer[1]);
         ir_pointer.anchorMax = new Vector2(pointer[0], pointer[1]);
 
-
+        
         float[] pointer2 = wiimote2.Ir.GetPointingPosition();
         ir_pointer2.anchorMin = new Vector2(pointer2[0], pointer2[1]);
         ir_pointer2.anchorMax = new Vector2(pointer2[0], pointer2[1]);
-
+        
         float[] pointer3 = wiimote3.Ir.GetPointingPosition();
         ir_pointer3.anchorMin = new Vector2(pointer3[0], pointer3[1]);
         ir_pointer3.anchorMax = new Vector2(pointer3[0], pointer3[1]);
@@ -68,6 +68,7 @@ public class WiimoteTest : MonoBehaviour {
         float[] pointer4 = wiimote4.Ir.GetPointingPosition();
         ir_pointer4.anchorMin = new Vector2(pointer4[0], pointer4[1]);
         ir_pointer4.anchorMax = new Vector2(pointer4[0], pointer4[1]);
+        
     }
 
     void OnApplicationQuit()

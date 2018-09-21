@@ -52,6 +52,14 @@ public class dialogController : MonoBehaviour {
         //askQuestion(currentConversation);
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            startDialog();
+        }
+    }
+
 
     private void OnEnable()
     {
@@ -167,7 +175,7 @@ public class dialogController : MonoBehaviour {
     private ConversationNode fear = new ConversationNode(1, "As you should be. Let's train before you begin.", "How do we attack?", 4, "How do we defend?", 3);
     private ConversationNode confident = new ConversationNode(2, "Pride comes before fall. Let's learn before we begin.", "How do we attack?", 4, "How do we defend?", 3);
     private ConversationNode defense = new ConversationNode(3, "Attacks will turn the ground beneath you red. Don't stand on them to stay healthy", "Bring it on!", -1, "Hit me with your best shot", -1);
-    private ConversationNode offense = new ConversationNode(4, "Blast these targets with your crossbows to practice aiming", "OK", -2, "OK", -2);
+    private ConversationNode offense = new ConversationNode(4, "Blast these targets with your crossbows to practice aiming", "We won't hold back", -2, "Okie Dokie", -2);
     private ConversationNode success = new ConversationNode(5, "Great job. Complete both to continue. What next?", "Attack Practice", 4, "Defense Practice",  3);
     private ConversationNode gameTime = new ConversationNode(6, "What would you like to do?", "Practice a little more", 7, "Bring on the dragon!", -3);
     private ConversationNode training = new ConversationNode(7, "What would you like to practice?", "We would like to try dodging", 3, "We want more crossbow practice", 4);
