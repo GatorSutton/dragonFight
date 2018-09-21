@@ -171,7 +171,7 @@ public class dialogController : MonoBehaviour {
 
 
 
-    private ConversationNode intro = new ConversationNode(0, "Ow!. So you have come to fight the dragon?", "We are scared", 1, "This will be easy", 2);
+    private ConversationNode intro = new ConversationNode(0, "Ouch! So you have come to fight the dragon?", "We are scared", 1, "This will be easy", 2);
     private ConversationNode fear = new ConversationNode(1, "As you should be. Let's train before you begin.", "How do we attack?", 4, "How do we defend?", 3);
     private ConversationNode confident = new ConversationNode(2, "Pride comes before fall. Let's learn before we begin.", "How do we attack?", 4, "How do we defend?", 3);
     private ConversationNode defense = new ConversationNode(3, "Attacks will turn the ground beneath you red. Don't stand on them to stay healthy", "Bring it on!", -1, "Hit me with your best shot", -1);
