@@ -26,6 +26,9 @@ public class GameController : MonoBehaviour {
     public dialogController dialogController;
     public hpBarsController hpBC;
 
+    [SerializeField]
+    private AudioClip[] clipArray;
+    private AudioSource aS;
     private GameObject dragon;
     private dragonHealth dH;
     private dragonController dC;
@@ -43,8 +46,10 @@ public class GameController : MonoBehaviour {
     void Start () {
 
         StartCoroutine(gameLoop());
+        aS = GetComponent<AudioSource>();
         sC = GameObject.Find("Score").GetComponent<ScoreController>();
-	}
+       
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -140,8 +145,10 @@ public class GameController : MonoBehaviour {
             if(pH.HP <= 0)
             {
                 nC.flashMessage("YOU DIED");
+                aS.clip = clipArray[1];
+                aS.Play();
                 //finish current attack
-                while(!dC.isActionComplete())
+                while (!dC.isActionComplete())
                 {
                     yield return null;
                 }
@@ -189,6 +196,8 @@ public class GameController : MonoBehaviour {
         {
             yield return new WaitForEndOfFrame();
         }
+        aS.clip = clipArray[0];
+        aS.PlayDelayed(5f);
         print("ending waitForfinish");
     }
 
