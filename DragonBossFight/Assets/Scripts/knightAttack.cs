@@ -11,7 +11,7 @@ public class knightAttack : MonoBehaviour {
     bool notHit = true;
     NotificationController nC;
     private Floor floor;
-    public int snakeSize;
+    private int snakeSize;
     List<Tile> snakeList = new List<Tile>();
     Animator anim;
 
@@ -25,6 +25,7 @@ public class knightAttack : MonoBehaviour {
         nC = GameObject.Find("Notification").GetComponent<NotificationController>();
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
         anim = GetComponent<Animator>();
+        snakeSize = floor.sizeX / 2;
     }
 	
 	// Update is called once per frame
@@ -73,15 +74,15 @@ public class knightAttack : MonoBehaviour {
         {
             notHit = true;
             StartCoroutine(moveSnake());
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(8f);
             StartCoroutine(moveSnake());
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(8f);
             yield return StartCoroutine(moveSnake());
 
             if (!notHit)
             {
                 nC.flashMessage("TRY AGAIN");
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(8f);
             }
             else
             {
@@ -122,7 +123,7 @@ public class knightAttack : MonoBehaviour {
                 snakeList[i - snakeSize].myState = Tile.States.NONE;
             }
 
-            yield return new WaitForSeconds(.15f);
+            yield return new WaitForSeconds(.25f);
         }
     }
 

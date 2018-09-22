@@ -5,14 +5,24 @@ using UnityEngine;
 public class CanvasController : MonoBehaviour {
 
 
-    public Crossbow crossbow;
+    private Crossbow[] crossbows = new Crossbow[4];
     public Canvas canvas;
     private SplineWalker SW;
     private float cooldownTime = 2;
     private float cooldownTimer = 0;
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void Start()
+    {
+        GameObject[] bows = GameObject.FindGameObjectsWithTag("bow");
+        for (int i = 0; i < bows.Length; i++)
+        {
+            crossbows[i] = bows[i].GetComponent<Crossbow>();
+        }
+        
+    }
+
+    // Update is called once per frame
+    void Update () {
         cooldownTimer += Time.deltaTime;
 	}
 
@@ -56,19 +66,28 @@ public class CanvasController : MonoBehaviour {
     private void leftView()
     {
         canvas.targetDisplay = 0;
-        crossbow.offsetRotation = 270;
+        foreach (Crossbow crossbow in crossbows)
+        {
+            crossbow.offsetRotation = 270;
+        }
     }
 
     private void frontView()
     {
         canvas.targetDisplay = 1;
-        crossbow.offsetRotation = 0;
+        foreach (Crossbow crossbow in crossbows)
+        {
+            crossbow.offsetRotation = 0;
+        }
     }
 
     private void rightView()
     {
         canvas.targetDisplay = 2;
-        crossbow.offsetRotation = 90;
+        foreach (Crossbow crossbow in crossbows)
+        {
+            crossbow.offsetRotation = 90;
+        }
     }
 
 
