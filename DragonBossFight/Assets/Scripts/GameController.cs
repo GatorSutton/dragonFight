@@ -91,6 +91,7 @@ public class GameController : MonoBehaviour {
         }
         floor.clearAllTiles();
         initialFloor.SetActive(false);
+        pH.healToFull();
         skip = true;
 
 

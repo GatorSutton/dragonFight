@@ -131,6 +131,7 @@ public class dragonHealth : MonoBehaviour {
         else
         {
             healthBar = GameObject.Find("DragonHPBar").GetComponent<Slider>();
+            healthBar.value = ((float)hp / (float)startingHealth);
         }
     }
     
