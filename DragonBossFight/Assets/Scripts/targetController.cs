@@ -15,6 +15,8 @@ public class targetController : MonoBehaviour {
     public bool dead;
     public List<GameObject> weakSpots = new List<GameObject>();
 
+
+    private targetFlash tF;
     private particlesController PC;
     private int position = 0;
     float time;
@@ -36,12 +38,14 @@ public class targetController : MonoBehaviour {
         sC = GetComponent<SphereCollider>();
         PC = this.GetComponentInChildren<particlesController>();
         nC = GameObject.FindGameObjectWithTag("notification").GetComponent<NotificationController>();
+        tF = transform.Find("target").GetComponent<targetFlash>();
         weakSpots = GameObject.FindGameObjectsWithTag("weakParent").ToList();
         audioSource = GetComponent<AudioSource>();
         target = transform.Find("target").transform;
         //target.gameObject.SetActive(false);
         targetOff();
         center = GameObject.FindGameObjectWithTag("center").transform;
+        
     }
 
     // Use this for initialization
@@ -166,6 +170,7 @@ public class targetController : MonoBehaviour {
     {
         counter++;
         PC.spawnSparks();
+        StartCoroutine(tF.flash());
         //nC.flashMessage(counter++.ToString());
         vulnerable = false;
         position = differentRandomPosition(position);
