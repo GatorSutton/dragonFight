@@ -37,28 +37,18 @@ public class CircleAttack : FireAttack {
         boxCollider.tag = "fire";
         yield return new WaitForSeconds(1f);
 
+
+        //add speed up every rotation and high chance to change direction
         for (int i = 0; i < rotations; i++)
         {
-
-            while (orb.transform.position.z < floor.sizeX / 4)
+            float dynamicSpeed = speed + i;
+            if(i%2 == 0)
             {
-                orb.transform.Translate(Vector3.forward * Time.deltaTime * speed);
-                yield return null;
+                yield return StartCoroutine(rotateClockwise(dynamicSpeed, orb));
             }
-            while (orb.transform.position.x < floor.sizeX / 4)
+            else
             {
-                orb.transform.Translate(Vector3.right * Time.deltaTime * speed);
-                yield return null;
-            }
-            while (orb.transform.position.z > -floor.sizeX / 4)
-            {
-                orb.transform.Translate(Vector3.back * Time.deltaTime * speed);
-                yield return null;
-            }
-            while (orb.transform.position.x > -floor.sizeX / 4)
-            {
-                orb.transform.Translate(Vector3.left * Time.deltaTime * speed);
-                yield return null;
+                yield return StartCoroutine(rotateCounterClockwise(dynamicSpeed, orb));
             }
         }
 
@@ -66,5 +56,56 @@ public class CircleAttack : FireAttack {
         yield return new WaitForFixedUpdate();
         Destroy(orb);
         activeStatus = false;
+    }
+
+    IEnumerator rotateClockwise(float speed, GameObject orb)
+    {
+        while (orb.transform.position.z < floor.sizeX / 4)
+        {
+            orb.transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            yield return null;
+        }
+        while (orb.transform.position.x < floor.sizeX / 4)
+        {
+            orb.transform.Translate(Vector3.right * Time.deltaTime * speed);
+            yield return null;
+        }
+        while (orb.transform.position.z > -floor.sizeX / 4)
+        {
+            orb.transform.Translate(Vector3.back * Time.deltaTime * speed);
+            yield return null;
+        }
+        while (orb.transform.position.x > -floor.sizeX / 4)
+        {
+            orb.transform.Translate(Vector3.left * Time.deltaTime * speed);
+            yield return null;
+        }
+        yield return new WaitForSeconds(2f);
+    }
+
+    IEnumerator rotateCounterClockwise(float speed, GameObject orb)
+    { 
+        while (orb.transform.position.x < floor.sizeX / 4)
+        {
+            orb.transform.Translate(Vector3.right * Time.deltaTime * speed);
+            yield return null;
+        }
+        while (orb.transform.position.z < floor.sizeX / 4)
+        {
+            orb.transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            yield return null;
+        }
+        while (orb.transform.position.x > -floor.sizeX / 4)
+        {
+            orb.transform.Translate(Vector3.left * Time.deltaTime * speed);
+            yield return null;
+        }
+        while (orb.transform.position.z > -floor.sizeX / 4)
+        {
+            orb.transform.Translate(Vector3.back * Time.deltaTime * speed);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(2f);
     }
 }

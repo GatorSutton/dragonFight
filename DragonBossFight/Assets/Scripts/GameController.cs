@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour {
     private dragonHealth dH;
     private dragonController dC;
     public playerHealth pH;
-    private ScoreController sC;
+    public ScoreController sC;
 
     bool skip = true;
 
@@ -46,9 +46,7 @@ public class GameController : MonoBehaviour {
     void Start () {
 
         StartCoroutine(gameLoop());
-        aS = GetComponent<AudioSource>();
-        sC = GameObject.Find("Score").GetComponent<ScoreController>();
-       
+        aS = GetComponent<AudioSource>();     
     }
 	
 	// Update is called once per frame

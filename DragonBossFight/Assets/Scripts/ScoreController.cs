@@ -88,6 +88,7 @@ public class ScoreController : MonoBehaviour {
         Tile.OnHit -= notFlawless;
         dragonAttackController.attackBegin -= flawlessReset;
         dragonAttackController.attackEnd += checkForBonus;
+        OnVariableChange -= VariableChangeHandler;
     }
 
     void checkForBonus()
