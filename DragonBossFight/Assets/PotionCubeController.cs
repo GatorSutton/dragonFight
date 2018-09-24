@@ -16,11 +16,18 @@ public class PotionCubeController : MonoBehaviour {
     private Renderer rend;
     private Transform gameCenter;
     Rigidbody rb;
+    private playerHealth pH;
+    private ScoreController sC;
+    private CanvasController cC;
     
 
 
     // Use this for initialization
     void Start () {
+        Destroy(this.gameObject, lifeTime);
+        pH = GameObject.Find("Player").GetComponent<playerHealth>();
+        sC = GameObject.Find("Score").GetComponent<ScoreController>();
+        
         moveToCenter = true;
         buttonCount = 0;
         gameCenter = GameObject.Find("GameCenter").transform;
@@ -29,6 +36,7 @@ public class PotionCubeController : MonoBehaviour {
         hp = startingHP;
         rend = GetComponent<Renderer>();
         startTransform = transform;
+        cC = GameObject.Find("CanvasController").GetComponent<CanvasController>();
 	}
 	
 	// Update is called once per frame
@@ -40,6 +48,10 @@ public class PotionCubeController : MonoBehaviour {
                 if (tile.playerHere == true)
                 {
                     StartCoroutine(collect());
+                }
+                if (tile.myState == Tile.States.FIRE)
+                {
+                    Destroy(this.gameObject);
                 }
             }
         }
@@ -86,6 +98,9 @@ public class PotionCubeController : MonoBehaviour {
 
     IEnumerator collect()
     {
+
+        pH.heal();
+        sC.Score += 1000;
         Destroy(this.gameObject);
         yield return null;
     }
@@ -115,6 +130,8 @@ public class PotionCubeController : MonoBehaviour {
         {
             tile.myState = Tile.States.NONE;
         }
+        cC.updateCanvas();
+        
     }
 
 }

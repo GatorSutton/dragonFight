@@ -62,7 +62,7 @@ public class Tile : MonoBehaviour {
             myState = States.FIRE;
         }
 
-        if(other.tag == "warn" && !warning)
+        if(other.tag == "warn" && !warning && myState != States.POTION)
         {
             StartCoroutine(flickerWarn());
         }
@@ -108,7 +108,7 @@ public class Tile : MonoBehaviour {
                 myState = States.FIRE;
         }
 
-        if(other.tag == "warn" && !warning)
+        if(other.tag == "warn" && !warning && myState != States.POTION)
         {
             StartCoroutine(flickerWarn());
         }

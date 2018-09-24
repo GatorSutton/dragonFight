@@ -11,6 +11,7 @@ public class dragonAttackController : MonoBehaviour
 
     public Animator anim;
 
+    [SerializeField]
     private List<FireAttack> fireAttacks = new List<FireAttack>();
     private FireAttack currentAttack;
     private SplineWalker SW;
@@ -118,15 +119,15 @@ public class dragonAttackController : MonoBehaviour
     {
         
         fireAttacks.Clear();
-        /*
+        
         foreach (FireAttack f in allPossibleAttacks)
          {
              fireAttacks.Add(f);
          }
          fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
          fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
-        */
-        fireAttacks.Add(allPossibleAttacks[4]);
+        
+        //fireAttacks.Add(allPossibleAttacks[4]);
 
     }
 
@@ -184,6 +185,12 @@ public class dragonAttackController : MonoBehaviour
     {
         return (action == Action.rest);
     }
+
+    public int numOfAttacksLeft()
+    {
+        return fireAttacks.Count;
+    }
+    
 
 
 

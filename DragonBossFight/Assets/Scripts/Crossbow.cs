@@ -50,7 +50,7 @@ public class Crossbow : MonoBehaviour
                 {
                     hit.collider.gameObject.GetComponent<dialogController>().startDialog();
                 }
-                if (hit.collider.name == "Potion")
+                if (hit.collider.tag == "potion")
                 {
                     hit.collider.gameObject.GetComponent<PotionCubeController>().hit();
                 }

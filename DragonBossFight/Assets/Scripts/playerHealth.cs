@@ -43,6 +43,14 @@ public class playerHealth : MonoBehaviour {
         }
     }
 
+    public void heal()
+    {
+        if(hp < startingHealth)
+        {
+            hp++;
+        }
+    }
+
     public void healToFull()
     {
         hp = startingHealth;

@@ -8,10 +8,13 @@ public class ScoreController : MonoBehaviour {
     public NotificationController Notification;
     public int defenseBonus;
     public int attackBonus;
+    public GameObject potionPrefab;
 
     private bool flawless;
     private Text scoreText;
     private int m_Score;
+    private dragonAttackController dAC;
+
     public int Score
     {
         get { return m_Score; }
@@ -99,6 +102,8 @@ public class ScoreController : MonoBehaviour {
             Notification.flashMessage(message);
             changeScore(defenseBonus * multiplier);
             multiplier += 1;
+            //check if dragon is out of attacks if not spawn a potion here for a job well done
+            spawnPotion();
         }
         else
         {
@@ -125,6 +130,21 @@ public class ScoreController : MonoBehaviour {
     void VariableChangeHandler(int newVal)
     {
         StartCoroutine(updateScore());
+    }
+
+    void spawnPotion()
+    {
+        if(dAC == null)
+        {
+            dAC = GameObject.FindGameObjectWithTag("dragon").GetComponent<dragonAttackController>();
+        }
+
+        if(dAC.numOfAttacksLeft() > 0)
+        {
+            GameObject potion = Instantiate(potionPrefab, dAC.gameObject.transform.position, Quaternion.identity);
+            Transform gameCenter = GameObject.Find("GameCenter").transform;
+            potion.transform.position = Vector3.MoveTowards(potion.transform.position, gameCenter.position, .01f);      
+        }
     }
 
 
