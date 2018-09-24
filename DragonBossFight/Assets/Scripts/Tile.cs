@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour {
     public playerHealth PH;
 
     public float timeBetweenFlicker;
-    public enum States { NONE, WARN, FLICKEROFF, FIRE, DAMAGE, SWITCH, FAKEFIRE, SELECTOR};
+    public enum States { NONE, WARN, FLICKEROFF, FIRE, DAMAGE, SWITCH, FAKEFIRE, SELECTOR, POTION};
     //[System.NonSerialized]
     public States myState = States.NONE;
     public Material[] materials;
@@ -76,6 +76,11 @@ public class Tile : MonoBehaviour {
         {
             myState = States.SELECTOR;
         }
+
+        if(other.tag == "potion")
+        {
+            myState = States.POTION;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -136,6 +141,9 @@ public class Tile : MonoBehaviour {
                 break;
             case States.SELECTOR:
                 rend.material = materials[6];
+                break;
+            case States.POTION:
+                rend.material = materials[7];
                 break;
         }
         

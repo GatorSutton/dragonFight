@@ -40,7 +40,7 @@ public class Crossbow : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 1000))
             {
-                print(hit.collider.name);
+                print(hit.collider.gameObject.tag);
                 if (hit.collider.tag == "target")
                 {
                     //hit.collider.transform.root.GetComponent<dragonHealth>().takeDamage();
@@ -49,6 +49,10 @@ public class Crossbow : MonoBehaviour
                 if (hit.collider.name == "knight")
                 {
                     hit.collider.gameObject.GetComponent<dialogController>().startDialog();
+                }
+                if (hit.collider.name == "Potion")
+                {
+                    hit.collider.gameObject.GetComponent<PotionCubeController>().hit();
                 }
             }
         }
