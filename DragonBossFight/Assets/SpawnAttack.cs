@@ -18,18 +18,16 @@ public class SpawnAttack : FireAttack {
         floor = GameObject.FindGameObjectWithTag("floor").GetComponent<Floor>();
         gameCenter = GameObject.FindGameObjectWithTag("center");
         id = 6;
-        buildSpotList();
 	}
 	
 	// Update is called once per frame
 	void Update ()  {
 		//remove spawns from list if they are destroyed
-        
-        foreach(SpawnController spawn in spawnList)
+        for (int i = 0; i < spawnList.Count; i++)
         {
-            if (spawn == null)
+            if(spawnList[i] == null)
             {
-                spawnList.Remove(spawn); 
+                spawnList.RemoveAt(i);
             }
         }
         
@@ -40,6 +38,7 @@ public class SpawnAttack : FireAttack {
     public override IEnumerator Attack()
     {
         activeStatus = true;
+        buildSpotList();
         yield return checkForPotion();
         //spawn all spawns
         
@@ -61,7 +60,6 @@ public class SpawnAttack : FireAttack {
         {
             StartCoroutine(spawn.moveToRandomSpot(randomFromSpotListAndRemove()));
             // spawnList.Remove(spawn);
-            yield return new WaitForSeconds(.2f);
         }
         //kamikazee all spawns at random until list is empty
         //doesnt wait if they have all ben destroyed
@@ -84,6 +82,7 @@ public class SpawnAttack : FireAttack {
 
     private void buildSpotList()
     {
+        spotList.Clear();
         for (int i = -1; i <= 1; i++)
         {
             for (int j = -1; j <= 1; j++)

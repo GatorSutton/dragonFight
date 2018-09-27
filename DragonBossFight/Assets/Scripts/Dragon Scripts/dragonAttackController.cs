@@ -12,7 +12,8 @@ public class dragonAttackController : MonoBehaviour
     public Animator anim;
 
     [SerializeField]
-    private List<FireAttack> fireAttacks = new List<FireAttack>();
+    private List<FireAttack> currentFireAttacks = new List<FireAttack>();
+    private List<FireAttack> oneOFEachFireAttack = new List<FireAttack>();
     private FireAttack currentAttack;
     private SplineWalker SW;
     private Action action;
@@ -57,10 +58,10 @@ public class dragonAttackController : MonoBehaviour
     private void attack()
     {
         attackBegin();                                                      //event
-        int index = Random.Range(0, fireAttacks.Count);
-        currentAttack = fireAttacks[index];
+        int index = Random.Range(0, currentFireAttacks.Count);
+        currentAttack = currentFireAttacks[index];
         StartCoroutine(currentAttack.Attack());
-        fireAttacks.RemoveAt(index);
+        currentFireAttacks.RemoveAt(index);
     }
 
     private enum Action
@@ -86,7 +87,7 @@ public class dragonAttackController : MonoBehaviour
                 {
                     attackEnd();                                                //event
 
-                    if (fireAttacks.Count == 0 && pH.HP > 0)
+                    if (currentFireAttacks.Count == 0 && pH.HP > 0)
                     {
                         actionComplete = true;
                         action = Action.rest;
@@ -118,7 +119,7 @@ public class dragonAttackController : MonoBehaviour
     private void resetAttacks()
     {
         
-        fireAttacks.Clear();
+        currentFireAttacks.Clear();
         /*
         foreach (FireAttack f in allPossibleAttacks)
          {
@@ -126,14 +127,30 @@ public class dragonAttackController : MonoBehaviour
          }
          fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
          fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
-        */
-        fireAttacks.Add(allPossibleAttacks[5]);
-        fireAttacks.Add(allPossibleAttacks[1]);
-        fireAttacks.Add(allPossibleAttacks[5]);
-        fireAttacks.Add(allPossibleAttacks[1]);
-        fireAttacks.Add(allPossibleAttacks[5]);
-        fireAttacks.Add(allPossibleAttacks[1]);
+         */
 
+        while(currentFireAttacks.Count < 3)
+        {
+            if(oneOFEachFireAttack.Count < 1)
+            {
+                reloadOneOfEach();
+            }
+            int random = Random.Range(0, oneOFEachFireAttack.Count);
+            currentFireAttacks.Add(oneOFEachFireAttack[random]);
+            oneOFEachFireAttack.RemoveAt(random);
+        }
+        
+        //currentFireAttacks.Add(allPossibleAttacks[5]);
+
+    }
+
+    private void reloadOneOfEach()
+    {
+        oneOFEachFireAttack.Clear();
+        foreach(FireAttack f in allPossibleAttacks)
+        {
+            oneOFEachFireAttack.Add(f);
+        }
     }
 
     private void attackController()
@@ -193,7 +210,7 @@ public class dragonAttackController : MonoBehaviour
 
     public int numOfAttacksLeft()
     {
-        return fireAttacks.Count;
+        return currentFireAttacks.Count;
     }
     
 
