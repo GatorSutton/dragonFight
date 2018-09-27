@@ -24,7 +24,7 @@ public class SpawnAttack : FireAttack {
 	// Update is called once per frame
 	void Update ()  {
 		//remove spawns from list if they are destroyed
-        /*
+        
         foreach(SpawnController spawn in spawnList)
         {
             if (spawn == null)
@@ -32,15 +32,17 @@ public class SpawnAttack : FireAttack {
                 spawnList.Remove(spawn); 
             }
         }
-        */
+        
 	}
 
 
     //Spawn the minis and have them circle the dragon send them off one at a time
     public override IEnumerator Attack()
     {
-        //spawn all spawns
         activeStatus = true;
+        yield return checkForPotion();
+        //spawn all spawns
+        
         for (int i = 0; i < numOfSpawns; i++)
         {
             spawnList.Add(spawnTheSpawn(secondsPerRotation));
@@ -58,11 +60,15 @@ public class SpawnAttack : FireAttack {
         foreach (SpawnController spawn in spawnList)
         {
             StartCoroutine(spawn.moveToRandomSpot(randomFromSpotListAndRemove()));
-           // spawnList.Remove(spawn);
-            yield return new WaitForSeconds(1f);
+            // spawnList.Remove(spawn);
+            yield return new WaitForSeconds(.2f);
         }
         //kamikazee all spawns at random until list is empty
-        yield return new WaitForSeconds(10f);
+        //doesnt wait if they have all ben destroyed
+        if(spawnList.Count != 0)
+        {
+            yield return new WaitForSeconds(6f);
+        }
 
         //Wait until the last mini has exploded
         activeStatus = false;

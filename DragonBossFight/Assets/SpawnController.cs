@@ -27,7 +27,7 @@ public class SpawnController : MonoBehaviour {
 	void Update () {
         if (transform.parent != null)
         {
-            transform.RotateAround(transform.parent.transform.position, Vector3.back, Time.deltaTime * 360 / secondsPerRotation);
+            transform.RotateAround(transform.parent.transform.position, transform.parent.transform.TransformDirection(Vector3.back), Time.deltaTime * 360 / secondsPerRotation);
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
         if(tC.dead == true)

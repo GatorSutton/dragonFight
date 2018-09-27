@@ -17,22 +17,22 @@ public class CanvasController : MonoBehaviour {
         {
             crossbows[i] = bows[i].GetComponent<Crossbow>();
         }
-        
-        
+
+
     }
 
     // Update is called once per frame
-    void Update () {
-  
-	}
+    void Update() {
+
+    }
 
     public void updateCanvas()
     {
-        if(SW == null)
+        if (SW == null)
         {
             SW = GameObject.FindGameObjectWithTag("dragon").GetComponent<SplineWalker>();
         }
-        if (GameObject.FindGameObjectWithTag("potion") == null)
+        if (GameObject.FindGameObjectWithTag("potion") == null  || GameObject.FindGameObjectWithTag("potion").GetComponent<PotionCubeController>().triggered == true)
         {
             switch (SW.position)
             {

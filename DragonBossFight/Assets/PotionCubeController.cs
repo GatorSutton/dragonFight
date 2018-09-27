@@ -7,6 +7,8 @@ public class PotionCubeController : MonoBehaviour {
     public int startingHP;
     public float lifeTime;
     public float speed;
+    [HideInInspector]
+    public bool triggered = false;
 
     List<Tile> buttonTiles = new List<Tile>();
     private int buttonCount;
@@ -75,6 +77,8 @@ public class PotionCubeController : MonoBehaviour {
                     break;
 
                 case 0:
+                    triggered = true;
+                    cC.updateCanvas();
                     rb.AddRelativeTorque((gameCenter.transform.position - transform.position) * 100);
                     StartCoroutine(activate());
                     break;
@@ -131,7 +135,6 @@ public class PotionCubeController : MonoBehaviour {
             tile.myState = Tile.States.NONE;
         }
         cC.updateCanvas();
-        
     }
 
 }

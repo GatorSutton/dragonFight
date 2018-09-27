@@ -10,6 +10,8 @@ public class FireBlast : FireAttack {
     public ParticleSystem ps;
     public Animator anim;
     public AudioSource audioSource;
+    public targetController weakPointPrefab;
+    public Transform dragonHead;
 
     private ParticleSystem.EmissionModule em;
     private Vector3 gameCenter = new Vector3(0f, 0f, 0f);
@@ -20,6 +22,7 @@ public class FireBlast : FireAttack {
 
     private float _currentScale = 1f;
     private bool _upScale = true;
+    private bool interrupted = false;
 
     private Floor floor;
 
@@ -39,6 +42,7 @@ public class FireBlast : FireAttack {
         }
 	}
 
+    /*
     public override IEnumerator Attack()
     {
         anim.SetInteger("attack", id);
@@ -88,6 +92,54 @@ public class FireBlast : FireAttack {
         em.enabled = false;
 
     }
-  
+    */
+
+    public override IEnumerator Attack()
+    {
+        activeStatus = true;
+        yield return checkForPotion();
+        anim.SetInteger("attack", id);
+        audioSource.Play();
+        em.enabled = true;
+        _currentScale = initScale;
+        //Move warn to the center
+        warn.position = gameCenter;
+        yield return new WaitForSeconds(.5f);
+        //Move warn back
+        warn.localPosition = new Vector3(0f, 0f, 0f);
+        yield return new WaitForSeconds(1f);
+        //Move fireball to the center
+        fire.position = gameCenter;
+        //grow fireball
+        targetController tC = Instantiate(weakPointPrefab, dragonHead);
+        tC.startTarget();
+        while (_upScale && !tC.dead)
+        {
+            if (_currentScale > targetScale)
+            {
+                _upScale = false;
+                _currentScale = targetScale;
+            }
+            _currentScale *= growFactor;
+            fire.localScale = Vector3.one * _currentScale;
+            yield return null;
+        }
+        Destroy(tC.gameObject);
+
+
+        //wait 2 seconds as large fireball
+        yield return new WaitForSeconds(2f);
+        //shrink fireball
+        fire.localScale = Vector3.one;
+
+        //Move back to under the dragon
+        audioSource.Stop();
+        fire.localPosition = new Vector3(0f, 0f, 0f);
+        activeStatus = false;
+        em.enabled = false;
+
+    }
+
+
 
 }

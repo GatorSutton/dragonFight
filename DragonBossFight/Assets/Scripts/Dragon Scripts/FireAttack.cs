@@ -18,4 +18,12 @@ public class FireAttack : MonoBehaviour {
         return activeStatus;
     }
 
+    public IEnumerator checkForPotion()
+    {
+        if (GameObject.FindGameObjectWithTag("potion") != null)
+        {
+            yield return new WaitForSeconds(10f);
+        }
+    }
+
 }

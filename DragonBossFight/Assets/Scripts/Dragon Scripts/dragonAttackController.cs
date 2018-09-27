@@ -128,6 +128,11 @@ public class dragonAttackController : MonoBehaviour
          fireAttacks.RemoveAt(Random.Range(0, fireAttacks.Count));
         */
         fireAttacks.Add(allPossibleAttacks[5]);
+        fireAttacks.Add(allPossibleAttacks[1]);
+        fireAttacks.Add(allPossibleAttacks[5]);
+        fireAttacks.Add(allPossibleAttacks[1]);
+        fireAttacks.Add(allPossibleAttacks[5]);
+        fireAttacks.Add(allPossibleAttacks[1]);
 
     }
 
