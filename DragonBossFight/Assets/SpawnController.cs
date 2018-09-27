@@ -20,7 +20,7 @@ public class SpawnController : MonoBehaviour {
         floor = GameObject.Find("Floor").GetComponent<Floor>();
         gameCenter = GameObject.FindGameObjectWithTag("center");
         tC = transform.GetComponentInChildren<targetController>();
-        StartCoroutine(moveToRandomSpot());
+        //StartCoroutine(moveToRandomSpot());
 	}
 	
 	// Update is called once per frame
@@ -55,7 +55,7 @@ public class SpawnController : MonoBehaviour {
         FireHitBox.SetActive(true);
         yield return new WaitForSeconds(3f);
         FireHitBox.transform.Translate(0f, -1000f, 0f);
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
         yield return null;
     }
@@ -73,16 +73,16 @@ public class SpawnController : MonoBehaviour {
         return target;
     }
 
-    public IEnumerator moveToRandomSpot()
+    public IEnumerator moveToRandomSpot(Vector3 spot)
     {
         transform.parent = null;
-        Vector3 randomSpot = pickRandomSpot();
-        while (Vector3.Distance(transform.position, randomSpot) >= .1f) 
+       // Vector3 randomSpot = pickRandomSpot();
+        while (Vector3.Distance(transform.position, spot) >= .1f) 
         {
-            transform.position = Vector3.MoveTowards(transform.position, randomSpot, Time.deltaTime * 5);
+            transform.position = Vector3.MoveTowards(transform.position, spot, Time.deltaTime * 5);
             yield return null;
         }
-        yield return StartCoroutine(kamikazee());
+        StartCoroutine(kamikazee());
     }
 
 

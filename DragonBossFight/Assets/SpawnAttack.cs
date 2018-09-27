@@ -10,16 +10,21 @@ public class SpawnAttack : FireAttack {
 
     GameObject gameCenter;
     List<SpawnController> spawnList = new List<SpawnController>();
+    List<Vector3> spotList = new List<Vector3>();
+    Floor floor;
 
 	// Use this for initialization
 	void Start () {
+        floor = GameObject.FindGameObjectWithTag("floor").GetComponent<Floor>();
         gameCenter = GameObject.FindGameObjectWithTag("center");
         id = 6;
+        buildSpotList();
 	}
 	
 	// Update is called once per frame
 	void Update ()  {
 		//remove spawns from list if they are destroyed
+        /*
         foreach(SpawnController spawn in spawnList)
         {
             if (spawn == null)
@@ -27,6 +32,7 @@ public class SpawnAttack : FireAttack {
                 spawnList.Remove(spawn); 
             }
         }
+        */
 	}
 
 
@@ -40,20 +46,23 @@ public class SpawnAttack : FireAttack {
             spawnList.Add(spawnTheSpawn(secondsPerRotation));
             yield return new WaitForSeconds(secondsPerRotation/numOfSpawns);
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
 
         //add targets to all spawns
         foreach(SpawnController spawn in spawnList)
         {
             spawn.GetComponentInChildren<targetController>().startTarget();
         }
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(11f);
 
         foreach (SpawnController spawn in spawnList)
         {
-            yield return StartCoroutine(spawn.moveToRandomSpot());
+            StartCoroutine(spawn.moveToRandomSpot(randomFromSpotListAndRemove()));
+           // spawnList.Remove(spawn);
+            yield return new WaitForSeconds(1f);
         }
         //kamikazee all spawns at random until list is empty
+        yield return new WaitForSeconds(10f);
 
         //Wait until the last mini has exploded
         activeStatus = false;
@@ -66,4 +75,25 @@ public class SpawnAttack : FireAttack {
         sC.secondsPerRotation = secondPerRotation;
         return sC;
     }
+
+    private void buildSpotList()
+    {
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                spotList.Add(new Vector3((i*floor.sizeX/4), 0f, (j*floor.sizeX/4)));
+            }
+        }
+    }
+
+    private Vector3 randomFromSpotListAndRemove()
+    {
+        int random = Random.Range(0, spotList.Count);
+        Vector3 result = spotList[random];
+        spotList.RemoveAt(random);
+        return result;
+
+    }
+
 }
