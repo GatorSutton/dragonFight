@@ -67,15 +67,15 @@ public class PotionCubeController : MonoBehaviour {
             switch (hp)
             {
                 case 2:
-                    rb.AddTorque(transform.right * 100);
+                    rb.AddRelativeTorque((gameCenter.transform.position - transform.position) * 100);
                     break;
 
                 case 1:
-                    rb.AddTorque(transform.right * 100);
+                    rb.AddRelativeTorque((gameCenter.transform.position - transform.position) * 100);
                     break;
 
                 case 0:
-                    rb.AddTorque(transform.right * 100);
+                    rb.AddRelativeTorque((gameCenter.transform.position - transform.position) * 100);
                     StartCoroutine(activate());
                     break;
 
