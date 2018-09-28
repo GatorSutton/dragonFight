@@ -7,6 +7,7 @@ public class Crossbow : MonoBehaviour
 {
 
     public float coolDownTime;
+    public ReticleController RC;
 
     private Wiimote wiimote;
     private float cdRemaining;
@@ -30,9 +31,10 @@ public class Crossbow : MonoBehaviour
         pointer = wiimote.Ir.GetPointingPosition();
 
 
-        if (wiimote.Button.b && cdRemaining < 0 && pointer[0] > -.5)
+        if (wiimote.Button.b && cdRemaining <= 0 && pointer[0] > -.5)
         {
             cdRemaining = coolDownTime;
+            RC.reticleFire();
             Debug.DrawRay(transform.position, calculateArrowVector() * 100, Color.green);
 
             RaycastHit hit;
@@ -58,7 +60,13 @@ public class Crossbow : MonoBehaviour
         }
 
         cdRemaining -= Time.deltaTime;
+        if(cdRemaining<0)
+        {
+            cdRemaining = 0;
+        }
 
+
+        RC.ReloadPercentage = Mathf.Abs(1 - cdRemaining / coolDownTime);
 
 
 
