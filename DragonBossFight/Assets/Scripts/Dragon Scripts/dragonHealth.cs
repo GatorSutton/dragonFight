@@ -19,6 +19,7 @@ public class dragonHealth : MonoBehaviour {
     private AudioSource audioSource;
     ScoreController sC;
     private bool dragDead;
+    private Rigidbody rB;
 
     private int hp;
     public int HP
@@ -43,6 +44,7 @@ public class dragonHealth : MonoBehaviour {
        dAC = GetComponent<dragonAttackController>();
         nC = GameObject.FindGameObjectWithTag("notification").GetComponent<NotificationController>();
         sC = GameObject.Find("Score").GetComponent<ScoreController>();
+        rB = GetComponent<Rigidbody>();
     }
 	
 	// Update is called once per frame
@@ -164,6 +166,9 @@ public class dragonHealth : MonoBehaviour {
             //circle the floor with fire for cool effect
         }
         anim.SetTrigger("dead");
+
+        //add gravity to the dragon
+        rB.useGravity = true;
         dragDead = true;
         // fall until hit the ground
     }
