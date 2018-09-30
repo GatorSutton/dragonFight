@@ -23,6 +23,7 @@ public class CircleAttack : FireAttack {
     public override IEnumerator Attack()
     {
         activeStatus = true;
+        yield return checkForPotion();
         Instantiate(squareEffect, this.transform);
         yield return new WaitForSeconds(2f);
         var orb = new GameObject();

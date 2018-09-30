@@ -6,24 +6,30 @@ using WiimoteApi;
 public class Crossbow : MonoBehaviour
 {
 
-    public float coolDownTime;
+    public float reloadCDTime;
     public ReticleController RC;
 
     private Wiimote wiimote;
-    private float cdRemaining;
     private float[] pointer;
     public float offsetRotation;
     public int wiiMoteNumber;
+    private int numOfShots;
+    private float reloadCDRemaining;
+    private float fireCDRemaining;
+
 
     // Use this for initialization
     void Start()
     {
-        cdRemaining = coolDownTime;
+        fireCDRemaining = 0;
+        numOfShots = 3;
+        reloadCDRemaining = reloadCDTime;
     }
 
     // Update is called once per frame
     void Update()
     {
+        print(numOfShots);
         if (!WiimoteManager.HasWiimote()) { return; }
 
 
@@ -31,10 +37,13 @@ public class Crossbow : MonoBehaviour
         pointer = wiimote.Ir.GetPointingPosition();
 
 
-        if (wiimote.Button.b && cdRemaining <= 0 && pointer[0] > -.5)
+        if (wiimote.Button.b && pointer[0] > -.5 && numOfShots>0 && fireCDRemaining <= 0)
         {
-            cdRemaining = coolDownTime;
+            numOfShots--;
+            fireCDRemaining = 1;
             RC.reticleFire();
+            RC.setShots(numOfShots);
+            //remove one from shots ui
             Debug.DrawRay(transform.position, calculateArrowVector() * 100, Color.green);
 
             RaycastHit hit;
@@ -59,17 +68,21 @@ public class Crossbow : MonoBehaviour
             }
         }
 
-        cdRemaining -= Time.deltaTime;
-        if(cdRemaining<0)
+        if(numOfShots == 0)
         {
-            cdRemaining = 0;
+            reloadCDRemaining -= Time.deltaTime;
+            if(reloadCDRemaining <= 0)
+            {
+                reloadCDRemaining = reloadCDTime;
+                numOfShots = 3;
+                RC.setShots(numOfShots);
+                //reset shots ui
+            }
         }
 
 
-        RC.ReloadPercentage = Mathf.Abs(1 - cdRemaining / coolDownTime);
-
-
-
+        RC.ReloadPercentage = Mathf.Abs(1 - reloadCDRemaining / reloadCDTime);
+        fireCDRemaining -= Time.deltaTime;
 
     }
 

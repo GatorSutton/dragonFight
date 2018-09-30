@@ -34,6 +34,7 @@ public class FireBallThrower : FireAttack {
     public override IEnumerator Attack()
     {
         activeStatus = true;
+        yield return checkForPotion();
         initList();
         anim.SetInteger("attack", id);
         while (fireballCount < numOfFireballs)

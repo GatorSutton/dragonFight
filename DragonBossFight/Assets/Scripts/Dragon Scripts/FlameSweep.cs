@@ -39,6 +39,7 @@ public class FlameSweep : FireAttack {
     public override IEnumerator Attack()
     {
         activeStatus = true;
+        yield return checkForPotion();
         bool secondWarning = false;
 
         //Spin the dragon around

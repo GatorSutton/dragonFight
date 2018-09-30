@@ -7,8 +7,9 @@ public class ReticleController : MonoBehaviour {
 
     Animator anim;
     Slider slider;
-    Outline outline;
     float reloadPercentage;
+
+    public List<GameObject> shots = new List<GameObject>();
 
     public float ReloadPercentage
     {
@@ -19,7 +20,6 @@ public class ReticleController : MonoBehaviour {
 	void Start () {
         anim = GetComponent<Animator>();
         slider = transform.GetComponentInChildren<Slider>();
-        outline = GetComponent<Outline>();
 	}
 	
 	// Update is called once per frame
@@ -32,18 +32,31 @@ public class ReticleController : MonoBehaviour {
         anim.SetTrigger("Fire");
     }
 
+    public void setShots(int numOfShotsLeft)
+    {
+        if (numOfShotsLeft == 3)
+        {
+            foreach(GameObject shot in shots)
+            {
+                shot.SetActive(true);
+            }
+        }
+        else
+        {
+            shots[numOfShotsLeft].SetActive(false);
+        }
+    }
+
     private void setReloadBar()
     {
-        if(reloadPercentage == 1)
+        if(Mathf.Approximately(reloadPercentage, 1) || Mathf.Approximately(reloadPercentage, 0))
         {
-            outline.enabled = true;
             slider.gameObject.SetActive(false);
         }
         else
         {
             slider.gameObject.SetActive(true);
             slider.value = reloadPercentage;
-            outline.enabled = false;
         }
     }
 }

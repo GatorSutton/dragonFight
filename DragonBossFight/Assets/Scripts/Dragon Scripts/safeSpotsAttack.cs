@@ -20,6 +20,7 @@ public class safeSpotsAttack : FireAttack {
     public override IEnumerator Attack()
     {
         activeStatus = true;
+        yield return checkForPotion();
         GameObject fb = Instantiate(dragonFireBall, this.transform);
         fb.AddComponent<moveToObject>();
         yield return new WaitForSeconds(10f);
