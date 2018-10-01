@@ -29,7 +29,6 @@ public class Crossbow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(numOfShots);
         if (!WiimoteManager.HasWiimote()) { return; }
 
 
@@ -40,7 +39,7 @@ public class Crossbow : MonoBehaviour
         if (wiimote.Button.b && pointer[0] > -.5 && numOfShots>0 && fireCDRemaining <= 0)
         {
             numOfShots--;
-            fireCDRemaining = 1;
+            fireCDRemaining = .5f;
             RC.reticleFire();
             RC.setShots(numOfShots);
             //remove one from shots ui

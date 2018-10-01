@@ -8,6 +8,7 @@ public class knightAttack : MonoBehaviour {
     public Transform throwingHand;
 
 
+    private float snakeSpeed;
     bool notHit = true;
     NotificationController nC;
     private Floor floor;
@@ -22,6 +23,7 @@ public class knightAttack : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        snakeSpeed = .25f;
         nC = GameObject.Find("Notification").GetComponent<NotificationController>();
         floor = GameObject.FindWithTag("floor").GetComponent<Floor>();
         anim = GetComponent<Animator>();
@@ -73,16 +75,19 @@ public class knightAttack : MonoBehaviour {
         do
         {
             notHit = true;
-            StartCoroutine(moveSnake());
+            StartCoroutine(moveSnake(snakeSpeed));
             yield return new WaitForSeconds(8f);
-            StartCoroutine(moveSnake());
+            StartCoroutine(moveSnake(snakeSpeed));
             yield return new WaitForSeconds(8f);
-            yield return StartCoroutine(moveSnake());
+            yield return StartCoroutine(moveSnake(snakeSpeed));
 
             if (!notHit)
             {
                 nC.flashMessage("TRY AGAIN");
-                yield return new WaitForSeconds(8f);
+                yield return new WaitForSeconds(2f);
+                snakeSpeed += .05f;
+                nC.flashMessage("Slower Snakes");
+                yield return new WaitForSeconds(2f);
             }
             else
             {
@@ -103,7 +108,7 @@ public class knightAttack : MonoBehaviour {
         StartCoroutine("snakeSwing");
     }
 
-    private IEnumerator moveSnake()
+    private IEnumerator moveSnake(float snakeSpeed)
     {
         for (int i = 0; i < snakeSize; i++)
         {
@@ -123,7 +128,7 @@ public class knightAttack : MonoBehaviour {
                 snakeList[i - snakeSize].myState = Tile.States.NONE;
             }
 
-            yield return new WaitForSeconds(.25f);
+            yield return new WaitForSeconds(snakeSpeed);
         }
     }
 
