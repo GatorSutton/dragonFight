@@ -43,7 +43,8 @@ public class playerResponseController : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         slider.value = fB.percentage;
-        if (Mathf.Approximately(fB.percentage, 1f))
+       // if (Mathf.Approximately(fB.percentage, 1f))
+       if(fB.percentage > 1)
         {
             fB.percentage = 0;
             slider.value = 0;

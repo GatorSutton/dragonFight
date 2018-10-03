@@ -11,6 +11,7 @@ public class PotionCubeController : MonoBehaviour {
     public bool triggered = false;
     public Color emissiveBase;
     public GameObject potionExplosionPrefab;
+    public float timeToCollect;
 
     List<Tile> buttonTiles = new List<Tile>();
     private int buttonCount;
@@ -55,22 +56,27 @@ public class PotionCubeController : MonoBehaviour {
     
         if (buttonTiles != null)
         {
+            bool playerOnPotion = false;
             foreach (Tile tile in buttonTiles)
             {
                 if (tile.playerHere == true)
                 {
-                    absorbPercent += Time.deltaTime;
-                    emission += absorbPercent;
-                    if (absorbPercent > 2)
-                    {
-                        collect();
-                    }
+                    playerOnPotion = true;
+                }
+                if (absorbPercent > timeToCollect)
+                {
+                    collect();
                 }
                 if (tile.myState == Tile.States.FIRE)
                 {
                     //call a different explosion prefab that is red and is only gravity
                     Destroy(this.gameObject);
                 }
+            }
+            if(playerOnPotion)
+            {
+                absorbPercent += Time.deltaTime;
+                emission += absorbPercent;
             }
         }
 
