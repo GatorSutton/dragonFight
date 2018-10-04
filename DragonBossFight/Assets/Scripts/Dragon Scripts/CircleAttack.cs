@@ -43,7 +43,7 @@ public class CircleAttack : FireAttack {
         for (int i = 0; i < rotations; i++)
         {
             float dynamicSpeed = speed + i;
-            if(i%2 == 0)
+            if(Random.value > .5f)
             {
                 yield return StartCoroutine(rotateClockwise(dynamicSpeed, orb));
             }
