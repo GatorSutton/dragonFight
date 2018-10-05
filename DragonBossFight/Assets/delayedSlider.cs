@@ -17,7 +17,7 @@ public class delayedSlider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!Mathf.Approximately(parentSlider.value,thisSlider.value) && !draining)
+		if(Mathf.Abs(parentSlider.value-thisSlider.value)>.01f && !draining)
         {
             StartCoroutine(drainHP());
         }
@@ -29,12 +29,18 @@ public class delayedSlider : MonoBehaviour {
         print(thisSlider.value);
         draining = true;
         float difference = thisSlider.value - parentSlider.value;
-        yield return new WaitForSeconds(1f);
-        for (int i = 0; i < 100; i++)
+        yield return new WaitForSeconds(.25f);
+
+        while (Mathf.Abs(difference) > .01f)
         {
-            thisSlider.value -= difference / 100;
-            yield return new WaitForSeconds(.01f);
+            for (int i = 0; i < 100; i++)
+            {
+                thisSlider.value -= difference / 100;
+                yield return new WaitForSeconds(.01f);
+            }
+            difference = thisSlider.value - parentSlider.value;
         }
+
         draining = false;
 
     }
