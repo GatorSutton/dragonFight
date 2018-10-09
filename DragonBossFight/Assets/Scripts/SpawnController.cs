@@ -48,6 +48,7 @@ public class SpawnController : MonoBehaviour {
 
     private IEnumerator kamikazee()
     {
+        Destroy(transform.Find("Props_Skeleton_Skull").gameObject);
         WarnHitBox.SetActive(true);
         yield return new WaitForSeconds(1f);
         WarnHitBox.SetActive(false);

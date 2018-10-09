@@ -34,6 +34,7 @@ public class FireBallThrower : FireAttack {
     public override IEnumerator Attack()
     {
         activeStatus = true;
+        yield return new WaitForSeconds(2f);
         yield return checkForPotion();
         initList();
         anim.SetInteger("attack", id);
@@ -44,7 +45,7 @@ public class FireBallThrower : FireAttack {
             yield return new WaitForSeconds(timeBetweenAttacks);
         }
         fireballCount = 0;
-        yield return new WaitForSeconds(9f);
+        yield return new WaitForSeconds(12f);
         activeStatus = false;
     }
 

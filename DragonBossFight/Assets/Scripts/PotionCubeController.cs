@@ -63,10 +63,6 @@ public class PotionCubeController : MonoBehaviour {
                 {
                     playerOnPotion = true;
                 }
-                if (absorbPercent > timeToCollect)
-                {
-                    collect();
-                }
                 if (tile.myState == Tile.States.FIRE)
                 {
                     //call a different explosion prefab that is red and is only gravity
@@ -77,6 +73,10 @@ public class PotionCubeController : MonoBehaviour {
             {
                 absorbPercent += Time.deltaTime;
                 emission += absorbPercent;
+            }
+            if (absorbPercent > timeToCollect)
+            {
+                collect();
             }
         }
 
