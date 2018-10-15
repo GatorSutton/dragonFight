@@ -27,6 +27,19 @@ public class Floor : MonoBehaviour {
         ACSensors = GameObject.Find("ArduinoCommunicatorSensors").GetComponent<ArduinoCommunicator>();
     }
 
+    public List<Tile> getAllTiles()
+    {
+        List<Tile> allTiles = new List<Tile>();
+        for (int i = 0; i < sizeX; i++)
+        {
+            for (int j = 0; j < sizeZ; j++)
+            {
+                allTiles.Add(tiles[i, j]);
+            }
+        }
+        return allTiles;
+    }
+
     private void Update()
     {
         if (ACSensors != null)

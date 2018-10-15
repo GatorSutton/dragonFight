@@ -1,17 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class floorButton : MonoBehaviour {
 
     //create list of type tiles
+    [SerializeField]
+    List<Tile> restOfTiles = new List<Tile>();
     List<Tile> buttonTiles = new List<Tile>();
+    Floor floor;
     bool playerOnButton = false;
+    bool playerOffButton = false;
     public float percentage = 0;
 
     private void OnEnable()
     {
         percentage = 0;
+        floor = GameObject.Find("Floor").GetComponent<Floor>();
     }
 
     private void OnDisable()
@@ -27,10 +33,24 @@ public class floorButton : MonoBehaviour {
     void Update()
     {
         playerOnButton = false;
+        playerOffButton = false;
 
-        foreach(Tile tile in buttonTiles)
+        if(buttonTiles.Count == 16 && restOfTiles.Count == 0)
         {
-            if(tile.playerHere == true)
+            initializeRestOfTiles();
+        }
+
+        foreach (Tile tile in restOfTiles)
+        {
+            if (tile.playerHere == true)
+            {
+                playerOffButton = true;
+            }
+        }
+
+        foreach (Tile tile in buttonTiles)
+        {
+            if(tile.playerHere == true && !playerOffButton)
             {
                 playerOnButton = true;
             }
@@ -54,7 +74,13 @@ public class floorButton : MonoBehaviour {
         }
     }
 
-    //method to set tiles to active
+    private void initializeRestOfTiles()
+    {
+        restOfTiles = floor.getAllTiles();
+        restOfTiles = restOfTiles.Except(buttonTiles).ToList();
+    }
+
+   
 
 
 
