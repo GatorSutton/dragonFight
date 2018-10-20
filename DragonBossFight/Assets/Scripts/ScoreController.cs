@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour {
 
-    public NotificationController Notification;
+
     public int defenseBonus;
     public int attackBonus;
     public GameObject potionPrefab;
 
+    private NotificationController Notification;
     private bool flawless;
     private Text scoreText;
     private int m_Score;
@@ -42,6 +43,7 @@ public class ScoreController : MonoBehaviour {
         flawless = true;
         scoreText = GetComponent<Text>();
         updateScore();
+        Notification = GameObject.Find("Notification").GetComponent<NotificationController>();
 	}
 
     public IEnumerator updateScore()
@@ -90,7 +92,8 @@ public class ScoreController : MonoBehaviour {
     {
         Tile.OnHit -= notFlawless;
         dragonAttackController.attackBegin -= flawlessReset;
-        dragonAttackController.attackEnd += checkForBonus;
+        dragonAttackController.attackEnd -= checkForBonus;
+        dragonHealth.takeHit -= awardAttackBonus;
         OnVariableChange -= VariableChangeHandler;
     }
 
